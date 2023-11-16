@@ -1,29 +1,38 @@
 package io.github.flightsimroutes.model;
+import java.util.ArrayList; 
 
 public class Aircraft {
     private String subfleets;
-    private String continents;
+    private String hub;
+    private ArrayList<String> countries;
+
     private boolean extremeDemand;
     private boolean bigDemand;
     private boolean mediumDemand;
     private boolean lessDemand;
 
-    public Aircraft(String subfleets, String continents, boolean extremeDemand, boolean bigDemand, boolean mediumDemand,
+    public Aircraft(String subfleets, String hub,ArrayList<String> countries, boolean extremeDemand, boolean bigDemand, boolean mediumDemand,
             boolean lessDemand) {
         this.subfleets = subfleets;
-        this.continents = continents;
+        this.hub = hub;
+        this.countries = countries;
         this.extremeDemand = extremeDemand;
         this.bigDemand = bigDemand;
         this.mediumDemand = mediumDemand;
         this.lessDemand = lessDemand;
     }
 
+
     public String getSubfleets() {
         return subfleets;
     }
 
-    public String getContinents() {
-        return continents;
+    public String getHub() {
+        return hub;
+    }
+
+    public ArrayList<String> getCountries() {
+        return countries;
     }
 
     public boolean isextremeDemand() {
@@ -42,12 +51,16 @@ public class Aircraft {
         return lessDemand;
     }
 
+    public void setCountries(ArrayList<String> countries) {
+        this.countries = countries;
+    }
+
     public void setSubfleets(String subfleets) {
         this.subfleets = subfleets;
     }
 
-    public void setContinents(String continents) {
-        this.continents = continents;
+    public void setHub(String hub) {
+        this.hub = hub;
     }
 
     public void setextremeDemand(boolean extremeDemand) {
