@@ -11,10 +11,9 @@ public class Aircraft {
     private boolean mediumDemand;
     private boolean lessDemand;
 
-    public Aircraft(String subfleets, String hub,ArrayList<String> countries, boolean extremeDemand, boolean bigDemand, boolean mediumDemand,
+    public Aircraft(String subfleets,ArrayList<String> countries, boolean extremeDemand, boolean bigDemand, boolean mediumDemand,
             boolean lessDemand) {
         this.subfleets = subfleets;
-        this.hub = hub;
         this.countries = countries;
         this.extremeDemand = extremeDemand;
         this.bigDemand = bigDemand;

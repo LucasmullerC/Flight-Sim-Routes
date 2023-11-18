@@ -8,22 +8,24 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import io.github.flightsimroutes.model.Airport;
-import io.github.flightsimroutes.service.RouteService;
+import io.github.flightsimroutes.service.AirportsService;
 
 public class ReadAirportsTest {
+    ArrayList<String> extremeDemand = new ArrayList<>(), bigDemand = new ArrayList<>(), mediumDemand = new ArrayList<>();
 
     @Test
     public void VerifyArray() {
-        ArrayList<Airport> airports = RouteService.readAirports(3,"BR");
+        AirportsService readAirports = new AirportsService(extremeDemand,bigDemand,mediumDemand);
+        ArrayList<Airport> airports = readAirports.readAirports(3,"BR");
 
         assertNotNull(airports);
     }
 
     @Test
     public void SearchArray() {
-        RouteService readAirports = new RouteService();
+        AirportsService readAirports = new AirportsService(extremeDemand,bigDemand,mediumDemand);
 
-        ArrayList<Airport> airports = RouteService.readAirports(3,"BR");
+        ArrayList<Airport> airports = readAirports.readAirports(3,"BR");
 
         Airport Recife = readAirports.searchAirport(airports, "SBRF");
 
