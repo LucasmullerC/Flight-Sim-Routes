@@ -1,5 +1,5 @@
 package io.github.flightsimroutes.model;
-import java.util.ArrayList; 
+import java.util.ArrayList;
 
 public class Aircraft {
     private String subfleets;

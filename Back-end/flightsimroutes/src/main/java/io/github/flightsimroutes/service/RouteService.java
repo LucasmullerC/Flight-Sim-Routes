@@ -12,17 +12,15 @@ import io.github.flightsimroutes.model.Route;
 public class RouteService {
     ArrayList<Aircraft> aircraft;
     ArrayList<Airport> airports;
-    ArrayList<Route> routes;
+    ArrayList<Route> routes = new ArrayList<Route>();
     ArrayList<String> hubs;
     int flight_number;
     boolean isRepetitive;
 
     public RouteService(ArrayList<Aircraft> aircraft, ArrayList<Airport> airports, int flight_number,
-            ArrayList<Route> routes,
             ArrayList<String> hubs, boolean isRepetitive) {
         this.aircraft = aircraft;
         this.flight_number = flight_number;
-        this.routes = routes;
         this.hubs = hubs;
         this.isRepetitive = isRepetitive;
         this.airports = airports;

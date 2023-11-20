@@ -48,7 +48,7 @@ public class RouteServiceTest {
         AirportsService readAirports = new AirportsService(extremeDemand, bigDemand, mediumDemand);
         ArrayList<Airport> airports = readAirports.readAirports(3, "BR");
 
-        RouteService routeService = new RouteService(aircrafts, airports, 6000, routes, hub, false);
+        RouteService routeService = new RouteService(aircrafts, airports, 6000, hub, false);
         routes = routeService.createDemand();
 
         System.out.println(routes.toString());
