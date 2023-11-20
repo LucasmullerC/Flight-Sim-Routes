@@ -8,28 +8,36 @@ import java.util.Random;
 import io.github.flightsimroutes.model.Aircraft;
 import io.github.flightsimroutes.model.Airport;
 import io.github.flightsimroutes.model.Route;
+import io.github.flightsimroutes.util.GeographicUtils;
 
 public class RouteService {
+    String airline;
     ArrayList<Aircraft> aircraft;
     ArrayList<Airport> airports;
     ArrayList<Route> routes = new ArrayList<Route>();
     ArrayList<String> hubs;
-    int flight_number;
+    int flight_number,quantity;
     boolean isRepetitive;
 
-    public RouteService(ArrayList<Aircraft> aircraft, ArrayList<Airport> airports, int flight_number,
-            ArrayList<String> hubs, boolean isRepetitive) {
+    public RouteService(String airline, ArrayList<Aircraft> aircraft, ArrayList<Airport> airports, int flight_number,
+            ArrayList<String> hubs, boolean isRepetitive, int quantity) {
+        this.airline = airline;
         this.aircraft = aircraft;
         this.flight_number = flight_number;
         this.hubs = hubs;
         this.isRepetitive = isRepetitive;
         this.airports = airports;
+        this.quantity = quantity;
     }
 
     public ArrayList<Route> createDemand() {
         connectHubs();
+        int chanceNum = verifyQuantity();
         for (Airport airport : airports) {
-            generateDemands(airport);
+            int randomNumber = new Random().nextInt(10);
+            if(randomNumber >= chanceNum){
+                generateDemands(airport);
+            }
         }
         return routes;
     }
@@ -79,14 +87,14 @@ public class RouteService {
                             }
                     }
                 } else {
-                    if (!airport.getType().equals("lessDemand")) {
+                    if (!airport.getType().equals("lessDemand") && !depAirport.getType().equals("lessDemand")) {
                         switch (airport.getType()) { // to other airports
                             case "extremeDemand":
-                                if (randomNumber >= 8) {
+                                if (randomNumber >= 9) {
                                     createRoute(airport.getIcao(), depAirport.getIcao(), airport.getType());
                                 }
                             case "bigDemand":
-                                if (randomNumber >= 9) {
+                                if (randomNumber >= 10) {
                                     createRoute(airport.getIcao(), depAirport.getIcao(), airport.getType());
                                 }
                             case "mediumDemand":
@@ -116,12 +124,12 @@ public class RouteService {
 
         if (isRepetitive) {
             for (int i = 0; i <= 5; i++) {
-                addRoute(subfleets, dep, arr);
-                addRoute(subfleets, arr, dep);
+                addRoute(subfleets, depAirport, arrAirport);
+                addRoute(subfleets, depAirport, arrAirport);
             }
         } else {
-            addRoute(subfleets, dep, arr);
-            addRoute(subfleets, arr, dep);
+            addRoute(subfleets, depAirport, arrAirport);
+            addRoute(subfleets, depAirport, arrAirport);
         }
     }
 
@@ -176,13 +184,28 @@ public class RouteService {
         return subfleets;
     }
 
-    private void addRoute(String subfleets, String dep, String arr) {
-        Route route = new Route(Integer.toString(flight_number), dep, arr, subfleets);
+    private void addRoute(String subfleets, Airport dep, Airport arr) {
+        double distance = GeographicUtils.getAirportsDistanceinMiles(Double.valueOf(dep.getLat()),Double.valueOf(dep.getLon()),Double.valueOf(arr.getLat()),Double.valueOf(arr.getLon()));
+        Route route = new Route(airline,Integer.toString(flight_number), dep.getIcao(), arr.getIcao(), subfleets, distance);
         routes.add(route);
         flight_number++;
     }
 
-    public Airport searchAirport(String icao) {
+    private int verifyQuantity(){
+        switch (quantity) {
+            case 1: //Very Low
+                return 9;
+            case 2: //Low
+                return 6;
+            case 3: //Mid
+                return 3;
+            case 4: //High
+                return 0;
+        }
+        return 0;
+    }
+
+    private Airport searchAirport(String icao) {
         for (Airport airport : this.airports) {
             if (airport.getIcao().equals(icao)) {
                 return airport;

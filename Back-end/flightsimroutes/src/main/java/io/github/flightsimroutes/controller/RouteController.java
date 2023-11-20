@@ -38,8 +38,8 @@ public class RouteController {
         AirportsService readAirports = new AirportsService(request.getExtremeDemand(), request.getBigDemand(), request.getMediumDemand());
         airportsList = readAirports.readAirports(request.getInternational(), request.getBaseCountry());
 
-        RouteService generateSchedule = new RouteService(request.getAircraft(), airportsList, request.getFlight_number(),
-                request.getHubs(), request.isRepetitive());
+        RouteService generateSchedule = new RouteService(request.getAirline(), request.getAircraft(), airportsList, request.getFlight_number(),
+                request.getHubs(), request.isRepetitive(), request.getQuantity());
         ArrayList<Route> routes = generateSchedule.createDemand();
 
         GenerateFiles generateFiles = new GenerateFiles();

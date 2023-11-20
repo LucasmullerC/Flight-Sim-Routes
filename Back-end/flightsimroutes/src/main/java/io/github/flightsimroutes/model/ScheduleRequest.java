@@ -12,10 +12,12 @@ public class ScheduleRequest {
     private int flight_number;
     private boolean isRepetitive;
     private ArrayList<String> hubs;
+    private String airline;
+    private int quantity;
 
     public ScheduleRequest(ArrayList<Aircraft> aircraft, ArrayList<String> extremeDemand, ArrayList<String> bigDemand,
             ArrayList<String> mediumDemand, int international, String baseCountry, int flight_number,
-            boolean isRepetitive, ArrayList<String> hubs) {
+            boolean isRepetitive, ArrayList<String> hubs, String airline, int quantity) {
         this.aircraft = aircraft;
         this.extremeDemand = extremeDemand;
         this.bigDemand = bigDemand;
@@ -25,6 +27,8 @@ public class ScheduleRequest {
         this.flight_number = flight_number;
         this.isRepetitive = isRepetitive;
         this.hubs = hubs;
+        this.airline = airline;
+        this.quantity = quantity;
     }
 
     public ArrayList<Aircraft> getAircraft() {
@@ -97,6 +101,22 @@ public class ScheduleRequest {
 
     public void setHubs(ArrayList<String> hubs) {
         this.hubs = hubs;
+    }
+
+    public String getAirline() {
+        return airline;
+    }
+
+    public void setAirline(String airline) {
+        this.airline = airline;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
 }

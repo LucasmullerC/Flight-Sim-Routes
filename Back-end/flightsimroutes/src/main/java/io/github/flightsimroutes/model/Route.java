@@ -5,16 +5,18 @@ public class Route {
     private String flight_number;
     private String dpt_airport;
     private String arr_airport;
-    private String distance = "0";
+    private double distance = 0;
     private String flight_time = "0";
     private String flight_type = "J";
     private String subfleets;
 
-    public Route(String flight_number, String dpt_airport, String arr_airport, String subfleets) {
+    public Route(String airline, String flight_number, String dpt_airport, String arr_airport, String subfleets, double distance) {
+        this.airline = airline;
         this.flight_number = flight_number;
         this.dpt_airport = dpt_airport;
         this.arr_airport = arr_airport;
         this.subfleets = subfleets;
+        this.distance = distance;
     }
 
     public void setAirline(String airline) {
@@ -33,7 +35,7 @@ public class Route {
         this.arr_airport = arr_airport;
     }
 
-    public void setDistance(String distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
@@ -65,7 +67,7 @@ public class Route {
         return arr_airport;
     }
 
-    public String getDistance() {
+    public double getDistance() {
         return distance;
     }
 
