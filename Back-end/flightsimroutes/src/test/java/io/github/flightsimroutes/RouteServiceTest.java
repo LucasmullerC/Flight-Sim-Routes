@@ -4,75 +4,49 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.github.flightsimroutes.model.Aircraft;
 import io.github.flightsimroutes.model.Airport;
 import io.github.flightsimroutes.model.Route;
 import io.github.flightsimroutes.service.AirportsService;
 import io.github.flightsimroutes.service.RouteService;
 
 public class RouteServiceTest {
-    ArrayList<String> extremeDemand = new ArrayList<>(), bigDemand = new ArrayList<>(),
-            mediumDemand = new ArrayList<>(), hub = new ArrayList<>();
-    ArrayList<Aircraft> aircrafts = new ArrayList<>();
-    ArrayList<Route> routes = new ArrayList<>();
+    
+    @Test
+    public void generateRandomRoute(){
+        ArrayList<Airport> airportsList = new ArrayList<>();
+        AirportsService readAirports = new AirportsService();
 
-    @BeforeEach
-    void setUp() {
-        ArrayList<String> countries = new ArrayList<>();
-        countries.add("BR");
-        countries.add("AR");
-        Aircraft aircraft = new Aircraft("A20N", countries, true, true, true, false);
-        aircrafts.add(aircraft);
+        airportsList = readAirports.generateAirportsRoutes("");
+        RouteService routeService = new RouteService(airportsList);
+        ArrayList<Route> routes = routeService.generateRoute("SBRF", "", "", "", 500, 100, false, 0);
 
-        hub.add("SBRF");
-        hub.add("SBBR");
-
-        extremeDemand.add("SBSV");
-        extremeDemand.add("SBPA");
-        extremeDemand.add("SBFZ");
-
-        bigDemand.add("SBJP");
-        bigDemand.add("SBRJ");
-        bigDemand.add("SBCF");
-
-        mediumDemand.add("SBSP");
-        mediumDemand.add("SBCG");
-        mediumDemand.add("SBEG");
+        assertEquals("SBRF",routes.get(0).getDpt_airport());
     }
 
     @Test
-    public void createRouteHubTest() {
-        AirportsService readAirports = new AirportsService(extremeDemand, bigDemand, mediumDemand);
-        ArrayList<Airport> airports = readAirports.readAirports(3, "BR");
+    public void generateRandomRouteAirports(){
+        ArrayList<Airport> airportsList = new ArrayList<>();
+        AirportsService readAirports = new AirportsService();
 
-        RouteService routeService = new RouteService("ABV",aircrafts, airports, 6000, hub, false, 4);
-        routes = routeService.createDemand();
+        airportsList = readAirports.generateAirportsRoutes("");
+        RouteService routeService = new RouteService(airportsList);
+        ArrayList<Route> routes = routeService.generateRoute("SBRF", "SBGR", "", "", 1500, 100, false, 0);
 
-        System.out.println(routes.toString());
-        for (Route route : routes) {
-            System.out.println(route.getDpt_airport() + " - " + route.getArr_airport());
-        }
-        assertEquals("SBRF", routes.get(0).getDpt_airport());
-        assertEquals("SBBR", routes.get(0).getArr_airport());
+        assertEquals("SBRF",routes.get(0).getDpt_airport());
+        assertEquals("SBGR",routes.get(0).getArr_airport());
     }
 
-        @Test
-    public void RouteDistanceTest() {
-        double epsilon = 0.100000d;
-        AirportsService readAirports = new AirportsService(extremeDemand, bigDemand, mediumDemand);
-        ArrayList<Airport> airports = readAirports.readAirports(3, "BR");
+    @Test
+    public void generateRandomRouteOnlyArr(){
+        ArrayList<Airport> airportsList = new ArrayList<>();
+        AirportsService readAirports = new AirportsService();
 
-        RouteService routeService = new RouteService("ABV",aircrafts, airports, 6000, hub, false, 4);
-        routes = routeService.createDemand();
+        airportsList = readAirports.generateAirportsRoutes("");
+        RouteService routeService = new RouteService(airportsList);
+        ArrayList<Route> routes = routeService.generateRoute("", "SBRF", "", "", 1500, 100, false, 0);
 
-        System.out.println(routes.toString());
-        for (Route route : routes) {
-            System.out.println(route.getDpt_airport() + " - " + route.getArr_airport());
-        }
-        assertEquals(893.107, Double.valueOf(routes.get(0).getDistance()),epsilon);
+        assertEquals("SBRF",routes.get(0).getArr_airport());
     }
-
 }

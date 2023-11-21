@@ -5,17 +5,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.flightsimroutes.model.Aircraft;
 import io.github.flightsimroutes.model.Airport;
+import io.github.flightsimroutes.model.RandomRouteRequest;
 import io.github.flightsimroutes.model.Route;
 import io.github.flightsimroutes.model.ScheduleRequest;
 import io.github.flightsimroutes.service.AirportsService;
+import io.github.flightsimroutes.service.DemandService;
 import io.github.flightsimroutes.service.RouteService;
 import io.github.flightsimroutes.util.GenerateFiles;
 
@@ -27,20 +26,28 @@ import java.util.zip.ZipEntry;
 @RestController
 public class RouteController {
 
-    @GetMapping("/")
-    public String hello() {
-        return "Hello World!";
+    @PostMapping("/RandomRoute")
+    public ResponseEntity<Object> randomRoute(@RequestBody final RandomRouteRequest request) {
+        ArrayList<Airport> airportsList = new ArrayList<>();
+        AirportsService readAirports = new AirportsService();
+        airportsList = readAirports.generateAirportsRoutes(request.getDepCountry());
+        
+        RouteService routeService = new RouteService(airportsList);
+        ArrayList<Route> routes = routeService.generateRoute(request.getDepAirport(), request.getArrAirport(), request.getDepCountry(), request.getArrCountry(), request.getMaxDistance(), request.getMinDistance(), request.isContinous(), request.getQuantity());
+        return new ResponseEntity<>(routes, HttpStatus.OK);
     }
 
     @PostMapping("/GenerateSchedules")
     public ResponseEntity<byte[]> generateSchedules(@RequestBody final ScheduleRequest request) {
         ArrayList<Airport> airportsList = new ArrayList<>();
-        AirportsService readAirports = new AirportsService(request.getExtremeDemand(), request.getBigDemand(), request.getMediumDemand());
-        airportsList = readAirports.readAirports(request.getInternational(), request.getBaseCountry());
+        AirportsService readAirports = new AirportsService();
+        airportsList = readAirports.generateAirportsSchedules(request.getExtremeDemand(), request.getBigDemand(),
+                request.getMediumDemand(), request.getBaseCountry());
 
-        RouteService generateSchedule = new RouteService(request.getAirline(), request.getAircraft(), airportsList, request.getFlight_number(),
+        DemandService generateSchedule = new DemandService(request.getAirline(), request.getAircraft(), airportsList,
+                request.getFlight_number(),
                 request.getHubs(), request.isRepetitive(), request.getQuantity());
-        ArrayList<Route> routes = generateSchedule.createDemand();
+        ArrayList<Route> routes = generateSchedule.createDemand(request.getInternational(), request.getBaseCountry());
 
         GenerateFiles generateFiles = new GenerateFiles();
 
@@ -50,8 +57,10 @@ public class RouteController {
             ZipOutputStream zipOutputStream = new ZipOutputStream(baos);
 
             zipOutputStream = createFiles(zipOutputStream, generateFiles.generateFlightsCsv(routes), "routes.csv");
-            zipOutputStream = createFiles(zipOutputStream, generateFiles.generateAirportsCsv(airportsList), "airports.csv");
-            zipOutputStream = createFiles(zipOutputStream,metaLink+generateFiles.generateGrateCircleMapper(routes)+"\" />", "RouteMap.html");
+            zipOutputStream = createFiles(zipOutputStream, generateFiles.generateAirportsCsv(airportsList),
+                    "airports.csv");
+            zipOutputStream = createFiles(zipOutputStream,
+                    metaLink + generateFiles.generateGrateCircleMapper(routes) + "\" />", "RouteMap.html");
             zipOutputStream.close();
 
             HttpHeaders headers = new HttpHeaders();

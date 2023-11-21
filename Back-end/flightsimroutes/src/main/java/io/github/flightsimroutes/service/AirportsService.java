@@ -14,23 +14,29 @@ import org.springframework.util.ResourceUtils;
 import io.github.flightsimroutes.model.Airport;
 
 public class AirportsService {
-    ArrayList<String> extremeDemand, bigDemand, mediumDemand;
+    ArrayList<String> extremeDemand = new ArrayList<>(), bigDemand = new ArrayList<>(), mediumDemand = new ArrayList<>();
 
-    public AirportsService(ArrayList<String> extremeDemand, ArrayList<String> bigDemand,
-            ArrayList<String> mediumDemand) {
+    public ArrayList<Airport> generateAirportsSchedules(ArrayList<String> extremeDemand, ArrayList<String> bigDemand,
+            ArrayList<String> mediumDemand,String baseCountry) {
         this.extremeDemand = extremeDemand;
         this.bigDemand = bigDemand;
         this.mediumDemand = mediumDemand;
+
+        return readAirports(baseCountry);
     }
 
-    public ArrayList<Airport> readAirports(int inter, String baseCountry) {
+    public ArrayList<Airport> generateAirportsRoutes(String depCountry) {
+        return readAirports(depCountry);
+    }
+
+    private ArrayList<Airport> readAirports(String baseCountry) {
         ArrayList<Airport> airports = new ArrayList<>();
         try {
             File file = ResourceUtils.getFile("classpath:airports.csv");
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 for (String line; (line = br.readLine()) != null;) {
                     String[] attributes = line.split(",");
-                    Airport airport = createAirports(attributes, inter, baseCountry);
+                    Airport airport = createAirports(attributes, baseCountry);
                     if (airport != null) {
                         airports.add(airport);
                     }
@@ -45,36 +51,27 @@ public class AirportsService {
 
     }
 
-    private Airport createAirports(String[] metadata, int inter, String baseCountry) {
+    private Airport createAirports(String[] metadata, String baseCountry) {
         String country = metadata[8].replace("\"", "");
         String type = metadata[2].replace("\"", "");
 
-        switch (inter) {
-            case 1 /* ONLY INTER */:
-                if (!country.equals(baseCountry)) {
-                    return defineAirport(metadata, "large_airport");
-                }
-            case 2 /* BOTH */:
-                if (country.equals(baseCountry)) {
-                    if (type.equals("large_airport")) {
-                        return defineAirport(metadata, "large_airport");
-                    } else if (type.equals("medium_airport")) {
-                        return defineAirport(metadata, "medium_airport");
-                    }
-                } else {
-                    return defineAirport(metadata, "large_airport");
-                }
-            case 3 /* DOMESTIC ONLY */:
-                if (country.equals(baseCountry)) {
-                    if (type.equals("large_airport")) {
-                        return defineAirport(metadata, "large_airport");
-                    } else if (type.equals("medium_airport")) {
-                        return defineAirport(metadata, "medium_airport");
-                    }
-                }
-            default:
-                return null;
+        if (country.equals(baseCountry)) {
+            if (type.equals("large_airport")) {
+                return defineAirport(metadata, "large_airport");
+            } else if (type.equals("medium_airport")) {
+                return defineAirport(metadata, "medium_airport");
+            }
+        } else if (baseCountry.equals("")) {
+            if (type.equals("large_airport")) {
+                return defineAirport(metadata, "large_airport");
+            } else if (type.equals("medium_airport")) {
+                return defineAirport(metadata, "medium_airport");
+            }
+        } else {
+            return defineAirport(metadata, "large_airport");
         }
+
+        return null;
     }
 
     private Airport defineAirport(String[] metadata, String decisionType) {
@@ -122,20 +119,20 @@ public class AirportsService {
         }
     }
 
-    public Airport searchAirport(ArrayList<Airport> airports, String icao) {
-        for (Airport arpts : airports) {
-            if (arpts.getIcao().equals(icao)) {
-                return arpts;
-            }
-        }
-        return null;
-    }
-
-    public static boolean verifyICAO(String icao) {
+    private static boolean verifyICAO(String icao) {
         String regex = "^[A-Z]{4}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(icao);
 
         return matcher.matches();
+    }
+
+    public static Airport searchAirport(ArrayList<Airport> airports, String icao) {
+        for (Airport airport : airports) {
+            if (airport.getIcao().equals(icao)) {
+                return airport;
+            }
+        }
+        return null;
     }
 }

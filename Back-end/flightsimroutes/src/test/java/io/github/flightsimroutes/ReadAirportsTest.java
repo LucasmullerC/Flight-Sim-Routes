@@ -15,23 +15,22 @@ public class ReadAirportsTest {
 
     @Test
     public void VerifyArray() {
-        AirportsService readAirports = new AirportsService(extremeDemand,bigDemand,mediumDemand);
-        ArrayList<Airport> airports = readAirports.readAirports(3,"BR");
+        AirportsService readAirports = new AirportsService();
+        ArrayList<Airport> airports = readAirports.generateAirportsSchedules(extremeDemand,bigDemand,mediumDemand,"BR");
 
         assertNotNull(airports);
     }
 
     @Test
     public void SearchArray() {
-        AirportsService readAirports = new AirportsService(extremeDemand,bigDemand,mediumDemand);
+        AirportsService readAirports = new AirportsService();
 
-        ArrayList<Airport> airports = readAirports.readAirports(3,"BR");
+        ArrayList<Airport> airports = readAirports.generateAirportsSchedules(extremeDemand,bigDemand,mediumDemand,"BR");
 
-        Airport Recife = readAirports.searchAirport(airports, "SBRF");
+        Airport Recife = AirportsService.searchAirport(airports, "SBRF");
 
         System.out.println(Recife.getIcao());
 
-        assertEquals(Recife.getIcao(), "SBRF");
+        assertEquals("SBRF", Recife.getIcao());
     }
-
 }
