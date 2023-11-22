@@ -20,7 +20,7 @@ public class ScheduleRequest {
     private boolean isRepetitive;
     private Set<String> hubs;
     private String airline;
-    private int quantity;
+    private int routeDensity;
 
     public ArrayList<Aircraft> getAircraft() {
         return aircraft;
@@ -102,12 +102,12 @@ public class ScheduleRequest {
         this.airline = airline;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getRouteDensity() {
+        return routeDensity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setRouteDensity(int routeDensity) {
+        this.routeDensity = routeDensity;
     }
 
 }

@@ -47,7 +47,7 @@ public class GenerateFiles {
         return flightsCsv;
     }
 
-    public static ZipOutputStream createFiles(ZipOutputStream zipOutputStream, String content, String name) {
+        public static ZipOutputStream addToZip(ZipOutputStream zipOutputStream, String content, String name) {
         try {
             zipOutputStream.putNextEntry(new ZipEntry(name));
             zipOutputStream.write(content.getBytes());

@@ -17,41 +17,40 @@ public class DemandService {
     ArrayList<Airport> airports;
     ArrayList<Route> routes = new ArrayList<Route>();
     Set<String> hubs;
-    int flight_number,quantity;
+    int flight_number, routeDensity;
     boolean isRepetitive;
 
+    private static final int EXTREME_DEMAND_PROBABILITY = 0;
+    private static final int BIG_DEMAND_PROBABILITY = 3;
+    private static final int MEDIUM_DEMAND_PROBABILITY = 5;
+    private static final int LESS_DEMAND_PROBABILITY = 7;
+    private static final int EXTREME_DEMAND_PROBABILITY_NON_HUB = 9;
+    private static final int BIG_DEMAND_PROBABILITY_NON_HUB = 10;
+    private static final int MEDIUM_DEMAND_PROBABILITY_NON_HUB = 10;
+    private static final int VERY_LOW_DENSITY = 9;
+    private static final int LOW_DENSITY = 6;
+    private static final int MID_DENSITY = 3;
+    private static final int HIGH_DENSITY = 0;
+
     public DemandService(String airline, ArrayList<Aircraft> aircraft, ArrayList<Airport> airports, int flight_number,
-    Set<String> hubs, boolean isRepetitive, int quantity) {
+            Set<String> hubs, boolean isRepetitive, int routeDensity) {
         this.airline = airline;
         this.aircraft = aircraft;
         this.flight_number = flight_number;
         this.hubs = hubs;
         this.isRepetitive = isRepetitive;
         this.airports = airports;
-        this.quantity = quantity;
+        this.routeDensity = routeDensity;
     }
 
     public ArrayList<Route> createDemand(int flightType, String baseCountry) {
         connectHubs();
-        int chanceNum = verifyQuantity();
-        boolean typeCheck = false;
+        int chanceNum = getRouteDensity();
         for (Airport airport : airports) {
-            switch (flightType) {
-                case 1 /* ONLY INTER */:
-                    if (!airport.getCountry().equals(baseCountry)) {
-                        typeCheck = true;
-                    }
-                case 2 /* BOTH */:
-                    typeCheck = true;
-                case 3 /* DOMESTIC ONLY */:
-                    if (airport.getCountry().equals(baseCountry)) {
-                        typeCheck = true;
-                    }
-            }
-            if(typeCheck == true){
+            if (verifyFlightType(flightType, baseCountry, airport) == true) {
                 int randomNumber = new Random().nextInt(10);
-                if(randomNumber >= chanceNum){
-                    generateDemands(airport);
+                if (randomNumber >= chanceNum) {
+                    generateDemands(airport, flightType, baseCountry);
                 }
             }
         }
@@ -71,72 +70,35 @@ public class DemandService {
         }
     }
 
-    private void generateDemands(Airport depAirport) {
+    private void generateDemands(Airport depAirport, int flightType, String baseCountry) {
         for (Airport airport : airports) {
-            if (!airport.getIcao().equals(depAirport.getIcao())) {
+            if (!airport.getIcao().equals(depAirport.getIcao()) && verifyFlightType(flightType, baseCountry, airport)) {
                 int randomNumber = new Random().nextInt(10);
                 if (isHub(airport.getIcao())) {
-                    switch (depAirport.getType()) { // to hubs
-                        case "extremeDemand":
-                            if (randomNumber >= 0) {
-                                createRoute(airport.getIcao(), depAirport.getIcao(), depAirport.getType());
-                            } else {
-                                break;
-                            }
-                        case "bigDemand":
-                            if (randomNumber >= 3) {
-                                createRoute(airport.getIcao(), depAirport.getIcao(), depAirport.getType());
-                            } else {
-                                break;
-                            }
-                        case "mediumDemand":
-                            if (randomNumber >= 5) {
-                                createRoute(airport.getIcao(), depAirport.getIcao(), depAirport.getType());
-                            } else {
-                                break;
-                            }
-                        case "lessDemand":
-                            if (randomNumber >= 7) {
-                                createRoute(airport.getIcao(), depAirport.getIcao(), depAirport.getType());
-                            } else {
-                                break;
-                            }
-                    }
+                    generateDemands(depAirport, airport, randomNumber,true);
                 } else {
                     if (!airport.getType().equals("lessDemand") && !depAirport.getType().equals("lessDemand")) {
-                        switch (airport.getType()) { // to other airports
-                            case "extremeDemand":
-                                if (randomNumber >= 9) {
-                                    createRoute(airport.getIcao(), depAirport.getIcao(), airport.getType());
-                                }
-                            case "bigDemand":
-                                if (randomNumber >= 10) {
-                                    createRoute(airport.getIcao(), depAirport.getIcao(), airport.getType());
-                                }
-                            case "mediumDemand":
-                                if (randomNumber >= 10) {
-                                    createRoute(airport.getIcao(), depAirport.getIcao(), airport.getType());
-                                }
-                        }
+                        generateDemands(depAirport, airport, randomNumber,false);
                     }
                 }
             }
         }
     }
 
-    private void createRoute(String dep, String arr, String demand) {
-        String subfleets = "";
-        Airport depAirport = AirportUtils.searchAirport(this.airports,dep);
-        Airport arrAirport = AirportUtils.searchAirport(this.airports,arr);
+    private void generateDemands(Airport depAirport, Airport airport, int randomNumber, boolean isHub) {
+        String demandType = depAirport.getType();
+        int probability = getProbabilityByDemandType(demandType,isHub);
 
-        if (arrAirport.getCountry().equals(depAirport.getCountry())) {
-            subfleets = generateSubfleetsDemand(demand);
-        } else {
-            subfleets = generateSubfleetsInternational(depAirport, arrAirport);
-            if (subfleets.equals("")) {
-                subfleets = generateSubfleetsDemand(demand);
-            }
+        if (randomNumber >= probability) {
+            createRoute(airport.getIcao(), depAirport.getIcao(), depAirport.getType());
         }
+    }
+
+    private void createRoute(String dep, String arr, String demand) {
+        Airport depAirport = AirportUtils.searchAirport(this.airports, dep);
+        Airport arrAirport = AirportUtils.searchAirport(this.airports, arr);
+
+        String subfleets = generateSubfleets(depAirport, arrAirport, demand);
 
         if (isRepetitive) {
             for (int i = 0; i <= 5; i++) {
@@ -149,74 +111,108 @@ public class DemandService {
         }
     }
 
-    private String generateSubfleetsInternational(Airport dep, Airport arr) {
-        String subfleets = "";
-        for (Aircraft airc : aircraft) {
-            for (String country : airc.getCountries()) {
-                if (arr.getContinent().equals(country)) {
-                    if (subfleets.equals("")) {
-                        subfleets = airc.getSubfleets();
-                    } else {
-                        subfleets += ";" + airc.getSubfleets();
-                    }
-                }
-            }
-        }
-        return subfleets;
-    }
-
-    private String generateSubfleetsDemand(String demand) {
-        String subfleets = "";
-        boolean found = false;
-        for (Aircraft selectedAircraft : aircraft) {
-            switch (demand) {
-                case "extremeDemand":
-                    if (selectedAircraft.isextremeDemand()) {
-                        found = true;
-                    }
-                case "bigDemand":
-                    if (selectedAircraft.isbigDemand()) {
-                        found = true;
-                    }
-                case "mediumDemand":
-                    if (selectedAircraft.ismediumDemand()) {
-                        found = true;
-                    }
-                case "lessDemand":
-                    if (selectedAircraft.islessDemand()) {
-                        found = true;
-                    }
-            }
-
-            if (found == true) {
-                if (subfleets.equals("")) {
-                    subfleets = selectedAircraft.getSubfleets();
-                } else {
-                    subfleets += ";" + selectedAircraft.getSubfleets();
-                }
-                found = false;
-            }
-        }
-        return subfleets;
-    }
-
     private void addRoute(String subfleets, Airport dep, Airport arr) {
-        double distance = GeographicUtils.getAirportsDistanceinMiles(Double.valueOf(dep.getLat()),Double.valueOf(dep.getLon()),Double.valueOf(arr.getLat()),Double.valueOf(arr.getLon()));
-        Route route = new Route(airline,Integer.toString(flight_number), dep.getIcao(), arr.getIcao(), subfleets, distance);
+        double distance = GeographicUtils.getAirportsDistanceinMiles(Double.valueOf(dep.getLat()),
+                Double.valueOf(dep.getLon()), Double.valueOf(arr.getLat()), Double.valueOf(arr.getLon()));
+        Route route = new Route(airline, Integer.toString(flight_number), dep.getIcao(), arr.getIcao(), subfleets,
+                distance);
         routes.add(route);
         flight_number++;
     }
 
-    private int verifyQuantity(){
-        switch (quantity) {
-            case 1: //Very Low
-                return 9;
-            case 2: //Low
-                return 6;
-            case 3: //Mid
-                return 3;
-            case 4: //High
-                return 0;
+    private String generateSubfleets(Airport depAirport, Airport arrivalAirport, String demand) {
+
+        StringBuilder subfleetsBuilder = new StringBuilder();
+        for (Aircraft selectedAircraft : aircraft) {
+            if (isDemandSatisfied(selectedAircraft, demand) && aircraftHasCountry(arrivalAirport, selectedAircraft)) {
+                if (subfleetsBuilder.length() > 0) {
+                    subfleetsBuilder.append(";");
+                }
+                subfleetsBuilder.append(selectedAircraft.getSubfleets());
+            }
+        }
+        return subfleetsBuilder.toString();
+    }
+
+    private boolean aircraftHasCountry(Airport arrival, Aircraft aircraft) {
+        for (String country : aircraft.getCountries()) {
+            if (arrival.getContinent().equals(country)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isDemandSatisfied(Aircraft selectedAircraft, String demand) {
+        switch (demand) {
+            case "extremeDemand":
+                return selectedAircraft.isextremeDemand();
+            case "bigDemand":
+                return selectedAircraft.isbigDemand();
+            case "mediumDemand":
+                return selectedAircraft.ismediumDemand();
+            case "lessDemand":
+                return selectedAircraft.islessDemand();
+            default:
+                return false;
+        }
+    }
+
+    private int getProbabilityByDemandType(String demandType, boolean isHub) {
+        if (isHub) {
+            switch (demandType) {
+                case "extremeDemand":
+                    return EXTREME_DEMAND_PROBABILITY;
+                case "bigDemand":
+                    return BIG_DEMAND_PROBABILITY;
+                case "mediumDemand":
+                    return MEDIUM_DEMAND_PROBABILITY;
+                case "lessDemand":
+                    return LESS_DEMAND_PROBABILITY;
+                default:
+                    return 0;
+            }
+        } else {
+            switch (demandType) {
+                case "extremeDemand":
+                    return EXTREME_DEMAND_PROBABILITY_NON_HUB;
+                case "bigDemand":
+                    return BIG_DEMAND_PROBABILITY_NON_HUB;
+                case "mediumDemand":
+                    return MEDIUM_DEMAND_PROBABILITY_NON_HUB;
+                default:
+                    return 0;
+            }
+        }
+    }
+
+    private boolean verifyFlightType(int flightType, String baseCountry, Airport airport) {
+        boolean typeCheck = false;
+        switch (flightType) {
+            case 1 /* ONLY INTER */:
+                if (!airport.getCountry().equals(baseCountry)) {
+                    typeCheck = true;
+                }
+            case 2 /* BOTH */:
+                typeCheck = true;
+            case 3 /* DOMESTIC ONLY */:
+                if (airport.getCountry().equals(baseCountry)) {
+                    typeCheck = true;
+                }
+        }
+        return typeCheck;
+    }
+
+    private int getRouteDensity() {
+        switch (routeDensity) {
+            case 1: // Very Low
+                return VERY_LOW_DENSITY;
+            case 2: // Low
+                return LOW_DENSITY;
+            case 3: // Mid
+                return MID_DENSITY;
+            case 4: // High
+                return HIGH_DENSITY;
         }
         return 0;
     }

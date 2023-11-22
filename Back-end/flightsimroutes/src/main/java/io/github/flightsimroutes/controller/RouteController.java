@@ -37,7 +37,8 @@ public class RouteController {
         ArrayList<Airport> airportsList = readAirports.generateAirportsRoutes(request.getDepCountry());
 
         RouteService routeService = new RouteService();
-        ArrayList<Route> routes = routeService.generateRoute(airportsList, request.getDepAirport(), request.getArrAirport(),
+        ArrayList<Route> routes = routeService.generateRoute(airportsList, request.getDepAirport(),
+                request.getArrAirport(),
                 request.getDepCountry(), request.getArrCountry(), request.getMaxDistance(), request.getMinDistance(),
                 request.isContinuous(), request.getQuantity());
         return new ResponseEntity<>(routes, HttpStatus.OK);
@@ -48,30 +49,29 @@ public class RouteController {
      * The generated files can be uploaded at the PHPvms admin panel.
      *
      * @param request Object containing the request parameters.
-     * @return a zip file containing two CSV and one HTML file "routes.csv", "airports.csv" and "RouteMap.html".
+     * @return a zip file containing two CSV and one HTML file "routes.csv",
+     *         "airports.csv" and "RouteMap.html".
      */
     @PostMapping("/generate-schedules")
     public ResponseEntity<byte[]> generateSchedules(@RequestBody final ScheduleRequest request) {
-        ArrayList<Airport> airportsList = new ArrayList<>();
-        AirportsService readAirports = new AirportsService();
-        airportsList = readAirports.generateAirportsSchedules(request.getExtremeDemand(), request.getBigDemand(),
-                request.getMediumDemand(), request.getBaseCountry());
+        AirportsService airportsService = new AirportsService();
+        ArrayList<Airport> airportsList = airportsService.generateAirportsSchedules(request.getExtremeDemand(),
+                request.getBigDemand(), request.getMediumDemand(), request.getBaseCountry());
 
-        DemandService generateSchedule = new DemandService(request.getAirline(), request.getAircraft(), airportsList,
-                request.getFlight_number(),
-                request.getHubs(), request.isRepetitive(), request.getQuantity());
-        ArrayList<Route> routes = generateSchedule.createDemand(request.getInternational(), request.getBaseCountry());
+        DemandService demandService = new DemandService(request.getAirline(), request.getAircraft(), airportsList,
+                request.getFlight_number(), request.getHubs(), request.isRepetitive(), request.getRouteDensity());
+        ArrayList<Route> routes = demandService.createDemand(request.getInternational(), request.getBaseCountry());
 
         try {
-            String metaLink = "<meta http-equiv=\"refresh\" charset=\"utf-8\" content=\"0; url=";
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ZipOutputStream zipOutputStream = new ZipOutputStream(baos);
 
-            zipOutputStream = GenerateFiles.createFiles(zipOutputStream, GenerateFiles.generateFlightsCsv(routes), "routes.csv");
-            zipOutputStream = GenerateFiles.createFiles(zipOutputStream, GenerateFiles.generateAirportsCsv(airportsList),
+            zipOutputStream = GenerateFiles.addToZip(zipOutputStream, GenerateFiles.generateFlightsCsv(routes), "routes.csv");
+            zipOutputStream = GenerateFiles.addToZip(zipOutputStream, GenerateFiles.generateAirportsCsv(airportsList),
                     "airports.csv");
-            zipOutputStream = GenerateFiles.createFiles(zipOutputStream,
-                    metaLink + GenerateFiles.generateGrateCircleMapper(routes) + "\" />", "RouteMap.html");
+            zipOutputStream = GenerateFiles.addToZip(zipOutputStream,
+                    String.format("<meta http-equiv=\"refresh\" charset=\"utf-8\" content=\"0; url=%s\" />",
+            GenerateFiles.generateGrateCircleMapper(routes)), "RouteMap.html");
             zipOutputStream.close();
 
             HttpHeaders headers = new HttpHeaders();
