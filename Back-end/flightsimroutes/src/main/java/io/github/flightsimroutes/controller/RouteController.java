@@ -37,8 +37,8 @@ public class RouteController {
         AirportsService readAirports = new AirportsService();
         ArrayList<Airport> airportsList = readAirports.generateAirportsRoutes(request.getDepCountry());
 
-        RouteService routeService = new RouteService(airportsList);
-        ArrayList<Route> routes = routeService.generateRoute(request.getDepAirport(), request.getArrAirport(),
+        RouteService routeService = new RouteService();
+        ArrayList<Route> routes = routeService.generateRoute(airportsList, request.getDepAirport(), request.getArrAirport(),
                 request.getDepCountry(), request.getArrCountry(), request.getMaxDistance(), request.getMinDistance(),
                 request.isContinuous(), request.getQuantity());
         return new ResponseEntity<>(routes, HttpStatus.OK);

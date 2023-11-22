@@ -19,8 +19,8 @@ public class RouteServiceTest {
         AirportsService readAirports = new AirportsService();
 
         airportsList = readAirports.generateAirportsRoutes("");
-        RouteService routeService = new RouteService(airportsList);
-        ArrayList<Route> routes = routeService.generateRoute("SBRF", "", "", "", 500, 100, false, 0);
+        RouteService routeService = new RouteService();
+        ArrayList<Route> routes = routeService.generateRoute(airportsList,"SBRF", "", "", "", 500, 100, false, 1);
 
         assertEquals("SBRF",routes.get(0).getDpt_airport());
     }
@@ -31,8 +31,8 @@ public class RouteServiceTest {
         AirportsService readAirports = new AirportsService();
 
         airportsList = readAirports.generateAirportsRoutes("");
-        RouteService routeService = new RouteService(airportsList);
-        ArrayList<Route> routes = routeService.generateRoute("SBRF", "SBGR", "", "", 1500, 100, false, 0);
+        RouteService routeService = new RouteService();
+        ArrayList<Route> routes = routeService.generateRoute(airportsList,"SBRF", "SBGR", "", "", 1500, 100, false, 1);
 
         assertEquals("SBRF",routes.get(0).getDpt_airport());
         assertEquals("SBGR",routes.get(0).getArr_airport());
@@ -44,8 +44,8 @@ public class RouteServiceTest {
         AirportsService readAirports = new AirportsService();
 
         airportsList = readAirports.generateAirportsRoutes("");
-        RouteService routeService = new RouteService(airportsList);
-        ArrayList<Route> routes = routeService.generateRoute("", "SBRF", "", "", 1500, 100, false, 0);
+        RouteService routeService = new RouteService();
+        ArrayList<Route> routes = routeService.generateRoute(airportsList,"", "SBRF", "", "", 1500, 100, false, 1);
 
         assertEquals("SBRF",routes.get(0).getArr_airport());
     }
