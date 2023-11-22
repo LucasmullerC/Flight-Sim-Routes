@@ -1,4 +1,4 @@
-package io.github.flightsimroutes.model;
+package io.github.flightsimroutes.model.request;
 
 /**
  * Represent the request for the random route generator.

@@ -1,7 +1,9 @@
-package io.github.flightsimroutes.model;
+package io.github.flightsimroutes.model.request;
 
 import java.util.ArrayList;
 import java.util.Set;
+
+import io.github.flightsimroutes.model.entity.Aircraft;
 
 /**
  * Represent the request for the schedules generator.

@@ -1,4 +1,4 @@
-package io.github.flightsimroutes.model;
+package io.github.flightsimroutes.model.entity;
 
 public class Airport {
     private String icao;

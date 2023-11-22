@@ -1,4 +1,4 @@
-package io.github.flightsimroutes.model;
+package io.github.flightsimroutes.model.entity;
 import java.util.ArrayList;
 
 public class Aircraft {

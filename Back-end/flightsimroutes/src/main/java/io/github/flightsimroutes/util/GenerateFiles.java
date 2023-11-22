@@ -1,9 +1,12 @@
 package io.github.flightsimroutes.util;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
-import io.github.flightsimroutes.model.Airport;
-import io.github.flightsimroutes.model.Route;
+import io.github.flightsimroutes.model.entity.Airport;
+import io.github.flightsimroutes.model.entity.Route;
 
 public class GenerateFiles {
 
@@ -36,11 +39,24 @@ public class GenerateFiles {
         for (Route route : routes) {
             flightsCsv += route.getAirline() + "," + route.getFlight_number()
                     + ",,,," + route.getDpt_airport() + "," + route.getArr_airport()
-                    + ",,,,,," + String.valueOf(route.getDistance()) + "," + route.getFlight_time() + ",J,,,,,,,,1," + route.getSubfleets()
+                    + ",,,,,," + String.valueOf(route.getDistance()) + "," + route.getFlight_time() + ",J,,,,,,,,1,"
+                    + route.getSubfleets()
                     + ",,\r\n";
         }
 
         return flightsCsv;
+    }
+
+    public static ZipOutputStream createFiles(ZipOutputStream zipOutputStream, String content, String name) {
+        try {
+            zipOutputStream.putNextEntry(new ZipEntry(name));
+            zipOutputStream.write(content.getBytes());
+            zipOutputStream.closeEntry();
+            return zipOutputStream;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

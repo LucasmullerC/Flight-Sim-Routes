@@ -11,7 +11,7 @@ import java.util.Set;
 
 import org.springframework.util.ResourceUtils;
 
-import io.github.flightsimroutes.model.Airport;
+import io.github.flightsimroutes.model.entity.Airport;
 import io.github.flightsimroutes.util.AirportUtils;
 
 public class AirportsService {

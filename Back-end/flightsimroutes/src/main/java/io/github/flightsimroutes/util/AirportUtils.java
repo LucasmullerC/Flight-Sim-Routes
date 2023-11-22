@@ -2,9 +2,10 @@ package io.github.flightsimroutes.util;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
-import io.github.flightsimroutes.model.Airport;
+import io.github.flightsimroutes.model.entity.Airport;
+
+import java.util.regex.Matcher;
 
 public class AirportUtils {
         public static boolean verifyICAO(String icao) {

@@ -9,9 +9,9 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.github.flightsimroutes.model.Aircraft;
-import io.github.flightsimroutes.model.Airport;
-import io.github.flightsimroutes.model.Route;
+import io.github.flightsimroutes.model.entity.Aircraft;
+import io.github.flightsimroutes.model.entity.Airport;
+import io.github.flightsimroutes.model.entity.Route;
 import io.github.flightsimroutes.service.AirportsService;
 import io.github.flightsimroutes.service.DemandService;
 

@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.flightsimroutes.model.Airport;
-import io.github.flightsimroutes.model.RandomRouteRequest;
-import io.github.flightsimroutes.model.Route;
-import io.github.flightsimroutes.model.ScheduleRequest;
+import io.github.flightsimroutes.model.entity.Airport;
+import io.github.flightsimroutes.model.entity.Route;
+import io.github.flightsimroutes.model.request.RandomRouteRequest;
+import io.github.flightsimroutes.model.request.ScheduleRequest;
 import io.github.flightsimroutes.service.AirportsService;
 import io.github.flightsimroutes.service.DemandService;
 import io.github.flightsimroutes.service.RouteService;
@@ -21,7 +21,6 @@ import io.github.flightsimroutes.util.GenerateFiles;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.zip.ZipOutputStream;
-import java.util.zip.ZipEntry;
 
 @RestController
 public class RouteController {
@@ -68,10 +67,10 @@ public class RouteController {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ZipOutputStream zipOutputStream = new ZipOutputStream(baos);
 
-            zipOutputStream = createFiles(zipOutputStream, GenerateFiles.generateFlightsCsv(routes), "routes.csv");
-            zipOutputStream = createFiles(zipOutputStream, GenerateFiles.generateAirportsCsv(airportsList),
+            zipOutputStream = GenerateFiles.createFiles(zipOutputStream, GenerateFiles.generateFlightsCsv(routes), "routes.csv");
+            zipOutputStream = GenerateFiles.createFiles(zipOutputStream, GenerateFiles.generateAirportsCsv(airportsList),
                     "airports.csv");
-            zipOutputStream = createFiles(zipOutputStream,
+            zipOutputStream = GenerateFiles.createFiles(zipOutputStream,
                     metaLink + GenerateFiles.generateGrateCircleMapper(routes) + "\" />", "RouteMap.html");
             zipOutputStream.close();
 
@@ -84,17 +83,5 @@ public class RouteController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    private ZipOutputStream createFiles(ZipOutputStream zipOutputStream, String content, String name) {
-        try {
-            zipOutputStream.putNextEntry(new ZipEntry(name));
-            zipOutputStream.write(content.getBytes());
-            zipOutputStream.closeEntry();
-            return zipOutputStream;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

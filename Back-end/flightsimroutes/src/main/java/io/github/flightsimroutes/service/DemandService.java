@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Random;
 
-import io.github.flightsimroutes.model.Aircraft;
-import io.github.flightsimroutes.model.Airport;
-import io.github.flightsimroutes.model.Route;
+import io.github.flightsimroutes.model.entity.Aircraft;
+import io.github.flightsimroutes.model.entity.Airport;
+import io.github.flightsimroutes.model.entity.Route;
 import io.github.flightsimroutes.util.AirportUtils;
 import io.github.flightsimroutes.util.GeographicUtils;
 

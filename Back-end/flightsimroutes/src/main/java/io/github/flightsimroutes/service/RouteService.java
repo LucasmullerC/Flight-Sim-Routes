@@ -3,8 +3,8 @@ package io.github.flightsimroutes.service;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import io.github.flightsimroutes.model.Airport;
-import io.github.flightsimroutes.model.Route;
+import io.github.flightsimroutes.model.entity.Airport;
+import io.github.flightsimroutes.model.entity.Route;
 import io.github.flightsimroutes.util.GeographicUtils;
 
 public class RouteService {
