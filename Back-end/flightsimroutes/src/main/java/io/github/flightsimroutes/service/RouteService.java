@@ -18,7 +18,7 @@ public class RouteService {
     public ArrayList<Route> generateRoute(String depAirport, String arrAirport, String depCountry, String arrCountry,
             double maxDistance, double minDistance,
             boolean continous, int quantity) {
-        generateRandomRouteCountry(depAirport, arrAirport, depCountry, arrCountry, maxDistance, minDistance);
+        generateRandomRouteIcao(depAirport, arrAirport, depCountry, arrCountry, maxDistance, minDistance);
 
         if (routes.isEmpty()) {
             return null;
@@ -28,7 +28,7 @@ public class RouteService {
 
                 do {
                     Route lastRoute = routes.get(routes.size() - 1);
-                    generateRandomRouteCountry(lastRoute.getArr_airport(), "", "", arrCountry, maxDistance,
+                    generateRandomRouteIcao(lastRoute.getArr_airport(), "", "", arrCountry, maxDistance,
                             minDistance);
                     cont++;
                 } while (cont < quantity);
@@ -39,40 +39,41 @@ public class RouteService {
         }
     }
 
-    private void generateRandomRouteCountry(String depIcao, String arrIcao, String depCountry, String arrCountry,
+    private void generateRandomRouteIcao(String depIcao, String arrIcao, String depCountry, String arrCountry,
             double maxDistance,
             double minDistance) {
         Airport depAirport = null, arrAirport = null;
-        Collections.shuffle(airports);
-        for (Airport airport : airports) {
-            if (depCountry.equals(airport.getCountry()) && depIcao.equals("")
-                    || depCountry.equals("") && depIcao.equals(airport.getIcao())
-                    || depCountry.equals("") && depIcao.equals("")) {
-                if (depAirport == null && airport != arrAirport) {
-                    depAirport = airport;
+        do {
+            Collections.shuffle(airports);
+            for (Airport airport : airports) {
+                if (depCountry.equals(airport.getCountry()) && depIcao.equals("")
+                        || depCountry.equals("") && depIcao.equals(airport.getIcao())
+                        || depCountry.equals("") && depIcao.equals("")) {
+                    if (depAirport == null && airport != arrAirport) {
+                        depAirport = airport;
+                    }
+                }
+                if (arrCountry.equals(airport.getCountry()) && arrIcao.equals("")
+                        || arrCountry.equals("") && arrIcao.equals(airport.getIcao())
+                        || arrCountry.equals("") && arrIcao.equals("")) {
+                    if (arrAirport == null && airport != depAirport) {
+                        arrAirport = airport;
+                    }
+                }
+                if (depAirport != null && arrAirport != null) {
+                    double distance = checkDistance(depAirport, arrAirport, maxDistance, minDistance);
+                    if (distance != 0) {
+                        addRoute(depAirport, arrAirport, distance);
+                        break;
+                    } else if (!arrIcao.equals("") && depIcao.equals("")
+                            || !arrCountry.equals("") && depCountry.equals("")) {
+                        depAirport = null;
+                    } else {
+                        arrAirport = null;
+                    }
                 }
             }
-            if (arrCountry.equals(airport.getCountry()) && arrIcao.equals("")
-                    || arrCountry.equals("") && arrIcao.equals(airport.getIcao())
-                    || arrCountry.equals("") && arrIcao.equals("")) {
-                if (arrAirport == null && airport != depAirport) {
-                    arrAirport = airport;
-                }
-            }
-            if (depAirport != null && arrAirport != null) {
-                double distance = checkDistance(depAirport, arrAirport, maxDistance, minDistance);
-                if (distance != 0) {
-                    addRoute(depAirport, arrAirport, distance);
-                    break;
-                } else if (!arrIcao.equals("") && depIcao.equals("")
-                        || !arrCountry.equals("") && depCountry.equals("")) {
-                    depAirport = null;
-                }
-                else {
-                    arrAirport = null;
-                }
-            }
-        }
+        } while (depAirport == null || arrAirport == null);
     }
 
     private double checkDistance(Airport dep, Airport arr, double maxDistance, double minDistance) {

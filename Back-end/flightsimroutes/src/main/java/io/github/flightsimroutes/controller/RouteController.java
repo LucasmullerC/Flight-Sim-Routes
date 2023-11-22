@@ -26,18 +26,32 @@ import java.util.zip.ZipEntry;
 @RestController
 public class RouteController {
 
-    @PostMapping("/RandomRoute")
+    /**
+     * Generate a random route or a list of random routes based on the user request.
+     *
+     * @param request Object containing the request parameters.
+     * @return Route list generated.
+     */
+    @PostMapping("/random-route")
     public ResponseEntity<Object> randomRoute(@RequestBody final RandomRouteRequest request) {
-        ArrayList<Airport> airportsList = new ArrayList<>();
         AirportsService readAirports = new AirportsService();
-        airportsList = readAirports.generateAirportsRoutes(request.getDepCountry());
-        
+        ArrayList<Airport> airportsList = readAirports.generateAirportsRoutes(request.getDepCountry());
+
         RouteService routeService = new RouteService(airportsList);
-        ArrayList<Route> routes = routeService.generateRoute(request.getDepAirport(), request.getArrAirport(), request.getDepCountry(), request.getArrCountry(), request.getMaxDistance(), request.getMinDistance(), request.isContinous(), request.getQuantity());
+        ArrayList<Route> routes = routeService.generateRoute(request.getDepAirport(), request.getArrAirport(),
+                request.getDepCountry(), request.getArrCountry(), request.getMaxDistance(), request.getMinDistance(),
+                request.isContinuous(), request.getQuantity());
         return new ResponseEntity<>(routes, HttpStatus.OK);
     }
 
-    @PostMapping("/GenerateSchedules")
+    /**
+     * Generate route schedules based on the user request.
+     * The generated files can be uploaded at the PHPvms admin panel.
+     *
+     * @param request Object containing the request parameters.
+     * @return a zip file containing two CSV and one HTML file "routes.csv", "airports.csv" and "RouteMap.html".
+     */
+    @PostMapping("/generate-schedules")
     public ResponseEntity<byte[]> generateSchedules(@RequestBody final ScheduleRequest request) {
         ArrayList<Airport> airportsList = new ArrayList<>();
         AirportsService readAirports = new AirportsService();
@@ -49,18 +63,16 @@ public class RouteController {
                 request.getHubs(), request.isRepetitive(), request.getQuantity());
         ArrayList<Route> routes = generateSchedule.createDemand(request.getInternational(), request.getBaseCountry());
 
-        GenerateFiles generateFiles = new GenerateFiles();
-
         try {
             String metaLink = "<meta http-equiv=\"refresh\" charset=\"utf-8\" content=\"0; url=";
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ZipOutputStream zipOutputStream = new ZipOutputStream(baos);
 
-            zipOutputStream = createFiles(zipOutputStream, generateFiles.generateFlightsCsv(routes), "routes.csv");
-            zipOutputStream = createFiles(zipOutputStream, generateFiles.generateAirportsCsv(airportsList),
+            zipOutputStream = createFiles(zipOutputStream, GenerateFiles.generateFlightsCsv(routes), "routes.csv");
+            zipOutputStream = createFiles(zipOutputStream, GenerateFiles.generateAirportsCsv(airportsList),
                     "airports.csv");
             zipOutputStream = createFiles(zipOutputStream,
-                    metaLink + generateFiles.generateGrateCircleMapper(routes) + "\" />", "RouteMap.html");
+                    metaLink + GenerateFiles.generateGrateCircleMapper(routes) + "\" />", "RouteMap.html");
             zipOutputStream.close();
 
             HttpHeaders headers = new HttpHeaders();
@@ -85,7 +97,4 @@ public class RouteController {
         }
         return null;
     }
-
-    // GET Generate random route (ICAO - DEP airport(not mandatory),ICAO - ARR
-    // airport (not mandatory), AIRCRAFT - Aircraft, INT - miles(?))
 }

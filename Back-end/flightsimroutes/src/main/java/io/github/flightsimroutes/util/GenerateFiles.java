@@ -7,7 +7,7 @@ import io.github.flightsimroutes.model.Route;
 
 public class GenerateFiles {
 
-    public String generateGrateCircleMapper(ArrayList<Route> route) {
+    public static String generateGrateCircleMapper(ArrayList<Route> route) {
         String link = "https://www.greatcirclemap.com/?routes=";
 
         for (Route rt : route) {
@@ -16,7 +16,7 @@ public class GenerateFiles {
         return link;
     }
 
-    public String generateAirportsCsv(ArrayList<Airport> database) {
+    public static String generateAirportsCsv(ArrayList<Airport> database) {
         String airportCsv = "";
 
         airportCsv += "icao,iata,name,location,country,timezone,hub,lat,lon,ground_handling_cost,fuel_100ll_cost,fuel_jeta_cost,fuel_mogas_cost,notes\r\n";
@@ -29,7 +29,7 @@ public class GenerateFiles {
         return airportCsv;
     }
 
-    public String generateFlightsCsv(ArrayList<Route> routes) {
+    public static String generateFlightsCsv(ArrayList<Route> routes) {
         String flightsCsv = "";
 
         flightsCsv += "airline,flight_number,route_code,callsign,route_leg,dpt_airport,arr_airport,alt_airport,days,dpt_time,arr_time,level,distance,flight_time,flight_type,load_factor,load_factor_variance,pilot_pay,route,notes,start_date,end_date,active,subfleets,fares,fields\r\n";

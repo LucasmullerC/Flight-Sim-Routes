@@ -1,35 +1,24 @@
 package io.github.flightsimroutes.model;
 
 import java.util.ArrayList;
+import java.util.Set;
+
+/**
+ * Represent the request for the schedules generator.
+ */
 
 public class ScheduleRequest {    
     private ArrayList<Aircraft> aircraft;
-    private ArrayList<String> extremeDemand;
-    private ArrayList<String> bigDemand;
-    private ArrayList<String> mediumDemand;
+    private Set<String> extremeDemand;
+    private Set<String> bigDemand;
+    private Set<String> mediumDemand;
     private int international;
     private String baseCountry;
     private int flight_number;
     private boolean isRepetitive;
-    private ArrayList<String> hubs;
+    private Set<String> hubs;
     private String airline;
     private int quantity;
-
-    public ScheduleRequest(ArrayList<Aircraft> aircraft, ArrayList<String> extremeDemand, ArrayList<String> bigDemand,
-            ArrayList<String> mediumDemand, int international, String baseCountry, int flight_number,
-            boolean isRepetitive, ArrayList<String> hubs, String airline, int quantity) {
-        this.aircraft = aircraft;
-        this.extremeDemand = extremeDemand;
-        this.bigDemand = bigDemand;
-        this.mediumDemand = mediumDemand;
-        this.international = international;
-        this.baseCountry = baseCountry;
-        this.flight_number = flight_number;
-        this.isRepetitive = isRepetitive;
-        this.hubs = hubs;
-        this.airline = airline;
-        this.quantity = quantity;
-    }
 
     public ArrayList<Aircraft> getAircraft() {
         return aircraft;
@@ -39,27 +28,27 @@ public class ScheduleRequest {
         this.aircraft = aircraft;
     }
 
-    public ArrayList<String> getExtremeDemand() {
+    public Set<String> getExtremeDemand() {
         return extremeDemand;
     }
 
-    public void setExtremeDemand(ArrayList<String> extremeDemand) {
+    public void setExtremeDemand(Set<String> extremeDemand) {
         this.extremeDemand = extremeDemand;
     }
 
-    public ArrayList<String> getBigDemand() {
+    public Set<String> getBigDemand() {
         return bigDemand;
     }
 
-    public void setBigDemand(ArrayList<String> bigDemand) {
+    public void setBigDemand(Set<String> bigDemand) {
         this.bigDemand = bigDemand;
     }
 
-    public ArrayList<String> getMediumDemand() {
+    public Set<String> getMediumDemand() {
         return mediumDemand;
     }
 
-    public void setMediumDemand(ArrayList<String> mediumDemand) {
+    public void setMediumDemand(Set<String> mediumDemand) {
         this.mediumDemand = mediumDemand;
     }
 
@@ -95,11 +84,11 @@ public class ScheduleRequest {
         this.isRepetitive = isRepetitive;
     }
 
-    public ArrayList<String> getHubs() {
+    public Set<String> getHubs() {
         return hubs;
     }
 
-    public void setHubs(ArrayList<String> hubs) {
+    public void setHubs(Set<String> hubs) {
         this.hubs = hubs;
     }
 

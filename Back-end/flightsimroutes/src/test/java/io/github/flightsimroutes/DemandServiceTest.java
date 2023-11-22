@@ -3,6 +3,8 @@ package io.github.flightsimroutes;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +16,10 @@ import io.github.flightsimroutes.service.AirportsService;
 import io.github.flightsimroutes.service.DemandService;
 
 public class DemandServiceTest {
-    ArrayList<String> extremeDemand = new ArrayList<>(), bigDemand = new ArrayList<>(),
-            mediumDemand = new ArrayList<>(), hub = new ArrayList<>();
+    Set<String> extremeDemand = new HashSet<>();
+    Set<String> bigDemand = new HashSet<>();
+    Set<String> mediumDemand = new HashSet<>();
+    Set<String> hub = new HashSet<>();
     ArrayList<Aircraft> aircrafts = new ArrayList<>();
     ArrayList<Route> routes = new ArrayList<>();
 

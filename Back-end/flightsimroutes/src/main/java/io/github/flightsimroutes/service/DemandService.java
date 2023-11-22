@@ -8,6 +8,7 @@ import java.util.Random;
 import io.github.flightsimroutes.model.Aircraft;
 import io.github.flightsimroutes.model.Airport;
 import io.github.flightsimroutes.model.Route;
+import io.github.flightsimroutes.util.AirportUtils;
 import io.github.flightsimroutes.util.GeographicUtils;
 
 public class DemandService {
@@ -15,12 +16,12 @@ public class DemandService {
     ArrayList<Aircraft> aircraft;
     ArrayList<Airport> airports;
     ArrayList<Route> routes = new ArrayList<Route>();
-    ArrayList<String> hubs;
+    Set<String> hubs;
     int flight_number,quantity;
     boolean isRepetitive;
 
     public DemandService(String airline, ArrayList<Aircraft> aircraft, ArrayList<Airport> airports, int flight_number,
-            ArrayList<String> hubs, boolean isRepetitive, int quantity) {
+    Set<String> hubs, boolean isRepetitive, int quantity) {
         this.airline = airline;
         this.aircraft = aircraft;
         this.flight_number = flight_number;
@@ -125,8 +126,8 @@ public class DemandService {
 
     private void createRoute(String dep, String arr, String demand) {
         String subfleets = "";
-        Airport depAirport = AirportsService.searchAirport(this.airports,dep);
-        Airport arrAirport = AirportsService.searchAirport(this.airports,arr);
+        Airport depAirport = AirportUtils.searchAirport(this.airports,dep);
+        Airport arrAirport = AirportUtils.searchAirport(this.airports,arr);
 
         if (arrAirport.getCountry().equals(depAirport.getCountry())) {
             subfleets = generateSubfleetsDemand(demand);

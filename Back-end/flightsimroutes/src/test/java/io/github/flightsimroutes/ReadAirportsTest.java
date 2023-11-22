@@ -4,14 +4,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
 import io.github.flightsimroutes.model.Airport;
 import io.github.flightsimroutes.service.AirportsService;
+import io.github.flightsimroutes.util.AirportUtils;
 
 public class ReadAirportsTest {
-    ArrayList<String> extremeDemand = new ArrayList<>(), bigDemand = new ArrayList<>(), mediumDemand = new ArrayList<>();
+    Set<String> extremeDemand = new HashSet<>();
+    Set<String> bigDemand = new HashSet<>();
+    Set<String> mediumDemand = new HashSet<>();
 
     @Test
     public void VerifyArray() {
@@ -27,7 +32,7 @@ public class ReadAirportsTest {
 
         ArrayList<Airport> airports = readAirports.generateAirportsSchedules(extremeDemand,bigDemand,mediumDemand,"BR");
 
-        Airport Recife = AirportsService.searchAirport(airports, "SBRF");
+        Airport Recife = AirportUtils.searchAirport(airports, "SBRF");
 
         System.out.println(Recife.getIcao());
 
