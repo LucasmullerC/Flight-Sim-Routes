@@ -75,10 +75,10 @@ public class DemandService {
             if (!airport.getIcao().equals(depAirport.getIcao()) && verifyFlightType(flightType, baseCountry, airport)) {
                 int randomNumber = new Random().nextInt(10);
                 if (isHub(airport.getIcao())) {
-                    generateDemands(depAirport, airport, randomNumber,true);
+                    generateDemands(depAirport, airport, randomNumber, true);
                 } else {
                     if (!airport.getType().equals("lessDemand") && !depAirport.getType().equals("lessDemand")) {
-                        generateDemands(depAirport, airport, randomNumber,false);
+                        generateDemands(depAirport, airport, randomNumber, false);
                     }
                 }
             }
@@ -87,7 +87,7 @@ public class DemandService {
 
     private void generateDemands(Airport depAirport, Airport airport, int randomNumber, boolean isHub) {
         String demandType = depAirport.getType();
-        int probability = getProbabilityByDemandType(demandType,isHub);
+        int probability = getProbabilityByDemandType(demandType, isHub);
 
         if (randomNumber >= probability) {
             createRoute(airport.getIcao(), depAirport.getIcao(), depAirport.getType());
@@ -100,14 +100,16 @@ public class DemandService {
 
         String subfleets = generateSubfleets(depAirport, arrAirport, demand);
 
-        if (isRepetitive) {
-            for (int i = 0; i <= 5; i++) {
+        if (!subfleets.equals("")) {
+            if (isRepetitive) {
+                for (int i = 0; i <= 5; i++) {
+                    addRoute(subfleets, depAirport, arrAirport);
+                    addRoute(subfleets, depAirport, arrAirport);
+                }
+            } else {
                 addRoute(subfleets, depAirport, arrAirport);
                 addRoute(subfleets, depAirport, arrAirport);
             }
-        } else {
-            addRoute(subfleets, depAirport, arrAirport);
-            addRoute(subfleets, depAirport, arrAirport);
         }
     }
 
@@ -136,7 +138,7 @@ public class DemandService {
 
     private boolean aircraftHasCountry(Airport arrival, Aircraft aircraft) {
         for (String country : aircraft.getCountries()) {
-            if (arrival.getContinent().equals(country)) {
+            if (arrival.getCountry().equals(country)) {
                 return true;
             }
         }
