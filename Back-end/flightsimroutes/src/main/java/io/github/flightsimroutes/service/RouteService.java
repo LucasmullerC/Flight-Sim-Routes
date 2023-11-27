@@ -24,8 +24,6 @@ public class RouteService {
                 if (continuous) {
                     depAirport = route.getArr_airport();
                     arrAirport = "";
-                } else {
-                    break;
                 }
             }
         }
