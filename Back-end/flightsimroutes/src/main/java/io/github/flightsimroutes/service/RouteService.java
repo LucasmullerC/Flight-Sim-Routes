@@ -31,6 +31,25 @@ public class RouteService {
         return routes.isEmpty() ? null : routes;
     }
 
+    public ArrayList<Route> generateRoutePairs(ArrayList<Route> routes, String depAirport, String arrAirport,
+            boolean continuous, int quantity) {
+        ArrayList<Route> flightPairs = new ArrayList<>();
+
+        for (int i = 0; i < quantity; i++) {
+            Route route = findRoutePairs(routes, depAirport, arrAirport);
+            if (route != null) {
+                flightPairs.add(route);
+
+                if (continuous) {
+                    depAirport = route.getArr_airport();
+                    arrAirport = "";
+                }
+            }
+        }
+
+        return routes.isEmpty() ? null : flightPairs;
+    }
+
     private Route generateRandomRoute(String depIcao, String arrIcao, String depCountry, String arrCountry,
             double maxDistance,
             double minDistance, ArrayList<Airport> airports) {
@@ -50,6 +69,22 @@ public class RouteService {
         }
 
         return null;
+    }
+
+    private Route findRoutePairs(ArrayList<Route> routes, String depAirport, String arrAirport) {
+        Collections.shuffle(routes);
+
+        for (Route randomRoute : routes) {
+            if (isValidRoutePair(depAirport, randomRoute.getDpt_airport())
+                    && isValidRoutePair(arrAirport, randomRoute.getArr_airport())) {
+                return randomRoute;
+            }
+        }
+        return null;
+    }
+
+    private boolean isValidRoutePair(String airport, String airportRoute) {
+        return (airport.isEmpty() || airport.equals(airportRoute));
     }
 
     private boolean isValidAirport(Airport airport, String icao, String country) {
