@@ -2,12 +2,12 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 0 24px 0 24px;
 }
 .header-container{
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding: 0 24px 0 24px;
 }
 .header-container img{
     width: 50px;
@@ -21,6 +21,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    white-space: nowrap;
 }
 
 .menu ul{
@@ -34,6 +35,7 @@
 }
 
 .menu li{
+    padding: 0 24px 0 24px;
     display: flex;
     align-items: center;
     height: 56px;
@@ -54,7 +56,8 @@
 }
 
 .active {
-    background-color: white;
+
+    background-color: #D9D9D9;
 }
 .active p{
     color: #000;
@@ -64,15 +67,20 @@
 } 
 
 hr.solid {
-    width: 210px;
+    width: 80%;
     height: 1px;
     background: #FFF;
+}
+
+.donate{
+    padding: 0 24px 0 24px;
 }
 
 .footer{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: center;
     margin-top: auto;
 }
 .footer p{
