@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    box-sizing: border-box;
+  }
+body{
+    background-color: #002142;
+    height: 100vh;
+    width: 100vw;
+}
+/* override browser default */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+    font-family: 'League Gothic';
+    src: url('./assets/fonts/League_Gothic/LeagueGothic-Regular-VariableFont_wdth.ttf');
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('./assets/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf');
+}
