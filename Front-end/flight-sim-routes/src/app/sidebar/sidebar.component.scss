@@ -53,6 +53,16 @@
     fill: #FFF;
 }
 
+.active {
+    background-color: white;
+}
+.active p{
+    color: #000;
+}
+.active svg{ 
+    fill: #000;
+} 
+
 hr.solid {
     width: 210px;
     height: 1px;
