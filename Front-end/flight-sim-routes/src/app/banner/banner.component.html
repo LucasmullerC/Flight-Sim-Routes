@@ -1,0 +1,14 @@
+<div class="container" [ngClass]="{'active': isRow }">
+    <div class="banner" [ngStyle]="{'background': 'linear-gradient(0deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%), url('+imageUrl+'), lightgray 50% / cover no-repeat'}">
+        <h1>{{ title }}</h1>
+    </div>
+    <p class="description">{{description}}</p>
+    <div class="link-section">
+        <a routerLink={{routerLink}}>
+            <button class="button">
+                <img [src]="buttonIconPath" alt="Button Icon">
+                <p>{{buttonText}}</p>
+            </button>
+        </a>
+    </div>
+</div>

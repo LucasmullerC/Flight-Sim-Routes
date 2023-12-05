@@ -1,0 +1,48 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.header-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.header-title h1{
+    color: #000;
+    font-family: Inter;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.header-title h1 span{
+    color: #000;
+    font-family: League Gothic;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.header-title img{
+    width: 50px;
+    flex-shrink: 0;
+    padding-left: 10px;
+}
+
+.banner-section{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.updates-section h1{
+    color: #000;
+    font-family: Inter;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

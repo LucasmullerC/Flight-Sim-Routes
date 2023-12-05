@@ -1,1 +1,32 @@
-<p>home works!</p>
+<div class="container">
+    <div class="header-title">
+        <h1>Welcome to <span>Flight Sim Routes</span></h1>
+        <img src="../../assets/images/transparent_blue_fit.png" alt="Flight Sim Routes Logo">
+    </div>
+    <div class="banner-section">
+        <app-banner
+        [imageUrl]="'../../assets/images/flight_generator.png'"
+        [title]="'Flight Generator'"
+        [description]="'Create detailed itineraries between airports of your choice. \nWhether you&rsquo;re planning short-haul flights or intercontinental journeys.\nChoose between our random generated flights or real life data!'"
+        [buttonText]="'Try Now!'"
+        [buttonIconPath]="'../../assets/svg/subtract.svg'"
+        [routerLink]="'/flights'"
+        [isRow]="false"
+        ></app-banner>
+        <app-banner
+        [imageUrl]="'../../assets/images/schedules.png'"
+        [title]="'Schedules Generator'"
+        [description]="'Create detailed and challenging schedules for your virtual airline. Plan domestic or international flights, adjusting demand and density as needed. \nCompatible with PHPvms 7.x'"
+        [buttonText]="'Try Now!'"
+        [buttonIconPath]="'../../assets/svg/date-range-fill.svg'"
+        [routerLink]="'/schedules'"
+        [isRow]="false"
+        ></app-banner>
+    </div>
+    <div clas="final-row">
+        <div class="updates-section">
+            <h1>Updates</h1>
+            <a class="twitter-timeline" data-width="537" data-height="390" data-theme="dark" href="https://twitter.com/LucassmmDev?ref_src=twsrc%5Etfw">Tweets by LucassmmDev</a>
+        </div>
+    </div>
+</div>
