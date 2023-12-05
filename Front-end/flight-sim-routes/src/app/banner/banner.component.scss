@@ -79,3 +79,12 @@
         width: 35vw;
     }
 }
+
+@media (max-width: 1100px) {
+    .container{
+        width: 70vw;
+    }
+    .banner{
+        width: 100%;
+    }
+}

@@ -1,5 +1,4 @@
 .container{
-    height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -105,4 +104,9 @@ hr.solid {
     justify-content: center;
     align-items: center;
     gap: 22px;
+}
+@media (max-width: 1110px) {
+    .container{
+        display: none;
+    }
 }
