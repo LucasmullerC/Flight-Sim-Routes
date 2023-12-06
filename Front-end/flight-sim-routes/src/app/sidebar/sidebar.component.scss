@@ -1,6 +1,7 @@
 .container{
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 .header-container{
     display: flex;
@@ -22,7 +23,9 @@
     line-height: normal;
     white-space: nowrap;
 }
-
+.mobile-close{
+    display: none;
+}
 .menu ul{
     list-style-type: none;
     margin: 0;
@@ -105,8 +108,50 @@ hr.solid {
     align-items: center;
     gap: 22px;
 }
+.hamburguer-menu{
+    display: none;
+}
 @media (max-width: 1110px) {
     .container{
-        display: none;
+        position: absolute;
+        background-color: #002142;
+        width: 100%;
+
+        top:0;
+        left:0;
+    }
+    .header-mobile{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .mobile-close{
+        display: block;
+        fill: white;
+        width: 50px;
+    }
+    .mobile-close:hover{
+        cursor: pointer;
+    }
+    .hamburguer-menu{
+        display: block;
+
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        width: 40px;
+        height: 40px;
+        top: 50px;
+        left: 10px;
+    
+        border-radius: 10px;
+        box-shadow: 1px 1px 10px black;
+        background-color: white;
+    }
+    .hamburguer-menu:hover{
+        cursor: pointer;
     }
 }
