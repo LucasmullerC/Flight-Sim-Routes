@@ -14,6 +14,21 @@
     flex-direction: row;
     width: 100%;
 }
+.description-button-column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+.description-button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    margin-left: 10px;
+    width: 50%;
+}
 .banner{
     display: flex;
     align-items: flex-end;
@@ -28,6 +43,7 @@
     color: #FFF;
     font-family: Inter;
     font-size: 35px;
+    
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -61,6 +77,9 @@
     font-weight: 700;
     line-height: normal;
 }
+.button:hover{
+    cursor: pointer;
+}
 
 .button img{
     width: 20px;
@@ -75,6 +94,9 @@
     .container{
         width: 35vw;
     }
+    .active{
+        width: 100%;
+    }
     .banner{
         width: 35vw;
     }
@@ -84,7 +106,14 @@
     .container{
         width: 70vw;
     }
+    .active{
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
     .banner{
+        width: 100%;
+    }
+    .description-button{
         width: 100%;
     }
 }

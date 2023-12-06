@@ -3,12 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { HomeComponent } from './home/home.component';
-import { DonateComponent } from './donate/donate.component';
-import { BannerComponent } from './banner/banner.component';
-import { ContactmeComponent } from './contactme/contactme.component';
-import { FlightsComponent } from './flights/flights.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { HomeComponent } from './pages/home/home.component';
+import { DonateComponent } from './components/donate/donate.component';
+import { BannerComponent } from './components/banner/banner.component';
+import { ContactmeComponent } from './components/contactme/contactme.component';
+import { FlightsComponent } from './pages/flights/flights.component';
 
 @NgModule({
   declarations: [

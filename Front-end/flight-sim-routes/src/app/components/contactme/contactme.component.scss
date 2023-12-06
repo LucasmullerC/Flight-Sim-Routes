@@ -35,6 +35,13 @@ hr.solid {
 }
 a{
     text-decoration: none;
+    
+    p{
+        color: #D9D9D9;
+    }
+    p:hover{
+        color: #FFF;
+    }
 }
 
 @media (min-width: 1400px) {

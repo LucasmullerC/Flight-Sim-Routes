@@ -14,4 +14,12 @@ export class BannerComponent {
   @Input() routerLink: string = '';
   @Input() isRow: boolean = false;
 
+  isIconActive(): boolean{
+    if(this.buttonIconPath == ''){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
 }
