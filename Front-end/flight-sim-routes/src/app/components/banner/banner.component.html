@@ -1,5 +1,5 @@
 <div class="container" [ngClass]="{'active': isRow }">
-    <div class="banner" [ngStyle]="{'background': 'linear-gradient(0deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%), url('+imageUrl+'), lightgray 50% / cover no-repeat'}">
+    <div class="banner" [ngClass]="{'banner-row': isRow }" [ngStyle]="{'background': 'linear-gradient(0deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%), url('+imageUrl+'), lightgray 50% / cover no-repeat'}">
         <h1>{{ title }}</h1>
     </div>
     <div class="description-button-column" [ngClass]="{'description-button': isRow }">

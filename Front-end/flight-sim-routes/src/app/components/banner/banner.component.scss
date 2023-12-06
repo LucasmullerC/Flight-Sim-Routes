@@ -37,6 +37,10 @@
     height: 141px;
     border-radius: 10px;
 }
+.banner-row{
+    align-items: flex-start;
+    justify-content: flex-end; 
+}
 
 .banner h1{
     margin-bottom: 8px;
@@ -112,6 +116,10 @@
     }
     .banner{
         width: 100%;
+    }
+    .banner-row{
+        align-items: flex-end;
+        justify-content: center
     }
     .description-button{
         width: 100%;
