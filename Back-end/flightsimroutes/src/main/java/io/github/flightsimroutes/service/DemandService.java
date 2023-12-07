@@ -24,9 +24,9 @@ public class DemandService {
     private static final int BIG_DEMAND_PROBABILITY = 3;
     private static final int MEDIUM_DEMAND_PROBABILITY = 5;
     private static final int LESS_DEMAND_PROBABILITY = 7;
-    private static final int EXTREME_DEMAND_PROBABILITY_NON_HUB = 9;
-    private static final int BIG_DEMAND_PROBABILITY_NON_HUB = 10;
-    private static final int MEDIUM_DEMAND_PROBABILITY_NON_HUB = 10;
+    private static final int EXTREME_DEMAND_PROBABILITY_NON_HUB = 8; //9
+    private static final int BIG_DEMAND_PROBABILITY_NON_HUB = 10; //10
+    private static final int MEDIUM_DEMAND_PROBABILITY_NON_HUB = 10; //10
     private static final int VERY_LOW_DENSITY = 9;
     private static final int LOW_DENSITY = 6;
     private static final int MID_DENSITY = 3;

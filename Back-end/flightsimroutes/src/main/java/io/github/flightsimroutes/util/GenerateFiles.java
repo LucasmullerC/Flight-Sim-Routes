@@ -35,13 +35,13 @@ public class GenerateFiles {
     public static String generateFlightsCsv(ArrayList<Route> routes) {
         String flightsCsv = "";
 
-        flightsCsv += "airline,flight_number,route_code,callsign,route_leg,dpt_airport,arr_airport,alt_airport,days,dpt_time,arr_time,level,distance,flight_time,flight_type,load_factor,load_factor_variance,pilot_pay,route,notes,start_date,end_date,active,subfleets,fares,fields\r\n";
+        flightsCsv += "airline,flight_number,route_code,callsign,route_leg,dpt_airport,arr_airport,alt_airport,days,dpt_time,arr_time,level,distance,flight_time,flight_type,load_factor,load_factor_variance,pilot_pay,route,notes,start_date,end_date,active,subfleets,fares,fields,event_id,user_id\r\n";
         for (Route route : routes) {
             flightsCsv += route.getAirline() + "," + route.getFlight_number()
                     + ",,,," + route.getDpt_airport() + "," + route.getArr_airport()
                     + ",,,,,," + String.valueOf(route.getDistance()) + "," + route.getFlight_time() + ",J,,,,,,,,1,"
                     + route.getSubfleets()
-                    + ",,\r\n";
+                    + ",,,,\r\n";
         }
 
         return flightsCsv;
