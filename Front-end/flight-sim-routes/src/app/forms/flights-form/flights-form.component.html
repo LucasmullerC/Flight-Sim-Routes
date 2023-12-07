@@ -1,8 +1,30 @@
 <form>
     <div *ngFor="let question of formOptions">
       <label>{{ question.title }}</label>
-      <input type={{question.type}} [placeholder]="question.placeholder" />
-    </div>
+
+        <div *ngIf="!isCountry(question)">
+          <input
+          *ngIf="isContinous(question)"
+          type="checkbox"
+          (change)="checkboxValue = !checkboxValue"
+          />
+    
+          <input
+          *ngIf="isContinous(question) && checkboxValue || !isContinous(question)"
+          type={{question.type}} 
+          [placeholder]="question.placeholder" 
+          [required]="question.required" 
+          [min]="question.min"
+          [max]="question.max"
+          />
+        </div>
+        
+        <div *ngIf="isCountry(question)">
+          <select formControlName="country">
+            <option *ngFor="let country of countries" [value]="country.cca2">{{ country.name.common }}</option>
+          </select>
+        </div>
+      </div>
 
     <button type="submit">Próximo</button>
   </form>

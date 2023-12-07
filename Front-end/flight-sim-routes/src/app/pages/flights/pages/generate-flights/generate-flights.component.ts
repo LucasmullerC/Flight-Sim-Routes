@@ -13,30 +13,63 @@ export class GenerateFlightsComponent {
   formRandomDb = [
     {
       title: 'Departure Airport (ICAO)',
-      label: 'KJFK', 
+      placeholder: 'KJFK', 
       type: 'textarea',
+      min: 0,
+      max: 0,
+      required: false,
     },
     {
       title: 'Arrival Airport (ICAO)',
-      label: 'KSFO', 
-      type: 'textarea'
+      placeholder: 'KSFO', 
+      type: 'textarea',
+      min: 0,
+      max: 0,
+      required: false,
     },
     {
       title: 'Departure Country',
-      label: 'Select', 
-      type: 'textarea',
+      placeholder: 'Select', 
+      type: 'country',
+      min: 0,
+      max: 0,
+      required: false,
+    },
+    {
+      title: 'Arrival Country',
+      placeholder: 'Select', 
+      type: 'country',
+      min: 0,
+      max: 0,
+      required: false,
+    },
+    {
+      title: 'Continous Flights',
+      placeholder: 'continous', 
+      type: 'range',
+      min: 1,
+      max: 10,
+      required: false,
+    },
+    {
+      title: 'Distance Range (NM)',
+      placeholder: 'range', 
+      type: 'range',
+      min: 1,
+      max: 9999,
+      required: true,
     },
   ]
 
   formRealFlights = [
     {
       title: 'Departure Airport (ICAO)',
-      label: 'KJFK', 
+      placeholder: 'KJFK', 
       type: 'textarea',
     },
     {
       title: 'Arrival Airport (ICAO)',
-      label: 'KSFO', 
+      placeholder: 'KSFO', 
       type: 'textarea'
     }
   ]
