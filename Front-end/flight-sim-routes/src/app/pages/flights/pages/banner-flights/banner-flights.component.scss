@@ -1,0 +1,13 @@
+.container{
+    height: 100%;
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+.banners{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 50%;
+}

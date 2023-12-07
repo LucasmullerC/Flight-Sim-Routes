@@ -1,0 +1,27 @@
+<div class="container">
+    <app-header
+    [title]="'Flights'"
+    [subtitle]="'Generation Types'"
+    [imageUrl]="'../../assets/images/transparent_blue_fit.png'"
+    ></app-header>
+    <div class="banners">
+        <app-banner
+        [imageUrl]="'../../assets/images/randomdb.png'"
+        [title]="'Random Database'"
+        [description]="'Our Random Database taps into the extensive data provided by OurAirports.com. Create your virtual journeys based on personal preferences or let randomness guide your adventure. With a vast repository of global airports.'"
+        [buttonText]="'Generate!'"
+        [buttonIconPath]="''"
+        [routerLink]="'/flights/randomdatabase'"
+        [isRow]="true"
+        ></app-banner>
+        <app-banner
+        [imageUrl]="'../../assets/images/flightdata.png'"
+        [title]="'Real Flights Data'"
+        [description]="'Sourced directly from multiple databases. Immerse yourself in the world of real-world flight schedules and explore the same routes flown by actual airlines. From major hubs to remote airstrips.'"
+        [buttonText]="'Generate!'"
+        [buttonIconPath]="''"
+        [routerLink]="'/flights/realflightsdata'"
+        [isRow]="true"
+        ></app-banner>
+    </div>
+</div>

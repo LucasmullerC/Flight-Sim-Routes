@@ -13,8 +13,12 @@ export class SidebarComponent {
 
   menuActivated = window.innerWidth >= 1110;
 
-  isRouteActive(route: string): boolean {
-    return this.router.isActive(route, true);
+  isRouteActive(routePaths: string[]): boolean {
+    const currentUrl = this.router.url;
+
+    return routePaths.some(routePath =>
+      currentUrl.startsWith(routePath + '/') || currentUrl === routePath
+    );
   }
 
   @HostListener('window:resize', ['$event'])

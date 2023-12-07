@@ -1,0 +1,8 @@
+<form>
+    <div *ngFor="let question of formOptions">
+      <label>{{ question.title }}</label>
+      <input type={{question.type}} [placeholder]="question.placeholder" />
+    </div>
+
+    <button type="submit">Próximo</button>
+  </form>
