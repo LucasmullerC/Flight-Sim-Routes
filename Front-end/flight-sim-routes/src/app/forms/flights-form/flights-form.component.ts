@@ -9,6 +9,7 @@ interface FormOption {
   type: string;
   min?: number;
   max?: number;
+  rangeNum?:String;
   required: boolean;
 }
 
@@ -20,14 +21,22 @@ interface FormOption {
 export class FlightsFormComponent {
   checkboxValue = false;
   countries: any[] = [];
+  flightsForm!: FormGroup;
   @Input()
   formOptions: FormOption[] = [];
 
-  constructor(private countryService: CountryService) {}
+  databaseList: String[] =[
+    "OpenSky Network"
+  ];
+
+  constructor(private formBuilder: FormBuilder,private countryService: CountryService) {}
 
   ngOnInit(): void {
     this.countryService.getAllCountries().subscribe((data) => {
       this.countries = data;
+    });
+    this.flightsForm = this.formBuilder.group({
+      country: [''],
     });
   }
 
@@ -35,8 +44,23 @@ export class FlightsFormComponent {
     return question.placeholder === 'continous'
   }
 
+  isRange(question: FormOption): boolean{
+    return question.type === 'range'
+  }
+
+  isDatabase(question: FormOption): boolean{
+    return question.type === 'database'
+  }
+  
   isCountry(question: FormOption): boolean{
     return question.type === 'country'
   }
+  
 
+  getInputValue(value: string,question: FormOption) {
+    const numericValue: number = +value;
+    if(numericValue <= question.max! && numericValue >= question.min!){
+      question.rangeNum = value;
+    }
+   }
 }

@@ -1,0 +1,147 @@
+.container{
+    height: 100%;
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+.form{
+    display: flex;
+    width: 975px;
+    height: 350px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 26px 50px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+.options{
+    display: flex;
+    width: 460px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    flex-shrink: 0;
+}
+.section{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.database .section{
+    width: 460px;
+}
+.database{
+    flex: 0 0 100%;
+    align-items: center;
+    
+}
+#checkbox-item{
+    width: 24px;
+    height: 24px;
+    margin-top: 10px;
+}
+.options input[type=range]{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    vertical-align: middle;
+    padding: 0;
+
+    border-radius: 20px;
+    background: #FFF;
+
+    -webkit-appearance: none;
+}
+.options input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background-color: #002142;
+    border-radius: 24px;
+    border: 2px solid #FFF;
+}
+.options input,select{
+    display: flex;
+    padding: 12px;
+    width: 100%;
+    align-items: flex-start;
+    
+    gap: 10px;
+    align-self: stretch;
+
+    border-radius: 4px;
+    border-color: #F8FAFC;
+    background: var(--surface-light, #F8FAFC);
+    border-style:solid;
+    
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0.16px;
+}
+
+.output-range {
+    color: red;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 4px;
+    transform: translateX(-50%);
+  }
+.output-range::after {
+    content: "";
+}
+.form-header{
+    display: flex;
+    flex-direction: row;
+    gap:5px;
+}
+#number-input{
+    width: 80px;
+    height: 10px;
+    border-radius: 0;
+    border-color: none;
+    background: none;
+    border: none;
+}
+
+label{
+    align-self: stretch;
+    color: #000;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0.16px;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    flex: 0 0 100%;
+}
+
+.button-container button{
+    width: 205px;
+    height: 57px;
+    flex-shrink: 0;
+
+    border-radius: 5px;
+    background: #002142;
+
+    color: #FFF;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border-style:solid
+}
+button:hover{
+    cursor: pointer;
+}
