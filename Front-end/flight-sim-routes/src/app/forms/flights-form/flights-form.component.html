@@ -1,51 +1,48 @@
 <div class="container">
-  <form class="form" [formGroup]="flightsForm">
+  <form class="form" [formGroup]="flightsForm" (ngSubmit)="onSubmit()">
     <div
       class="options"
       [ngClass]="question.type"
       *ngFor="let question of formOptions"
     >
-      <div class="form-header">
-        <label>{{ question.title }}</label>
-        <input
-          *ngIf="isRange(question)"
-          type="number"
-          id="number-input"
-          [min]="question.min"
-          [max]="question.max"
-          value="{{ question.rangeNum }}"
-          #ref
-          (change)="getInputValue(ref.value, question)"
-        />
-      </div>
+    <div class="form-header">
+      <label>{{ question.title }} <span *ngIf="isType(question,'distance')">Min: {{minValue}} Max: {{maxValue}}</span></label>
+    </div>
 
       <div
         class="section"
-        *ngIf="!isCountry(question) && !isDatabase(question)"
+        *ngIf="!isType(question,'country') && !isType(question,'database')"
       >
+      <!--Is continuous checkbox-->
         <input
           id="checkbox-item"
           *ngIf="isContinous(question)"
           type="checkbox"
+          formControlName="continuous"
           (change)="checkboxValue = !checkboxValue"
         />
 
+        <!--Variable input-->
         <input
           *ngIf="
-            (isContinous(question) && checkboxValue) || !isContinous(question)
+            (isContinous(question) && checkboxValue) || !isContinous(question) && !isType(question,'distance')
           "
           type="{{ question.type }}"
           [placeholder]="question.placeholder"
           [required]="question.required"
           [min]="question.min"
           [max]="question.max"
-          #ref
-          (change)="getInputValue(ref.value, question)"
-          value="{{ question.rangeNum }}"
+          formControlName="{{question.formControlName}}"
         />
       </div>
 
-      <div class="section" *ngIf="isDatabase(question)">
+      <mat-slider *ngIf="isType(question,'distance')" [min]="question.min" [max]="question.max">
+        <input matSliderStartThumb formControlName="minDistance" [(ngModel)]="minValue"> 
+        <input matSliderEndThumb formControlName="maxDistance" [(ngModel)]="maxValue">
+      </mat-slider>
+
+      <!--database selector-->
+      <div class="section" *ngIf="isType(question,'database')">
         <select formControlName="database">
           <option class="dropdown-item" disabled selected value="undefined">
             {{ question.placeholder }}
@@ -56,8 +53,9 @@
         </select>
       </div>
 
-      <div class="section" *ngIf="isCountry(question)">
-        <select formControlName="country">
+      <!--Country selector-->
+      <div class="section" *ngIf="isType(question,'country')">
+        <select formControlName="{{question.formControlName}}">
           <option class="dropdown-item" disabled selected value="undefined">
             {{ question.placeholder }}
           </option>

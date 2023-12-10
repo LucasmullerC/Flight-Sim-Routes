@@ -1,17 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CountryService } from 'src/app/country.service';
-
-
-interface FormOption {
-  title: string;
-  placeholder: string;
-  type: string;
-  min?: number;
-  max?: number;
-  rangeNum?:String;
-  required: boolean;
-}
+import { FlightsService } from 'src/app/flights.service';
+import { FormFlightsModel } from 'src/app/form-flights-model'; 
 
 @Component({
   selector: 'app-flights-form',
@@ -22,45 +13,45 @@ export class FlightsFormComponent {
   checkboxValue = false;
   countries: any[] = [];
   flightsForm!: FormGroup;
+  minValue: any;
+  maxValue: any;
   @Input()
-  formOptions: FormOption[] = [];
+  formOptions: FormFlightsModel[] = [];
 
   databaseList: String[] =[
     "OpenSky Network"
   ];
 
-  constructor(private formBuilder: FormBuilder,private countryService: CountryService) {}
+  constructor(private formBuilder: FormBuilder,private countryService: CountryService, private flightService: FlightsService) {}
 
   ngOnInit(): void {
     this.countryService.getAllCountries().subscribe((data) => {
       this.countries = data;
     });
     this.flightsForm = this.formBuilder.group({
-      country: [''],
+      quantity: 1,
+      depCountry: [''],
+      arrCountry: [''],
+      depAirport: '',
+      arrAirport: '',
+      minDistance: 0,
+      maxDistance: 0,
+      continuous: false
     });
   }
 
-  isContinous(question: FormOption): boolean{
+  onSubmit(): void {
+    const formData = this.flightsForm.value;
+    console.log(formData);
+    this.flightService.getRandomRoute(formData);
+  }
+
+  isType(question: FormFlightsModel, type: String): boolean{
+    return question.type === type;
+  }
+
+  isContinous(question: FormFlightsModel): boolean{
     return question.placeholder === 'continous'
   }
 
-  isRange(question: FormOption): boolean{
-    return question.type === 'range'
-  }
-
-  isDatabase(question: FormOption): boolean{
-    return question.type === 'database'
-  }
-  
-  isCountry(question: FormOption): boolean{
-    return question.type === 'country'
-  }
-  
-
-  getInputValue(value: string,question: FormOption) {
-    const numericValue: number = +value;
-    if(numericValue <= question.max! && numericValue >= question.min!){
-      question.rangeNum = value;
-    }
-   }
 }

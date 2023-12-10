@@ -29,6 +29,17 @@
     flex-direction: row;
     width: 100%;
 }
+
+.form-header{
+    display: flex;
+    flex-direction: row;
+    gap:5px;
+
+    span{
+        color: red;
+        font-weight: 700;
+    }
+}
 .database .section{
     width: 460px;
 }
@@ -42,6 +53,44 @@
     height: 24px;
     margin-top: 10px;
 }
+
+::ng-deep .mat-slider-horizontal, ::ng-deep .mat-slider-vertical, .mat-mdc-slider {
+  background: #FFF;
+  border-radius: 20px;
+  width: 100%;
+  height: 35px;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .mat-slider-thumb {
+  width: 25px;
+  height: 25px;
+  background-color: #002142 !important;
+  border-radius: 24px;
+  border: 2px solid #FFF;
+  margin-top: 0;
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+::ng-deep .mat-slider-track-fill {
+  background-color: #002142;
+}
+
+::ng-deep .mat-slider-track-background, ::ng-deep .mat-slider-buffer, ::ng-deep .mat-slider-wrapper {
+  height: 4px;
+}
+
+::ng-deep .mat-slider-thumb-label {
+  color: #002142;
+}
+
+::ng-deep .mat-slider-thumb-label {
+    font-size: 12px;
+    color: #002142;
+  }
+
 .options input[type=range]{
     display: flex;
     align-items: flex-start;
@@ -54,15 +103,16 @@
 
     -webkit-appearance: none;
 }
-.options input[type=range]::-webkit-slider-thumb {
+.options input[type=range]::-webkit-slider-thumb{
     -webkit-appearance: none;
     appearance: none;
     width: 25px;
     height: 25px;
-    background-color: #002142;
+    background-color: #002142 !important;
     border-radius: 24px;
     border: 2px solid #FFF;
 }
+
 .options input,select{
     display: flex;
     padding: 12px;
@@ -83,30 +133,6 @@
     font-weight: 400;
     line-height: 150%;
     letter-spacing: 0.16px;
-}
-
-.output-range {
-    color: red;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-radius: 4px;
-    transform: translateX(-50%);
-  }
-.output-range::after {
-    content: "";
-}
-.form-header{
-    display: flex;
-    flex-direction: row;
-    gap:5px;
-}
-#number-input{
-    width: 80px;
-    height: 10px;
-    border-radius: 0;
-    border-color: none;
-    background: none;
-    border: none;
 }
 
 label{

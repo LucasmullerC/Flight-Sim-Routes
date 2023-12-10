@@ -15,6 +15,8 @@ import { HeaderComponent } from './layout/header/header.component';
 import { GenerateFlightsComponent } from './pages/flights/pages/generate-flights/generate-flights.component';
 import { BannerFlightsComponent } from './pages/flights/pages/banner-flights/banner-flights.component';
 import { FlightsFormComponent } from './forms/flights-form/flights-form.component';
+import { ResultTableComponent } from './components/result-table/result-table.component';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { FlightsFormComponent } from './forms/flights-form/flights-form.componen
     GenerateFlightsComponent,
     BannerFlightsComponent,
     FlightsFormComponent,
+    ResultTableComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import { FlightsFormComponent } from './forms/flights-form/flights-form.componen
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

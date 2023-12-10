@@ -49,6 +49,11 @@ body {
   padding: 0;
 }
 
+html{
+  --mdc-slider-handle-color: #002142 !important;
+  --mat-minimal-pseudo-checkbox-selected-checkmark-color: #002142 !important;
+}
+
 @font-face {
     font-family: 'League Gothic';
     src: url('./assets/fonts/League_Gothic/LeagueGothic-Regular-VariableFont_wdth.ttf');
