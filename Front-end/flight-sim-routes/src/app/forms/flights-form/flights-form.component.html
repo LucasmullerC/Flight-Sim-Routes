@@ -1,12 +1,12 @@
 <div class="container">
-  <form class="form" [formGroup]="flightsForm" (ngSubmit)="onSubmit()">
+  <form ngNoForm class="form" [formGroup]="flightsForm" (ngSubmit)="onSubmit()">
     <div
       class="options"
       [ngClass]="question.type"
       *ngFor="let question of formOptions"
     >
     <div class="form-header">
-      <label>{{ question.title }} <span *ngIf="isType(question,'distance')">Min: {{minValue}} Max: {{maxValue}}</span></label>
+      <label>{{ question.title }}<span *ngIf="question.required">*</span></label> <span *ngIf="isType(question,'distance')">Min: {{minValue}} Max: {{maxValue}}</span>
     </div>
 
       <div
@@ -34,16 +34,18 @@
           [max]="question.max"
           formControlName="{{question.formControlName}}"
         />
+        
       </div>
 
       <mat-slider *ngIf="isType(question,'distance')" [min]="question.min" [max]="question.max">
-        <input matSliderStartThumb formControlName="minDistance" [(ngModel)]="minValue"> 
+        <input matSliderStartThumb formControlName="minDistance"  [(ngModel)]="minValue"> 
         <input matSliderEndThumb formControlName="maxDistance" [(ngModel)]="maxValue">
       </mat-slider>
 
+
       <!--database selector-->
-      <div class="section" *ngIf="isType(question,'database')">
-        <select formControlName="database">
+      <div class="section" *ngIf="isType(question,'database')"> 
+        <select [(ngModel)]="database" [ngModelOptions]="{standalone: true}">
           <option class="dropdown-item" disabled selected value="undefined">
             {{ question.placeholder }}
           </option>

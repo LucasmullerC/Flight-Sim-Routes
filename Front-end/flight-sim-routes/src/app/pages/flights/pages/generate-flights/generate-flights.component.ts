@@ -1,144 +1,164 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FlightsService } from 'src/app/flights.service';
 import { FormFlightsModel } from 'src/app/form-flights-model';
-
+import { UnixTimeService } from 'src/app/unix-time.service';
 
 @Component({
   selector: 'app-generate-flights',
   templateUrl: './generate-flights.component.html',
-  styleUrls: ['./generate-flights.component.scss']
+  styleUrls: ['./generate-flights.component.scss'],
 })
 export class GenerateFlightsComponent {
   title: string = 'Flights';
   subtitle: string = '';
-
+  flightsForm!: FormGroup;
   selectedForm: FormFlightsModel[] = [];
-  
+
+  constructor(private router: Router, private flightService: FlightsService,private formBuilder: FormBuilder,private unixTime: UnixTimeService) {}
+
+  ngOnInit(): void {
+    if (this.router.url == '/flights/randomdatabase') {
+      this.subtitle = 'Random Database';
+      this.selectedForm = this.formRandomDb;
+      this.flightsForm = this.randomDB
+    } else {
+      this.subtitle = 'Real Flights Data';
+      this.selectedForm = this.formRealFlights;
+      this.flightsForm = this.realFlightsDB;
+    }
+
+    this.flightService.requestData$.subscribe((formData) => {
+      console.log(formData);
+    });
+  }
+
+
+  randomDB = this.formBuilder.group({
+    quantity: 1,
+    depCountry: [''],
+    arrCountry: [''],
+    depAirport: '',
+    arrAirport: '',
+    minDistance: 1,
+    maxDistance: 9999,
+    continuous: false,
+  });
+
+  realFlightsDB = this.formBuilder.group({
+    quantity: 1,
+    depAirport: '',
+    arrAirport: '',
+    beginTime:this.unixTime.getUnixYesterday(),
+    endTime:this.unixTime.getUnixYesterdayPlusTwoHours(),
+    minDistance: 1,
+    maxDistance: 9999,
+    continuous: false,
+  });
+
   formRandomDb = [
     {
       title: 'Departure Airport (ICAO)',
-      placeholder: 'KJFK', 
+      placeholder: 'KJFK',
       type: 'textarea',
       min: 0,
       max: 0,
-      formControlName:'depAirport',
+      formControlName: 'depAirport',
       required: false,
     },
     {
       title: 'Arrival Airport (ICAO)',
-      placeholder: 'KSFO', 
+      placeholder: 'KSFO',
       type: 'textarea',
       min: 0,
       max: 0,
-      formControlName:'arrAirport',
+      formControlName: 'arrAirport',
       required: false,
     },
     {
       title: 'Departure Country',
-      placeholder: 'Select', 
+      placeholder: 'Select',
       type: 'country',
       min: 0,
       max: 0,
-      formControlName:'depCountry',
+      formControlName: 'depCountry',
       required: false,
     },
     {
       title: 'Arrival Country',
-      placeholder: 'Select', 
+      placeholder: 'Select',
       type: 'country',
       min: 0,
       max: 0,
-      formControlName:'arrCountry',
+      formControlName: 'arrCountry',
       required: false,
     },
     {
       title: 'Continous Flights',
-      placeholder: 'continous', 
+      placeholder: 'continous',
       type: 'number',
       min: 1,
       max: 10,
-      formControlName:'quantity',
+      formControlName: 'quantity',
       required: false,
     },
     {
       title: 'Distance Range (NM)',
-      placeholder: 'range', 
+      placeholder: 'range',
       type: 'distance',
       min: 1,
       max: 10000,
-      formControlName:'minDistance',
+      formControlName: 'minDistance',
       required: true,
     },
-  ]
+  ];
 
   formRealFlights = [
     {
       title: 'Database',
-      placeholder: 'Select', 
+      placeholder: 'Select',
       type: 'database',
       min: 0,
       max: 0,
-      formControlName:'database',
+      formControlName: 'database',
       required: true,
     },
     {
       title: 'Departure Airport (ICAO)',
-      placeholder: 'KJFK', 
+      placeholder: 'KJFK',
       type: 'textarea',
       min: 0,
       max: 0,
-      formControlName:'depAirport',
+      formControlName: 'depAirport',
       required: false,
     },
     {
       title: 'Arrival Airport (ICAO)',
-      placeholder: 'KSFO', 
+      placeholder: 'KSFO',
       type: 'textarea',
       min: 0,
       max: 0,
-      formControlName:'arrAirport',
+      formControlName: 'arrAirport',
       required: false,
     },
     {
       title: 'Continous Flights',
-      placeholder: 'continous', 
+      placeholder: 'continous',
       type: 'number',
       min: 1,
       max: 10,
-      formControlName:'quantity',
+      formControlName: 'quantity',
       required: false,
     },
     {
       title: 'Distance Range (NM)',
-      placeholder: 'range', 
+      placeholder: 'range',
       type: 'distance',
       min: 1,
       max: 10000,
-      formControlName:'minDistance',
+      formControlName: 'minDistance',
       required: true,
     },
-  ]
-
-  constructor(private router: Router, private flightService: FlightsService ) {}
-
-  ngOnInit(): void {
-    if(this.router.url == '/flights/randomdatabase'){
-      this.subtitle = 'Random Database';
-      this.selectedForm = this.formRandomDb;
-    }
-    else{
-      this.subtitle = 'Real Flights Data';
-      this.selectedForm = this.formRealFlights;
-    }
-
-    this.flightService.requestData$.subscribe((responseData) => {
-      // Lógica para processar os dados do formulário e atualizar tableRows
-      // ...
-
-      // Exemplo: Adicione uma nova linha à tabela
-      console.log(responseData);
-    });
-  }
-  
+  ];
 }

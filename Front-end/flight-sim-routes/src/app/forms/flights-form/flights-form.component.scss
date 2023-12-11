@@ -27,13 +27,16 @@
 .section{
     display: flex;
     flex-direction: row;
+    gap: 10px;
     width: 100%;
 }
+
 
 .form-header{
     display: flex;
     flex-direction: row;
-    gap:5px;
+    justify-content: space-between;
+    width: 460px;
 
     span{
         color: red;

@@ -9,12 +9,17 @@ export class FlightsService {
   private requestDataSubject = new BehaviorSubject<any>(null);
   requestData$ = this.requestDataSubject.asObservable();
 
-  private randomRoute = 'localhost:8080/random-route';
-  private openskyRoute = 'localhost:8080/opensky-route';
-
   constructor(private http: HttpClient) { }
 
-  getRandomRoute(data: any){
-    this.requestDataSubject.next(this.http.post(this.randomRoute, data));
+  getFlights(data: any,url:string){
+    this.http.post(url, data, { withCredentials: true }).subscribe({
+      next: responseData => {
+        this.requestDataSubject.next(responseData);
+      },
+      error: error => {
+        console.error('An Error Occurred', error);
+        this.requestDataSubject.next(error);
+      }
+    });
   }
 }
