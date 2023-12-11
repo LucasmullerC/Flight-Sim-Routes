@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import { CountryService } from 'src/app/services/country.service';
 import { FlightsService } from 'src/app/services/flights.service';
 import { FormFlightsModel } from 'src/app/form-flights-model';
@@ -23,7 +23,6 @@ export class FlightsFormComponent {
   @Input() flightsForm!: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
     private countryService: CountryService,
     private flightService: FlightsService
   ) {}

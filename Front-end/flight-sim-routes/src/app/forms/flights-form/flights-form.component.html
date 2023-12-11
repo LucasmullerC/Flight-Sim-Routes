@@ -45,7 +45,7 @@
 
       <!--database selector-->
       <div class="section" *ngIf="isType(question,'database')"> 
-        <select [(ngModel)]="database" [ngModelOptions]="{standalone: true}">
+        <select [(ngModel)]="database" [ngModelOptions]="{standalone: true}" required>
           <option class="dropdown-item" disabled selected value="undefined">
             {{ question.placeholder }}
           </option>
