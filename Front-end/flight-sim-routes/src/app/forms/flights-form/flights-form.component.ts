@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import { CountryService } from 'src/app/country.service';
-import { FlightsService } from 'src/app/flights.service';
+import { CountryService } from 'src/app/services/country.service';
+import { FlightsService } from 'src/app/services/flights.service';
 import { FormFlightsModel } from 'src/app/form-flights-model';
 
 @Component({
@@ -36,7 +36,6 @@ export class FlightsFormComponent {
 
   onSubmit(): void {
     const formData = this.flightsForm.value;
-    console.log(formData);
 
     switch(this.database) { 
       case "undefined":{

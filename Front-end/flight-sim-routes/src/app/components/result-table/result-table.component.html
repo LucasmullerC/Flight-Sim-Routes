@@ -1,12 +1,12 @@
 <table>
-    <thead>
-      <tr>
-        <th>teste</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>teste</td>
-      </tr>
-    </tbody>
-  </table>
+  <thead>
+    <tr>
+      <th *ngFor="let column of columns">{{ column }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of rows">
+      <td *ngFor="let key of toArray(row)">{{ key }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FlightsService } from 'src/app/flights.service';
+import { FlightsService } from 'src/app/services/flights.service';
 import { FormFlightsModel } from 'src/app/form-flights-model';
-import { UnixTimeService } from 'src/app/unix-time.service';
+import { UnixTimeService } from 'src/app/services/unix-time.service';
+import { TableService } from 'src/app/services/table.service';
 
 @Component({
   selector: 'app-generate-flights',
@@ -15,8 +16,14 @@ export class GenerateFlightsComponent {
   subtitle: string = '';
   flightsForm!: FormGroup;
   selectedForm: FormFlightsModel[] = [];
+  columns: string[] = [];
+  rows: any;
 
-  constructor(private router: Router, private flightService: FlightsService,private formBuilder: FormBuilder,private unixTime: UnixTimeService) {}
+  constructor(private router: Router, 
+    private flightService: FlightsService,
+    private formBuilder: FormBuilder,
+    private unixTime: UnixTimeService,
+    private table: TableService) {}
 
   ngOnInit(): void {
     if (this.router.url == '/flights/randomdatabase') {
@@ -30,7 +37,8 @@ export class GenerateFlightsComponent {
     }
 
     this.flightService.requestData$.subscribe((formData) => {
-      console.log(formData);
+      this.columns = this.table.buildColumns(formData);
+      this.rows = this.table.buildRows(formData);
     });
   }
 

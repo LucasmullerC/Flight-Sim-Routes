@@ -13,5 +13,9 @@ export interface TableRow {
 })
 export class ResultTableComponent{
   @Input() columns: string[] = [];
-  @Input() rows: TableRow[] = [];
+  @Input() rows: any;
+
+  toArray(data: any) {
+    return Object.keys(data).map(key => data[key])
+  }
 }

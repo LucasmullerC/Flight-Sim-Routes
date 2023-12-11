@@ -17,6 +17,7 @@ import { BannerFlightsComponent } from './pages/flights/pages/banner-flights/ban
 import { FlightsFormComponent } from './forms/flights-form/flights-form.component';
 import { ResultTableComponent } from './components/result-table/result-table.component';
 import {MatSliderModule} from '@angular/material/slider';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {MatSliderModule} from '@angular/material/slider';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatSliderModule
+    MatSliderModule,
+    CommonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
