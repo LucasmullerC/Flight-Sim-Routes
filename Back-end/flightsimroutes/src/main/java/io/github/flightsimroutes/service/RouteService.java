@@ -61,7 +61,7 @@ public class RouteService {
                     if (isValidAirport(arrAirport, arrIcao, arrCountry) && !depAirport.equals(arrAirport)) {
                         double distance = checkDistance(depAirport, arrAirport, maxDistance, minDistance);
                         if (distance != 0) {
-                            return new Route("", "0", depAirport.getIcao(), arrAirport.getIcao(), "", distance);
+                            return new Route("", "0", depAirport.getIcao(), arrAirport.getIcao(), "", (int) distance);
                         }
                     }
                 }
