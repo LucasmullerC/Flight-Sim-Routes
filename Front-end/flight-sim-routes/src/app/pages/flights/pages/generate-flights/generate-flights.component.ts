@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FlightsService } from 'src/app/services/flights.service';
 import { FormFlightsModel } from 'src/app/form-flights-model';
 import { UnixTimeService } from 'src/app/services/unix-time.service';
@@ -23,7 +23,8 @@ export class GenerateFlightsComponent {
     private flightService: FlightsService,
     private formBuilder: FormBuilder,
     private unixTime: UnixTimeService,
-    private table: TableService) {}
+    private table: TableService,
+    private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     if (this.router.url == '/flights/randomdatabase') {
@@ -35,13 +36,22 @@ export class GenerateFlightsComponent {
       this.selectedForm = this.formRealFlights;
       this.flightsForm = this.realFlightsDB;
     }
-
+    
     this.flightService.requestData$.subscribe((formData) => {
       if(formData != undefined){
         this.columns = this.table.buildColumns(formData);
         this.rows = this.table.buildRows(formData);
       }
     });
+
+    this.route.url.subscribe(url => {
+      this.rows = undefined;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.columns = [];
+    this.rows = [];
   }
 
   randomDB = this.formBuilder.group({
