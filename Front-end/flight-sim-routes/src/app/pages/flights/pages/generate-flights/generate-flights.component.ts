@@ -37,11 +37,12 @@ export class GenerateFlightsComponent {
     }
 
     this.flightService.requestData$.subscribe((formData) => {
-      this.columns = this.table.buildColumns(formData);
-      this.rows = this.table.buildRows(formData);
+      if(formData != undefined){
+        this.columns = this.table.buildColumns(formData);
+        this.rows = this.table.buildRows(formData);
+      }
     });
   }
-
 
   randomDB = this.formBuilder.group({
     quantity: 1,
