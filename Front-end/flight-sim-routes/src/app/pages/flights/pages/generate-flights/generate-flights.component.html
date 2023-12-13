@@ -6,5 +6,5 @@
     ></app-header>
 
     <app-flights-form class="form" [formOptions]="selectedForm" [flightsForm]="flightsForm"></app-flights-form>
-    <app-result-table class="table" *ngIf="columns && rows" [columns]="columns" [rows]="rows"></app-result-table>
+    <app-result-table class="table" *ngIf="columns && rows || error_table" [columns]="columns" [rows]="rows" [error]="error_table"></app-result-table>
 </div>

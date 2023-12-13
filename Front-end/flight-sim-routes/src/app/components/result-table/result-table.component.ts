@@ -14,6 +14,7 @@ export interface TableRow {
 export class ResultTableComponent {
   @Input() columns: string[] = [];
   @Input() rows: any[] = [];
+  @Input() error: boolean = false;
 
   currentPage: number = 1;
   itemsPerPage: number = 0;

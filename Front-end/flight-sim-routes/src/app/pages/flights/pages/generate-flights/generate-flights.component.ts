@@ -18,6 +18,7 @@ export class GenerateFlightsComponent {
   selectedForm: FormFlightsModel[] = [];
   columns: string[] = [];
   rows: any;
+  error_table: boolean = false;
 
   constructor(private router: Router, 
     private flightService: FlightsService,
@@ -39,12 +40,18 @@ export class GenerateFlightsComponent {
     
     this.flightService.requestData$.subscribe((formData) => {
       if(formData != undefined){
-        this.columns = this.table.buildColumns(formData);
-        this.rows = this.table.buildRows(formData);
+        if(formData.status != 500){
+          this.columns = this.table.buildColumns(formData);
+          this.rows = this.table.buildRows(formData);
+        }
+        else{
+          this.error_table = true;
+        }
       }
     });
 
     this.route.url.subscribe(url => {
+      this.error_table = false;
       this.rows = undefined;
     });
   }

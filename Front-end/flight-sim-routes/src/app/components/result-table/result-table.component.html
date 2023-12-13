@@ -1,28 +1,51 @@
-<div class="container">
-<table>
-  <thead>
-    <tr>
-      <th *ngFor="let column of columns">{{ column }}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let row of getPaginatedRows()">
-      <td *ngFor="let key of toArray(row)">{{ key }}</td>
-    </tr>
-  </tbody>
-</table>
+<div *ngIf="!error" class="container">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns">{{ column }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of getPaginatedRows()">
+        <td *ngFor="let key of toArray(row)">{{ key }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-<div class="pagination">
-  <button (click)="prevPage()" [disabled]="currentPage === 1">
-    <svg xmlns="http://www.w3.org/2000/svg" width="31" height="30" viewBox="0 0 31 30" fill="none">
-      <path d="M3.5 15L15.5 27L17.6 24.9L9.2 16.5H27.5V13.5H9.2L17.6 5.1L15.5 3L3.5 15Z" fill="black"/>
-    </svg>
-  </button>
-  <span>{{ currentPage }}</span>
-  <button (click)="nextPage()" [disabled]="currentPage === totalPages()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="31" height="30" viewBox="0 0 31 30" fill="none">
-      <path d="M13.4 5.1L21.8 13.5H3.5V16.5H21.8L13.4 24.9L15.5 27L27.5 15L15.5 3L13.4 5.1Z" fill="black"/>
-    </svg>
-  </button>
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="31"
+        height="30"
+        viewBox="0 0 31 30"
+        fill="none"
+      >
+        <path
+          d="M3.5 15L15.5 27L17.6 24.9L9.2 16.5H27.5V13.5H9.2L17.6 5.1L15.5 3L3.5 15Z"
+          fill="black"
+        />
+      </svg>
+    </button>
+    <span>{{ currentPage }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="31"
+        height="30"
+        viewBox="0 0 31 30"
+        fill="none"
+      >
+        <path
+          d="M13.4 5.1L21.8 13.5H3.5V16.5H21.8L13.4 24.9L15.5 27L27.5 15L15.5 3L13.4 5.1Z"
+          fill="black"
+        />
+      </svg>
+    </button>
+  </div>
 </div>
+
+<div *ngIf="error" class="errorBox">
+  <h1>An error occurred.</h1>
+  <p>This database is not available at the moment.</p>
 </div>
