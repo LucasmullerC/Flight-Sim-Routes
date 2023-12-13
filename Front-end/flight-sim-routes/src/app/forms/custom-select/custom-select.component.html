@@ -1,0 +1,9 @@
+<select (change)="onSelectChange($event)" [required]="required">
+  <option class="dropdown-item" disabled selected value="undefined">
+    {{ placeholder }}
+  </option>
+  <option *ngFor="let item of itemList" [value]="getValue(item, valueField)">
+    {{ getLabel(item, labelField) }}
+  </option>
+</select>
+

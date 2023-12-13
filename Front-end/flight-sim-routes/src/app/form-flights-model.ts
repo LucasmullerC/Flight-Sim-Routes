@@ -4,7 +4,7 @@ export interface FormFlightsModel {
     type: string;
     min?: number;
     max?: number;
-    rangeNum?:String;
-    formControlName:String;
+    rangeNum?:string;
+    formControlName:string;
     required: boolean;
 }

@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { FlightsComponent } from './pages/flights/flights.component';
 import { BannerFlightsComponent } from './pages/flights/pages/banner-flights/banner-flights.component';
 import { GenerateFlightsComponent } from './pages/flights/pages/generate-flights/generate-flights.component';
+import { SchedulesComponent } from './pages/schedules/schedules.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,11 @@ const routes: Routes = [
       { path: 'randomdatabase', component: GenerateFlightsComponent },
       { path: 'realflightsdata', component: GenerateFlightsComponent },
     ]
-  }
+  },
+  {
+    path:'schedules',
+    component: SchedulesComponent
+  },
 ];
 
 @NgModule({

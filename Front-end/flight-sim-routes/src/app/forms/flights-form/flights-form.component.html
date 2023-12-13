@@ -5,15 +5,21 @@
       [ngClass]="question.type"
       *ngFor="let question of formOptions"
     >
-    <div class="form-header">
-      <label>{{ question.title }}<span *ngIf="question.required">*</span></label> <span *ngIf="isType(question,'distance')">Min: {{minValue}} Max: {{maxValue}}</span>
-    </div>
+      <div class="form-header">
+        <app-custom-label
+        [title]="question.title"
+        [required]="question.required"
+        ></app-custom-label>
+        <span *ngIf="isType(question, 'distance')"
+          >Min: {{ minValue }} Max: {{ maxValue }}</span
+        >
+      </div>
 
       <div
         class="section"
-        *ngIf="!isType(question,'country') && !isType(question,'database')"
+        *ngIf="!isType(question, 'country') && !isType(question, 'database')"
       >
-      <!--Is continuous checkbox-->
+        <!--Is continuous checkbox-->
         <input
           id="checkbox-item"
           *ngIf="isContinous(question)"
@@ -23,48 +29,68 @@
         />
 
         <!--Variable input-->
-        <input
+        <app-custom-input
           *ngIf="
-            (isContinous(question) && checkboxValue) || !isContinous(question) && !isType(question,'distance')
+            (isContinous(question) && checkboxValue) ||
+            (!isContinous(question) && !isType(question, 'distance'))
           "
-          type="{{ question.type }}"
+          class="custom-input"
+          (formControlChange)="
+            onChildFormControlChange($event, question.formControlName)
+          "
+          [type]="question.type"
           [placeholder]="question.placeholder"
           [required]="question.required"
           [min]="question.min"
           [max]="question.max"
-          formControlName="{{question.formControlName}}"
-        />
-        
+        ></app-custom-input>
       </div>
 
-      <mat-slider *ngIf="isType(question,'distance')" [min]="question.min" [max]="question.max">
-        <input matSliderStartThumb formControlName="minDistance"  [(ngModel)]="minValue"> 
-        <input matSliderEndThumb formControlName="maxDistance" [(ngModel)]="maxValue">
+      <mat-slider
+        *ngIf="isType(question, 'distance')"
+        [min]="question.min"
+        [max]="question.max"
+      >
+        <input
+          matSliderStartThumb
+          formControlName="minDistance"
+          [(ngModel)]="minValue"
+        />
+        <input
+          matSliderEndThumb
+          formControlName="maxDistance"
+          [(ngModel)]="maxValue"
+        />
       </mat-slider>
 
-
       <!--database selector-->
-      <div class="section" *ngIf="isType(question,'database')"> 
-        <select [(ngModel)]="database" [ngModelOptions]="{standalone: true}" required>
-          <option class="dropdown-item" disabled selected value="undefined">
-            {{ question.placeholder }}
-          </option>
-          <option *ngFor="let database of databaseList" [value]="database">
-            {{ database }}
-          </option>
-        </select>
+      <div class="section" *ngIf="isType(question, 'database')">
+        <app-custom-select
+          class="custom-select"
+          (selectChange)="
+            onChildFormControlChange($event, question.formControlName)
+          "
+          [itemList]="databaseList"
+          [required]="question.required"
+          [placeholder]="question.placeholder"
+          [valueField]="''"
+          [labelField]="''"
+        ></app-custom-select>
       </div>
 
       <!--Country selector-->
-      <div class="section" *ngIf="isType(question,'country')">
-        <select formControlName="{{question.formControlName}}">
-          <option class="dropdown-item" disabled selected value="undefined">
-            {{ question.placeholder }}
-          </option>
-          <option *ngFor="let country of countries" [value]="country.cca2">
-            {{ country.name.common }}
-          </option>
-        </select>
+      <div class="section" *ngIf="isType(question, 'country')">
+        <app-custom-select
+          class="custom-select"
+          (selectChange)="
+            onChildFormControlChange($event, question.formControlName)
+          "
+          [placeholder]="question.placeholder"
+          [itemList]="countries"
+          [required]="question.required"
+          [valueField]="'cca2'"
+          [labelField]="'name.common'"
+        ></app-custom-select>
       </div>
     </div>
     <div class="button-container">

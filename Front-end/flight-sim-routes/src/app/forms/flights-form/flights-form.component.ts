@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import { CountryService } from 'src/app/services/country.service';
 import { FlightsService } from 'src/app/services/flights.service';
 import { FormFlightsModel } from 'src/app/form-flights-model';
@@ -35,7 +35,7 @@ export class FlightsFormComponent {
 
   onSubmit(): void {
     const formData = this.flightsForm.value;
-    
+    console.log(formData)
     switch(this.database) { 
       case "undefined":{
         this.flightService.getFlights(formData,'http://localhost:8080/random-route');
@@ -49,6 +49,10 @@ export class FlightsFormComponent {
         this.flightService.getFlights(formData,'http://localhost:8080/random-route');
      }
     }
+  }
+
+  onChildFormControlChange(formControl: string, controlName: string) {
+    this.flightsForm.setControl(controlName, new FormControl(formControl));
   }
 
   getInputValue(value: string, question: FormFlightsModel) {
