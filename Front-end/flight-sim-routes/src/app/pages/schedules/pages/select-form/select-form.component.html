@@ -4,7 +4,7 @@
     [subtitle]="'Virtual Airlines'"
     [imageUrl]="'../../assets/images/transparent_blue_fit.png'"
   ></app-header>
-  <form ngNoForm class="form-select-virtual">
+  <form ngNoForm class="form-select-virtual" [formGroup]="schedulesForm" (ngSubmit)="onSubmitSelectVirtual()">
     <div class="select-virtual">
       <app-custom-label
         [title]="'Select your Virtual Airline'"
@@ -13,8 +13,14 @@
 
       <app-custom-select
         class="custom-select"
+        (selectChange)="
+        onFormControlChange($event, 'airlineName')
+      "
         [placeholder]="'Select'"
         [required]="true"
+        [itemList]="dataList"
+        [valueField]="'airlineName'"
+        [labelField]="'airlineName'"
       ></app-custom-select>
     </div>
     <div class="button-container">
@@ -29,7 +35,7 @@
     [imageUrl]="''"
   ></app-header>
 
-  <form ngNoForm class="form-create-new">
+  <form ngNoForm class="form-create-new" [formGroup]="schedulesForm" (ngSubmit)="onSubmitCreateNew()">
     <div class="create-new">
       <app-custom-label
         [title]="'Vitual Airline Name'"
@@ -37,8 +43,12 @@
       ></app-custom-label>
       <app-custom-input
         class="custom-input"
+        (formControlChange)="
+        onFormControlChange($event, 'airlineName')
+      "
         [type]="'textarea'"
         [placeholder]="'Virtual Airline Name'"
+        [required]="true"
       ></app-custom-input>
     </div>
     <div class="create-new">
@@ -48,9 +58,13 @@
       ></app-custom-label>
       <app-custom-input
         class="custom-input"
+        (formControlChange)="
+        onFormControlChange($event, 'airline')
+      "
         [type]="'textarea'"
         [max]="3"
         [placeholder]="'VAN'"
+        [required]="true"
       ></app-custom-input>
     </div>
     <div class="create-new">
@@ -60,16 +74,28 @@
       ></app-custom-label>
       <app-custom-select
         class="custom-select"
+        (selectChange)="
+        onFormControlChange($event, 'country')
+      "
         [placeholder]="'Select'"
+        [itemList]="countries"
+        [valueField]="'cca2'"
+        [labelField]="'name.common'"
         [required]="true"
       ></app-custom-select>
     </div>
     <div class="create-new">
-      <app-custom-label [title]="'Hubs'" [required]="true"></app-custom-label>
+      <app-custom-label 
+      [title]="'Hubs'" 
+      [required]="true"></app-custom-label>
       <app-custom-input
         class="custom-input"
+        (formControlChange)="
+        onFormControlChange($event, 'hubs')
+      "
         [type]="'textarea'"
         [placeholder]="'KSFO,KJFK'"
+        [required]="true"
       ></app-custom-input>
     </div>
     <div class="button-container">
