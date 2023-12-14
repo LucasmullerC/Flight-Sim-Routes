@@ -1,7 +1,79 @@
 <div class="component">
-    <app-header
+  <app-header
     [title]="'Schedules'"
     [subtitle]="'Virtual Airlines'"
     [imageUrl]="'../../assets/images/transparent_blue_fit.png'"
-    ></app-header>
+  ></app-header>
+  <form ngNoForm class="form-select-virtual">
+    <div class="select-virtual">
+      <app-custom-label
+        [title]="'Select your Virtual Airline'"
+        [required]="true"
+      ></app-custom-label>
+
+      <app-custom-select
+        class="custom-select"
+        [placeholder]="'Select'"
+        [required]="true"
+      ></app-custom-select>
+    </div>
+    <div class="button-container">
+      <button type="submit">Generate!</button>
+    </div>
+  </form>
+  <hr class="solid" />
+
+  <app-header
+    [title]="''"
+    [subtitle]="'Create a new Virtual Airline'"
+    [imageUrl]="''"
+  ></app-header>
+
+  <form ngNoForm class="form-create-new">
+    <div class="create-new">
+      <app-custom-label
+        [title]="'Vitual Airline Name'"
+        [required]="true"
+      ></app-custom-label>
+      <app-custom-input
+        class="custom-input"
+        [type]="'textarea'"
+        [placeholder]="'Virtual Airline Name'"
+      ></app-custom-input>
+    </div>
+    <div class="create-new">
+      <app-custom-label
+        [title]="'Vitual Airline ICAO'"
+        [required]="true"
+      ></app-custom-label>
+      <app-custom-input
+        class="custom-input"
+        [type]="'textarea'"
+        [max]="3"
+        [placeholder]="'VAN'"
+      ></app-custom-input>
+    </div>
+    <div class="create-new">
+      <app-custom-label
+        [title]="'Base Country'"
+        [required]="true"
+      ></app-custom-label>
+      <app-custom-select
+        class="custom-select"
+        [placeholder]="'Select'"
+        [required]="true"
+      ></app-custom-select>
+    </div>
+    <div class="create-new">
+      <app-custom-label [title]="'Hubs'" [required]="true"></app-custom-label>
+      <app-custom-input
+        class="custom-input"
+        [type]="'textarea'"
+        [placeholder]="'KSFO,KJFK'"
+      ></app-custom-input>
+    </div>
+    <div class="button-container">
+      <button type="submit">Add new</button>
+    </div>
+  </form>
 </div>

@@ -18,4 +18,12 @@ export class HeaderComponent {
       return true;
     }
   }
+  isImgActive():boolean{
+    if(this.imageUrl == ''){
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
 }
