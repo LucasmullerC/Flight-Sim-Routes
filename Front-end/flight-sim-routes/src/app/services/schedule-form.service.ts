@@ -6,6 +6,7 @@ import { VirtualAirline } from '../virtual-airline';
 })
 export class ScheduleFormService {
   private formDataList: VirtualAirline[] = [];
+  private airlineName: string = '';
   formCompleted = new EventEmitter<void>();
 
   constructor() {
@@ -16,9 +17,16 @@ export class ScheduleFormService {
     return this.formDataList;
   }
 
+  setAirlineName(airlineName:string):void{
+    this.airlineName = airlineName;
+  }
+
+  getAirlineName():string{
+    return this.airlineName;
+  }
+
   setFormData(data: Partial<VirtualAirline>): void {
     const existingDataIndex = this.formDataList.findIndex(item => item.airlineName === data.airlineName);
-
     if (existingDataIndex !== -1) {
       this.formDataList[existingDataIndex] = { ...this.formDataList[existingDataIndex], ...data };
     } else {

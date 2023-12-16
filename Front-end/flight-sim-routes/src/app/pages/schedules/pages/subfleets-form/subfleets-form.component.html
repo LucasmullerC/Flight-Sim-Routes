@@ -1,1 +1,80 @@
-<p>subfleets-form works!</p>
+<div class="component">
+    <app-header
+    [title]="'Schedules'"
+    [subtitle]="'Subfleets - '+airlineName"
+    [imageUrl]="'../../assets/images/transparent_blue_fit.png'"
+  ></app-header>
+
+  <app-result-table></app-result-table>
+
+  <form ngNoForm class="form-subfleets" [formGroup]="subfleetsForm">
+    <div class="form-section">
+        <app-custom-label
+        [title]="'Aircraft Type (Same as your PHPvms type)'"
+        [required]="false"
+      ></app-custom-label>
+      <app-custom-input
+        class="custom-input"
+        (formControlChange)="
+        onFormControlChange($event, '')
+      "
+        [type]="'textarea'"
+        [placeholder]="'A320,A20N,A21N'"
+      ></app-custom-input>
+    </div>
+
+    <div class="form-section">
+        <app-custom-label
+        [title]="'Aircraft Hub (ICAO)'"
+        [required]="false"
+      ></app-custom-label>
+      <app-custom-input
+        class="custom-input"
+        (formControlChange)="
+        onFormControlChange($event, '')
+      "
+        [type]="'textarea'"
+        [placeholder]="'KJFK, KSFO, EDDF'"
+      ></app-custom-input>
+    </div>
+
+    <div class="form-section">
+        <app-custom-label
+        [title]="'Operational Countries'"
+        [required]="false"
+      ></app-custom-label>
+      <app-custom-select
+        class="custom-select"
+        (selectChange)="
+        onFormControlChange($event, '')
+      "
+        [placeholder]="'Select'"
+        [itemList]="countries"
+        [valueField]="'cca2'"
+        [labelField]="'name.common'"
+      ></app-custom-select>
+    </div>
+
+    <div class="form-section">
+        <app-custom-label
+        [title]="'Aircraft Demand Operations'"
+        [required]="false"
+      ></app-custom-label>
+      <app-custom-select
+        class="custom-select"
+        (selectChange)="
+        onFormControlChange($event, '')
+      "
+        [placeholder]="'Select'"
+        [itemList]="countries"
+        [valueField]="''"
+        [labelField]="''"
+      ></app-custom-select>
+    </div>
+
+    <div class="buttons-container">
+        <button type="button">Add new</button>
+        <button type="submit" class="nextActive">Next</button>
+    </div>
+  </form>
+</div>

@@ -35,11 +35,13 @@ export class SelectFormComponent {
     const dataStorage = this.scheduleForm.getFormDataList();
     const existingDataIndex = dataStorage.findIndex(item => item.airlineName === this.schedulesForm.value.airlineName);
     this.data = dataStorage[existingDataIndex];
+    this.scheduleForm.setAirlineName(this.data.airlineName);
     this.scheduleForm.setFormData(this.data);
   }
 
   onSubmitCreateNew(): void {
     this.scheduleForm.setFormData(this.schedulesForm.value);
+    this.scheduleForm.setAirlineName(this.schedulesForm.value.airlineName);
   }
 
   onFormControlChange(formControl: string, controlName: string) {
