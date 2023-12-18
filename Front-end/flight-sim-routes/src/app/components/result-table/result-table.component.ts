@@ -31,6 +31,9 @@ export class ResultTableComponent {
 
   getPaginatedRows(): any[] {
     this.itemsPerPage = this.calculateItemsPerPage();
+    if(this.itemsPerPage == 0){
+      this.itemsPerPage = 5;
+    }
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     return this.rows.slice(startIndex, endIndex);
@@ -51,12 +54,5 @@ export class ResultTableComponent {
   totalPages(): number {
     return Math.ceil(this.rows.length / this.itemsPerPage);
   }  
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event): void {
-    this.currentPage = 1;
-    this.itemsPerPage = this.calculateItemsPerPage();
-  }
-  
 
 }

@@ -5,9 +5,9 @@
     [imageUrl]="'../../assets/images/transparent_blue_fit.png'"
   ></app-header>
 
-  <app-result-table></app-result-table>
+  <app-result-table class="table" *ngIf="columns && rows" [columns]="columns" [rows]="rows"></app-result-table>
 
-  <form ngNoForm class="form-subfleets" [formGroup]="subfleetsForm">
+  <form ngNoForm class="form-subfleets" [formGroup]="subfleetsForm" (ngSubmit)="onSubmitNext()">
     <div class="form-section">
         <app-custom-label
         [title]="'Aircraft Type (Same as your PHPvms type)'"
@@ -16,7 +16,7 @@
       <app-custom-input
         class="custom-input"
         (formControlChange)="
-        onFormControlChange($event, '')
+        onFormControlChange($event, 'subfleets')
       "
         [type]="'textarea'"
         [placeholder]="'A320,A20N,A21N'"
@@ -31,7 +31,7 @@
       <app-custom-input
         class="custom-input"
         (formControlChange)="
-        onFormControlChange($event, '')
+        onFormControlChange($event, 'hub')
       "
         [type]="'textarea'"
         [placeholder]="'KJFK, KSFO, EDDF'"
@@ -43,16 +43,11 @@
         [title]="'Operational Countries'"
         [required]="false"
       ></app-custom-label>
-      <app-custom-select
-        class="custom-select"
-        (selectChange)="
-        onFormControlChange($event, '')
-      "
-        [placeholder]="'Select'"
-        [itemList]="countries"
-        [valueField]="'cca2'"
-        [labelField]="'name.common'"
-      ></app-custom-select>
+      <mat-select formControlName="countries" multiple>
+        @for (country of countries; track country) {
+          <mat-option [value]="country.cca2">{{country.name.common}}</mat-option>
+        }
+      </mat-select>
     </div>
 
     <div class="form-section">
@@ -60,21 +55,16 @@
         [title]="'Aircraft Demand Operations'"
         [required]="false"
       ></app-custom-label>
-      <app-custom-select
-        class="custom-select"
-        (selectChange)="
-        onFormControlChange($event, '')
-      "
-        [placeholder]="'Select'"
-        [itemList]="countries"
-        [valueField]="''"
-        [labelField]="''"
-      ></app-custom-select>
+      <mat-select formControlName="demands" multiple>
+        @for (demand of demands; track demand) {
+          <mat-option [value]="demand">{{demand}}</mat-option>
+        }
+      </mat-select>
     </div>
 
     <div class="buttons-container">
-        <button type="button">Add new</button>
-        <button type="submit" class="nextActive">Next</button>
+        <button type="button" class="addNew" (click)="addNewSubmit()">Add new</button>
+        <button type="submit" class="nextDisabled" [ngClass]="{'nextActive': isNextActive()}">Next</button>
     </div>
   </form>
 </div>

@@ -12,7 +12,7 @@ export class TableService {
 
     let object = data[0];
     for (let key in object) {
-      if (object[key] !== '' && object[key] !== '0'&& object[key] !== 'J') {
+      if (object[key] !== '' && object[key] !== '0'&& object[key] !== 'J'&&object[key] !== false) {
         columns.push(this.buildNameColumns(key));
       }
     }
@@ -24,7 +24,7 @@ export class TableService {
 
     for (let object of data) {
       for (let key in object) {
-        if (object[key] !== '' && object[key] !== '0'&& object[key] !== 'J') {
+        if (object[key] !== '' && object[key] !== '0'&& object[key] !== 'J'&&object[key] !== false) {
           object[key] = this.formatRows(key,object[key]);
         }
         else{
@@ -41,8 +41,8 @@ export class TableService {
       case 'airline':{
         return 'https://raw.githubusercontent.com/sexym0nk3y/airline-logos/main/logos/'+response+'.png';
       }
-      case 'subfleets':{
-        return '<a href="'+response+'">Aircraft Database</a>'
+      case 'demands':{
+        return this.formatDemands(response);
       }
       default:{
         return response
@@ -70,9 +70,25 @@ export class TableService {
       case 'subfleets':{
         return 'Aircraft'
       }
+      case 'demands':{
+        return "Demand Type"
+      }
+      case 'countries':{
+        return "Countries"
+      }
+      case 'hub':{
+        return "Hub"
+      }
       default:{
         return ''
       }
     }
+  }
+
+  private formatDemands(response:string){
+    return String(response)
+    .split(',')
+    .map(word => word.charAt(0)+",")
+    .join('');
   }
 }
