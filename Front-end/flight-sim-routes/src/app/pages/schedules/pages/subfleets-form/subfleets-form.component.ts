@@ -38,6 +38,16 @@ export class SubfleetsFormComponent {
       this.countries = data;
     });
     this.airlineName = this.scheduleForm.getAirlineName();
+    const dataStorage = this.scheduleForm.getFormDataList();
+    const existingDataIndex = dataStorage.findIndex(item => item.airlineName === this.airlineName);
+    this.data = dataStorage[existingDataIndex];
+    if(this.data.aircraft != null){
+      this.convertAircraftToTable(this.data.aircraft);
+      this.subfleets = this.data.aircraft;
+
+      this.columns = this.table.buildColumns(this.table_subfleets);
+      this.rows = this.table.buildRows(this.table_subfleets);
+    }
   }
 
   onFormControlChange(formControl: string, controlName: string) {
@@ -46,10 +56,6 @@ export class SubfleetsFormComponent {
 
   onSubmitNext():void{
     if(this.isNextActive()){
-      const dataStorage = this.scheduleForm.getFormDataList();
-      const existingDataIndex = dataStorage.findIndex(item => item.airlineName === this.airlineName);
-      this.data = dataStorage[existingDataIndex];
-
       const aircraftData = { ...this.data, aircraft: {...this.subfleets}  };
       this.scheduleForm.setFormData(aircraftData);
     }
@@ -57,6 +63,14 @@ export class SubfleetsFormComponent {
 
   addNewSubmit():void{
     this.addToSubfleets();
+    this.columns = this.table.buildColumns(this.table_subfleets);
+    this.rows = this.table.buildRows(this.table_subfleets);
+  }
+
+  deleteItem(item: any) {
+    this.subfleets = Object.values(this.subfleets).filter(i => i.subfleets !== item.subfleets);
+    this.table_subfleets = Object.values(this.table_subfleets).filter(i => i.subfleets !== item.subfleets);
+
     this.columns = this.table.buildColumns(this.table_subfleets);
     this.rows = this.table.buildRows(this.table_subfleets);
   }
@@ -89,6 +103,36 @@ export class SubfleetsFormComponent {
       }
     }
     return false;
+  }
+
+  private getDensityName(aircrafts:Aircraft):string[]{
+    let demand:string[] = [];
+    if(aircrafts.extremeDemand==true){
+      demand.push("Extreme Demand")
+    }
+    if(aircrafts.bigDemand==true){
+      demand.push("Big Demand")
+    }
+    if(aircrafts.mediumDemand==true){
+      demand.push("Medium Demand")
+    }
+    if(aircrafts.lessDemand==true){
+      demand.push("Low Demand")
+    }
+    return demand;
+  }
+
+  private convertAircraftToTable(aircrafts:Aircraft[]){
+
+    for(let key in aircrafts){
+      const aircraft_table = {
+        subfleets:aircrafts[key].subfleets,
+        hub:aircrafts[key].hub,
+        countries:aircrafts[key].countries,
+        demands:this.getDensityName(aircrafts[key]),
+      }
+      this.table_subfleets.push(aircraft_table)
+    }
   }
 
   isNextActive():boolean{

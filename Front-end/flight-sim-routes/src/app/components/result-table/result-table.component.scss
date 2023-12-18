@@ -106,6 +106,14 @@ svg{
     height: 30px;
 }
 
+.actions svg{
+    width: 24px;
+    height: 24px;
+}
+.actions:hover{
+    cursor: pointer;
+}
+
 @media (max-width: 1300px) {
     .container{
         width: 100%;

@@ -1,4 +1,4 @@
-import { Component, HostListener, Input} from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
 
 export interface TableRow {
   column1: string;
@@ -15,9 +15,12 @@ export class ResultTableComponent {
   @Input() columns: string[] = [];
   @Input() rows: any[] = [];
   @Input() error: boolean = false;
+  @Input() actions: boolean = false;
 
   currentPage: number = 1;
   itemsPerPage: number = 0;
+  
+  @Output() deleteRowEvent = new EventEmitter<any>();
 
   toArray(data: any) {
     return Object.keys(data).map(key => data[key])
@@ -54,5 +57,9 @@ export class ResultTableComponent {
   totalPages(): number {
     return Math.ceil(this.rows.length / this.itemsPerPage);
   }  
+
+  deleteRow(row: any) {
+    this.deleteRowEvent.emit(row);
+  }
 
 }
