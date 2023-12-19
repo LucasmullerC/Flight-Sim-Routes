@@ -8,6 +8,141 @@
 .tables{
     display: flex;
     flex-direction: row;
-
+    justify-content: space-around;
     width: 100%;
 }
+.table{
+    width: 150px;
+}
+
+.form-airports{
+    display: flex;
+    width: 975px;
+    height: 350px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 26px 50px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+.form-section{
+    display: flex;
+    width: 460px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.custom-input, .custom-select{
+    width: 100%;
+}
+
+.buttons-container{
+    display: flex;
+    gap: 26px 50px;
+}
+
+.buttons-container button{
+    width: 205px;
+    height: 57px;
+    flex-shrink: 0;
+
+    border-radius: 5px;
+
+    color: #FFF;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border-style:solid
+}
+
+.addNew{
+    background: #002142;
+}
+
+.nextActive{
+    background: #2C8424 !important;
+    border-style:none !important;
+}
+.nextActive:hover{
+    cursor: pointer !important;
+}
+.nextDisabled{
+    background: #cccccc;
+    border-style:none !important;
+}
+.nextDisabled:hover{
+    cursor:default;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+mat-select {
+    display: flex;
+    padding: 12px;
+    width: 100%;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 4px;
+    border: 1px solid #F8FAFC;
+    background-color: #F8FAFC;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0.16px;
+  }
+  
+  mat-option {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0.16px;
+  }
+  
+  mat-select:focus {
+    border-color: #002142;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.12);
+  }
+
+  @media (max-width: 1300px) {
+    .form-airports{
+        width: 100%;
+        height: 100%;
+    }
+    .table{
+        width: 100%;
+    }
+}
+
+@media (max-width: 1300px) and (min-width: 1100px) {
+    .form-airports{
+        width: 100%;
+        height: 100%;
+    }
+    .table{
+        width: 100%;
+    }
+    .form-section{
+        width: 40%;
+    }
+}
+
+@media (max-width: 580px) {
+    .form-section{
+        width: 90%;
+    }
+    .buttons-container{
+        flex-direction: column;
+    }
+}
+
