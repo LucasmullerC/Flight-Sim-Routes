@@ -37,9 +37,12 @@ export class ResultTableComponent {
     if(this.itemsPerPage == 0){
       this.itemsPerPage = 5;
     }
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    return this.rows.slice(startIndex, endIndex);
+    if(this.rows.length >= 1){
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.rows.slice(startIndex, endIndex);
+    }
+    return this.rows;
   }
 
   nextPage() {

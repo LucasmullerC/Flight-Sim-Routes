@@ -7,6 +7,7 @@
       </tr>
     </thead>
     <tbody>
+      
       <tr *ngFor="let row of getPaginatedRows()">
         <td *ngIf="actions">
           <div class="actions" (click)="deleteRow(row)"> 
@@ -15,7 +16,7 @@
           </svg>
         </div>
       </td>
-        <td *ngFor="let key of toArray(row)">{{ key }}</td>
+        <td *ngFor="let key of toArray(row); let i = index" [attr.data-title]="columns[i]+'- '">{{ key }}</td>
       </tr>
     </tbody>
   </table>

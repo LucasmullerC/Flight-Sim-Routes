@@ -1,1 +1,15 @@
-<p>airports-form works!</p>
+<div class="component">
+    <app-header
+    [title]="'Schedules'"
+    [subtitle]="'Airports - '+airlineName"
+    [imageUrl]="'../../assets/images/transparent_blue_fit.png'"
+  ></app-header>
+
+  <div class="tables">
+    <app-result-table class="table" [columns]="columns" [rows]="rows"></app-result-table>
+
+    <app-result-table class="table" [columns]="columns" [rows]="rows"></app-result-table>
+
+    <app-result-table class="table" [columns]="columns" [rows]="rows"></app-result-table>
+  </div>
+</div>

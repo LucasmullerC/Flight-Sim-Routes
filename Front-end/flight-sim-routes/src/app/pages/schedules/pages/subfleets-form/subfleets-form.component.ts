@@ -43,7 +43,7 @@ export class SubfleetsFormComponent {
     this.data = dataStorage[existingDataIndex];
     if(this.data.aircraft != null){
       this.convertAircraftToTable(this.data.aircraft);
-      this.subfleets = this.data.aircraft;
+      this.subfleets.concat(this.data.aircraft)
 
       this.columns = this.table.buildColumns(this.table_subfleets);
       this.rows = this.table.buildRows(this.table_subfleets);
@@ -92,8 +92,8 @@ export class SubfleetsFormComponent {
       countries:this.subfleetsForm.value.countries,
       demands:this.subfleetsForm.value.demands,
     }
-    this.subfleets.push(aircraft)
-    this.table_subfleets.push(aircraft_table)
+    this.subfleets.push(aircraft);
+    this.table_subfleets.push(aircraft_table);
   }
 
   private verifyDensity(demandType:string[],requiredType:string):boolean{

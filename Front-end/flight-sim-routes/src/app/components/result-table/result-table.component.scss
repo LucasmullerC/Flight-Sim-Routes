@@ -25,24 +25,20 @@
         font-weight: 400;
     }
 }
-table{
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-table, th, td {
-    border: 1px solid;
+table {
     border-collapse: collapse;
 }
 
-tr{
-    display: flex;
+th, td {
+    border: 1px solid;
+    border-collapse: collapse;
     width: 969px;
-    height: 65px;
-    align-items: flex-start;
 }
+
+tr{
+    height: 65px;
+}
+
 
 th{
     color: #000;
@@ -51,16 +47,12 @@ th{
     font-style: normal;
     font-weight: 700;
     line-height: 130%; /* 26px */
+    text-align: left;
 
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    align-items: flex-start;
     padding-left: 10px;
 }
 tbody{
-    width: 100%;
+
 }
 
 td{
@@ -71,11 +63,7 @@ td{
     font-weight: 400;
     line-height: 130%; /* 26px */
 
-    width: 100%;
-    height: 100%;
 
-    display: flex;
-    align-items: flex-start;
     padding-left: 10px;
 }
 .pagination{
@@ -121,4 +109,25 @@ svg{
     tr{
         width: 100%;
     }
+}
+
+@media (max-width: 500px) {
+    table thead {
+        display: none;
+    }
+    table td {
+        display: flex;
+    }
+    td::before { 
+        content: attr(data-title); 
+        color: #000;
+        font-family: Inter;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+    }
+    th, td {
+        width: 100%;
+    }
+
 }

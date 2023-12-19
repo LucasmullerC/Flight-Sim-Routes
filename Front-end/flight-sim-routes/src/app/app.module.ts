@@ -26,6 +26,7 @@ import { CustomInputComponent } from './forms/custom-input/custom-input.componen
 import { CustomSelectComponent } from './forms/custom-select/custom-select.component';
 import { CustomLabelComponent } from './forms/custom-label/custom-label.component';
 import { SubfleetsFormComponent } from './pages/schedules/pages/subfleets-form/subfleets-form.component';
+import { AirportsFormComponent } from './pages/schedules/pages/airports-form/airports-form.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SubfleetsFormComponent } from './pages/schedules/pages/subfleets-form/s
     CustomInputComponent,
     CustomSelectComponent,
     CustomLabelComponent,
-    SubfleetsFormComponent
+    SubfleetsFormComponent,
+    AirportsFormComponent
   ],
   imports: [
     BrowserModule,
