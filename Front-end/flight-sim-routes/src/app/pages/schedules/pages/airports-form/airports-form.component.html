@@ -11,7 +11,7 @@
         [title]="'Extreme Demand'"
         [required]="false"
       ></app-custom-label>
-      <app-result-table [columns]="columns" [rows]="rows"></app-result-table>
+      <app-result-table [columns]="columns" [rows]="rows.extremeDemand"></app-result-table>
     </div>
 
     <div class="table">
@@ -19,7 +19,7 @@
         [title]="'Big Demand'"
         [required]="false"
       ></app-custom-label>
-      <app-result-table [columns]="columns" [rows]="rows"></app-result-table>
+      <app-result-table [columns]="columns" [rows]="rows.bigDemand"></app-result-table>
     </div>
 
     <div class="table">
@@ -27,11 +27,11 @@
         [title]="'Medium Demand'"
         [required]="false"
       ></app-custom-label>
-      <app-result-table [columns]="columns" [rows]="rows"></app-result-table>
+      <app-result-table [columns]="columns" [rows]="rows.mediumDemand"></app-result-table>
     </div>
   </div>
 
-  <form ngNoForm class="form-airports" [formGroup]="airportsForm">
+  <form ngNoForm class="form-airports" [formGroup]="airportsForm" (ngSubmit)="onSubmitNext()">
     <div class="form-section">
       <app-custom-label
         [title]="'Airport ICAO'"
@@ -48,17 +48,21 @@
     <div class="form-section">
       <app-custom-label
         [title]="'Aircraft Demand Operations'"
-        [required]="false"
+        [required]="true"
       ></app-custom-label>
-      <mat-select formControlName="demands" multiple>
-        @for (demand of demands; track demand) {
-        <mat-option [value]="demand">{{ demand }}</mat-option>
-        }
-      </mat-select>
+      <app-custom-select
+      class="custom-select"
+      (selectChange)="onFormControlChange($event, 'demands')"
+      [itemList]="demands"
+      [required]="true"
+      [placeholder]="'Select'"
+      [valueField]="''"
+      [labelField]="''"
+    ></app-custom-select>
     </div>
     <div class="buttons-container">
-      <button type="button" class="addNew" >Add new</button>
-      <button type="submit" class="nextDisabled" >Next</button>
+      <button type="button" class="addNew" (click)="addNewSubmit()">Add new</button>
+      <button type="submit" class="nextDisabled" [ngClass]="{'nextActive': isNextActive()}">Next</button>
   </div>
   </form>
 </div>
