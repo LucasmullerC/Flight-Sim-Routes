@@ -3,6 +3,7 @@
     [title]="'Schedules'"
     [subtitle]="'Subfleets - '+airlineName"
     [imageUrl]="'../../assets/images/transparent_blue_fit.png'"
+    [help]="true"
   ></app-header>
 
   <app-result-table class="table" *ngIf="columns && rows" [columns]="columns" [rows]="rows" [actions]="true" (deleteRowEvent)="deleteItem($event)"></app-result-table>

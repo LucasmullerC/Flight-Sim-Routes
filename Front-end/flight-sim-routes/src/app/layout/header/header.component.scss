@@ -24,6 +24,11 @@
     padding-left: 10px;
 }
 
+.item-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 .item-title h1{
     color: #000;
     font-family: Inter;
@@ -31,4 +36,10 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+.help{
+    padding-left: 10px;
+}
+.help:hover{
+    cursor: pointer;
 }

@@ -9,6 +9,9 @@ export class HeaderComponent {
   @Input() title: string  = '';
   @Input() subtitle: string  = '';
   @Input() imageUrl: string = '';
+  @Input() help:boolean = false;
+
+  helpPopup:boolean = false;
 
   isSubtitleActive(): boolean{
     if(this.subtitle == ''){
@@ -24,6 +27,15 @@ export class HeaderComponent {
     }
     else{
       return true;
+    }
+  }
+
+  isHelpPopupActive(){
+    if(this.helpPopup==false){
+      this.helpPopup = true;
+    }
+    else{
+      this.helpPopup = false;
     }
   }
 }

@@ -1,0 +1,56 @@
+<div class="blur"></div>
+  <div class="container">
+    <div class="close-btn" (click)="onClosePage()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="50"
+        height="50"
+        viewBox="0 0 50 50"
+        fill="none"
+      >
+        <path
+          d="M40.7206 37.4042C41.1609 37.8445 41.4083 38.4417 41.4083 39.0644C41.4083 39.687 41.1609 40.2842 40.7206 40.7245C40.2803 41.1648 39.6831 41.4122 39.0605 41.4122C38.4378 41.4122 37.8406 41.1648 37.4003 40.7245L24.9999 28.3202L12.5956 40.7206C12.1553 41.1609 11.5581 41.4083 10.9355 41.4083C10.3128 41.4083 9.71561 41.1609 9.27531 40.7206C8.83501 40.2803 8.58765 39.6831 8.58765 39.0605C8.58765 38.4378 8.83501 37.8406 9.27531 37.4003L21.6796 24.9999L9.27921 12.5956C8.83891 12.1553 8.59155 11.5581 8.59155 10.9355C8.59155 10.3128 8.83891 9.71561 9.27921 9.27531C9.71951 8.835 10.3167 8.58765 10.9394 8.58765C11.562 8.58765 12.1592 8.835 12.5995 9.27531L24.9999 21.6796L37.4042 9.27335C37.8445 8.83305 38.4417 8.58569 39.0644 8.58569C39.687 8.58569 40.2842 8.83305 40.7245 9.27335C41.1648 9.71365 41.4122 10.3108 41.4122 10.9335C41.4122 11.5562 41.1648 12.1534 40.7245 12.5937L28.3202 24.9999L40.7206 37.4042Z"
+          fill="black"
+        />
+      </svg>
+    </div>
+    <h1>Understanding Demands and Subfleets</h1>
+    <div class="paragraph">
+      <p class="title">What are Demands?</p>
+      <ul>
+        <li>Demands reflect the desired activity level for an airport.</li>
+        <li>
+          They are divided into four types:
+          <span>Extreme Demand, Big Demand, Medium Demand,</span> and
+          <span>Low Demand.</span>
+        </li>
+      </ul>
+
+      <p class="title">Selecting Demands for Airports:</p>
+      <ul>
+        <li>Customize the activity of each airport by choosing the demand type in the <span>Airports section.</span></li>
+        <li>
+            If no demand type is chosen, all airports will be generated as <span>Low Demand</span>.
+        </li>
+      </ul>
+
+      <p class="title">How Do Demands Work?</p>
+      <ul>
+        <li>Demands influence the probability of an airport being included in the generated schedules.</li>
+        <li>
+            <span>Extreme Demand</span> has a <span>100%</span> chance, while <span>Big, Medium</span>, and <span>Low Demands</span> have decreasing probabilities.
+        </li>
+        <li><span>Subfleets</span> exclusively operate the chosen demands on the <span>Subfleets page</span>.</li>
+      </ul>
+
+      <p class="title">Practical Examples:</p>
+      <ul>
+        <li>Type: <span>B738</span>, Operational Countries: <span>US</span>, Aircraft Hub: <span>KJFK</span>, Aircraft Demand: <span>Extreme Demand</span></li>
+        <p class="warn">*This Aircraft will only operate to airports assigned with Extreme Demand in the US.</p>
+        <li>
+            Type: <span>A20N</span>, Operational Countries: <span>BR, AR</span>, Aircraft Hub: <span>SBGR</span>, Aircraft Demand: <span>Extreme, Big, Medium Demand</span>
+        </li>
+        <p class="warn">*This Aircraft will only operate to airports assigned with Extreme, Big and Medium Demand in Brazil and Argentina.</p>
+      </ul>
+    </div>
+  </div>
