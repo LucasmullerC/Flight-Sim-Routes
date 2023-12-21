@@ -28,6 +28,7 @@ import { CustomLabelComponent } from './forms/custom-label/custom-label.componen
 import { SubfleetsFormComponent } from './pages/schedules/pages/subfleets-form/subfleets-form.component';
 import { AirportsFormComponent } from './pages/schedules/pages/airports-form/airports-form.component';
 import { HelpDemandsComponent } from './components/help-demands/help-demands.component';
+import { GeneralFormComponent } from './pages/schedules/pages/general-form/general-form.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { HelpDemandsComponent } from './components/help-demands/help-demands.com
     CustomLabelComponent,
     SubfleetsFormComponent,
     AirportsFormComponent,
-    HelpDemandsComponent
+    HelpDemandsComponent,
+    GeneralFormComponent
   ],
   imports: [
     BrowserModule,

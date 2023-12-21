@@ -1,1 +1,66 @@
-<p>general-form works!</p>
+<div class="component">
+    <app-header
+    [title]="'Schedules'"
+    [subtitle]="'Airports - ' + airlineName"
+    [imageUrl]="'../../assets/images/transparent_blue_fit.png'"
+  ></app-header>
+
+  <form ngNoForm class="form-general" [formGroup]="generalForm" (ngSubmit)="onSubmit()">
+    <div class="form-section">
+        <app-custom-label
+          [title]="'Starting Flight Number'"
+          [required]="true"
+        ></app-custom-label>
+        <app-custom-input
+          class="custom-input"
+          (formControlChange)="onFormControlChange($event, 'flight_number')"
+          [type]="'number'"
+          [placeholder]="'6000'"
+          [min]="1"
+          [max]="9999"
+        ></app-custom-input>
+      </div>
+
+      <div class="form-section">
+        <app-custom-label
+          [title]="'Flight Density'"
+          [required]="true"
+        ></app-custom-label>
+        <app-custom-select
+        class="custom-select"
+        (selectChange)="onFormControlChange($event, 'routeDensity')"
+        [itemList]="density"
+        [required]="true"
+        [placeholder]="'Select'"
+        [valueField]="''"
+        [labelField]="''"
+      ></app-custom-select>
+      </div>
+
+      <div class="form-section">
+        <app-custom-label
+        [title]="'Generate International Flights:'"
+        [required]="false"
+      ></app-custom-label>
+        <input
+        id="checkbox-item"
+        type="checkbox"
+        formControlName="international"
+      />
+      </div>
+      <div class="form-section">
+        <app-custom-label
+        [title]="'Generate Repetitive Flights:'"
+        [required]="false"
+      ></app-custom-label>
+        <input
+        id="checkbox-item"
+        type="checkbox"
+        formControlName="isRepetitive"
+      />
+      </div>
+      <div class="button-container">
+        <button type="submit">Generate and Download</button>
+      </div>
+  </form>
+</div>
