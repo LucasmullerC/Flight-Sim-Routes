@@ -56,7 +56,7 @@ export class SubfleetsFormComponent {
 
   onSubmitNext():void{
     if(this.isNextActive()){
-      const aircraftData = { ...this.data, aircraft: {...this.subfleets}  };
+      const aircraftData = { ...this.data, aircraft: [...this.subfleets]  };
       this.scheduleForm.setFormData(aircraftData);
     }
   }

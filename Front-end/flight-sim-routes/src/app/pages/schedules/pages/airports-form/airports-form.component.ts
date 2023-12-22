@@ -47,7 +47,7 @@ export class AirportsFormComponent {
 
   onSubmitNext():void{
     if(this.isNextActive()){
-      const airportData = { ...this.data, extremeDemand: {...this.extremeDemand},bigDemand:{...this.bigDemand},mediumDemand:{...this.mediumDemand} };
+      const airportData = { ...this.data, extremeDemand: [...this.extremeDemand],bigDemand:[...this.bigDemand],mediumDemand:[...this.mediumDemand] };
       this.scheduleForm.setFormData(airportData);
     }
   }

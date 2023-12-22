@@ -35,10 +35,9 @@ export class GeneralFormComponent {
     const international = this.formatInternational();
     const generalData = { ...this.data, 
       flight_number: this.generalForm.value.flight_number,
-      route_density: routeDensity,
+      routeDensity: routeDensity,
       isRepetitive: this.generalForm.value.isRepetitive,
-      intenational:international };
-    console.log(generalData);
+      international:international };
     this.scheduleForm.setFormData(generalData);
   }
 

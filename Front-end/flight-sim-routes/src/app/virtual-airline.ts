@@ -5,6 +5,8 @@ export interface VirtualAirline {
     airline:string;
     flight_number:number;
     isRepetitive:boolean;
+    international:number;
+    baseCountry:string;
     hubs:string[];
     routeDentisy:number;
     extremeDemand:string[];

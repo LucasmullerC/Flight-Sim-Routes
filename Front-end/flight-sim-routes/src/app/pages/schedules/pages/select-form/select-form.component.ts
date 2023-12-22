@@ -40,11 +40,21 @@ export class SelectFormComponent {
   }
 
   onSubmitCreateNew(): void {
-    this.scheduleForm.setFormData(this.schedulesForm.value);
+    const newAirlineData = {
+      airlineName:this.schedulesForm.value.airlineName,
+      airline: this.schedulesForm.value.airline,
+      baseCountry: this.schedulesForm.value.country,
+      hubs: this.getHubs(),
+    }
+    this.scheduleForm.setFormData(newAirlineData);
     this.scheduleForm.setAirlineName(this.schedulesForm.value.airlineName);
   }
 
   onFormControlChange(formControl: string, controlName: string) {
     this.schedulesForm.setControl(controlName, new FormControl(formControl));
+  }
+
+  getHubs():string[]{
+    return this.schedulesForm.value.hubs.split(",");
   }
 }
