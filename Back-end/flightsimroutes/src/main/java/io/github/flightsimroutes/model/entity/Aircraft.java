@@ -1,18 +1,30 @@
 package io.github.flightsimroutes.model.entity;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Aircraft {
     private String subfleets;
     private String hub;
     private ArrayList<String> countries;
-
+    
     private boolean extremeDemand;
     private boolean bigDemand;
     private boolean mediumDemand;
     private boolean lessDemand;
+    
+        public Aircraft() {
+    }
 
-    public Aircraft(String subfleets,ArrayList<String> countries, boolean extremeDemand, boolean bigDemand, boolean mediumDemand,
-            boolean lessDemand) {
+    @JsonCreator
+        public Aircraft(
+            @JsonProperty("subfleets") String subfleets,
+            @JsonProperty("countries") ArrayList<String> countries,
+            @JsonProperty("extremeDemand") boolean extremeDemand,
+            @JsonProperty("bigDemand") boolean bigDemand,
+            @JsonProperty("mediumDemand") boolean mediumDemand,
+            @JsonProperty("lessDemand") boolean lessDemand) {
         this.subfleets = subfleets;
         this.countries = countries;
         this.extremeDemand = extremeDemand;
