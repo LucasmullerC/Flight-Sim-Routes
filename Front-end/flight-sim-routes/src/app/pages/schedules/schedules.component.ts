@@ -1,8 +1,6 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component} from '@angular/core';
 import { ScheduleFormService } from 'src/app/services/schedule-form.service';
 import { SchedulesService } from 'src/app/services/schedules.service';
-import { VirtualAirline } from 'src/app/virtual-airline';
 
 @Component({
   selector: 'app-schedules',
@@ -13,8 +11,7 @@ export class SchedulesComponent {
   activeForm: number = 1;
   constructor(private formService: ScheduleFormService,
     private scheduleService: SchedulesService,
-    private scheduleForm: ScheduleFormService,
-    private route: ActivatedRoute,private elementRef: ElementRef) {
+    private scheduleForm: ScheduleFormService) {
       this.formService.formCompleted.subscribe(() => {
         this.nextForm();
       });

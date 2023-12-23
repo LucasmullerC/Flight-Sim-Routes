@@ -29,6 +29,7 @@ import { SubfleetsFormComponent } from './pages/schedules/pages/subfleets-form/s
 import { AirportsFormComponent } from './pages/schedules/pages/airports-form/airports-form.component';
 import { HelpDemandsComponent } from './components/help-demands/help-demands.component';
 import { GeneralFormComponent } from './pages/schedules/pages/general-form/general-form.component';
+import { ThankyouComponent } from './pages/schedules/pages/thankyou/thankyou.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { GeneralFormComponent } from './pages/schedules/pages/general-form/gener
     SubfleetsFormComponent,
     AirportsFormComponent,
     HelpDemandsComponent,
-    GeneralFormComponent
+    GeneralFormComponent,
+    ThankyouComponent
   ],
   imports: [
     BrowserModule,
