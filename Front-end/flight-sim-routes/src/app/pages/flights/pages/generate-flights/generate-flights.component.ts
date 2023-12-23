@@ -40,7 +40,7 @@ export class GenerateFlightsComponent {
     
     this.flightService.requestData$.subscribe((formData) => {
       if(formData != undefined){
-        if(formData.status != 500){
+        if(formData.status == undefined){
           this.columns = this.table.buildColumns(formData);
           this.rows = this.table.buildRows(formData);
         }

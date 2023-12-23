@@ -9,6 +9,7 @@ import { SchedulesService } from 'src/app/services/schedules.service';
 })
 export class SchedulesComponent {
   activeForm: number = 1;
+  error: boolean = false;
   constructor(private formService: ScheduleFormService,
     private scheduleService: SchedulesService,
     private scheduleForm: ScheduleFormService) {
@@ -41,7 +42,8 @@ export class SchedulesComponent {
         this.scheduleService.downloadFile(blob, filename);
       },
       error => {
-        console.error('Erro ao gerar e baixar agendamentos:', error);
+        this.error = true;
+        console.error('An error occured:', error);
       }
     );
   }

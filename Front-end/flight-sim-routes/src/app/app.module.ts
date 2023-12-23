@@ -30,6 +30,7 @@ import { AirportsFormComponent } from './pages/schedules/pages/airports-form/air
 import { HelpDemandsComponent } from './components/help-demands/help-demands.component';
 import { GeneralFormComponent } from './pages/schedules/pages/general-form/general-form.component';
 import { ThankyouComponent } from './pages/schedules/pages/thankyou/thankyou.component';
+import { DatabaseErrorComponent } from './components/database-error/database-error.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ThankyouComponent } from './pages/schedules/pages/thankyou/thankyou.com
     AirportsFormComponent,
     HelpDemandsComponent,
     GeneralFormComponent,
-    ThankyouComponent
+    ThankyouComponent,
+    DatabaseErrorComponent
   ],
   imports: [
     BrowserModule,

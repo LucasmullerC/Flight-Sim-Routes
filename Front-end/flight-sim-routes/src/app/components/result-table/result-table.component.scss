@@ -4,27 +4,6 @@
     flex-direction: column;
     padding-top: 10px;
 }
-.errorBox{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 10px;
-    
-    h1{
-        color: red;
-        font-family: Inter;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 700;
-    }
-    p{
-        color: red;
-        font-family: Inter;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 400;
-    }
-}
 table {
     border-collapse: collapse;
 }
