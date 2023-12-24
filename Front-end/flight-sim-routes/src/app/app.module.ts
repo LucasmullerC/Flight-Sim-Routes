@@ -31,6 +31,7 @@ import { HelpDemandsComponent } from './components/help-demands/help-demands.com
 import { GeneralFormComponent } from './pages/schedules/pages/general-form/general-form.component';
 import { ThankyouComponent } from './pages/schedules/pages/thankyou/thankyou.component';
 import { DatabaseErrorComponent } from './components/database-error/database-error.component';
+import { AboutComponent } from './pages/about/about.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { DatabaseErrorComponent } from './components/database-error/database-err
     HelpDemandsComponent,
     GeneralFormComponent,
     ThankyouComponent,
-    DatabaseErrorComponent
+    DatabaseErrorComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { FlightsComponent } from './pages/flights/flights.component';
 import { BannerFlightsComponent } from './pages/flights/pages/banner-flights/banner-flights.component';
 import { GenerateFlightsComponent } from './pages/flights/pages/generate-flights/generate-flights.component';
 import { SchedulesComponent } from './pages/schedules/schedules.component';
+import { AboutComponent } from './pages/about/about.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path:'schedules',
     component: SchedulesComponent
+  },
+  {
+    path:'about',
+    component: AboutComponent
   },
 ];
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-contactme',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./contactme.component.scss']
 })
 export class ContactmeComponent {
-  
+  @Input() row: boolean = false;
 }
