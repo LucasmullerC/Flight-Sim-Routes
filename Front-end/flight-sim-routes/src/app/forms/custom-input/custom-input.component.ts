@@ -11,10 +11,12 @@ export class CustomInputComponent {
   @Input() required: boolean = false;
   @Input() min?: number = 0;
   @Input() max?: number = 0;
+  @Input() uppercase: boolean = false;
 
   @Output() formControlChange = new EventEmitter<string>();
 
   onFormControlChange(event:any) {
-    this.formControlChange.emit(event.target.value);
+    const value = ((this.uppercase) ? event.target.value.toUpperCase() : event.target.value)
+    this.formControlChange.emit(value);
   }
 }
