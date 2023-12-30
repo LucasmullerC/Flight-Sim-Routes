@@ -11,7 +11,7 @@ export class BannerComponent {
   @Input() description: string  = '';
   @Input() buttonText: string = '';
   @Input() buttonIconPath: string = '';
-  @Input() routerLink: string = '';
+  @Input() customRouterLink: string = '';
   @Input() isRow: boolean = false;
 
   isIconActive(): boolean {

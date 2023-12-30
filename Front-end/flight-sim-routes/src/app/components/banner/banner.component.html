@@ -5,7 +5,7 @@
     <div class="description-button-column" [ngClass]="{'description-button': isRow }">
         <p class="description">{{description}}</p>
         <div class="link-section">
-            <a routerLink={{routerLink}}>
+            <a routerLink={{customRouterLink}}>
                 <button class="button">
                     <img *ngIf="isIconActive()" [src]="buttonIconPath" alt="Button Icon">
                     <p>{{buttonText}}</p>
