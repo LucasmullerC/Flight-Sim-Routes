@@ -13,16 +13,30 @@ export class SelectFormComponent {
   countries: any[] = [];
   data!: VirtualAirline;
   dataList:VirtualAirline[]=[];
+  errorBtn:boolean=false;
   constructor(private countryService: CountryService,
     private scheduleForm: ScheduleFormService, 
     private formBuilder: FormBuilder,) {}
   
     schedulesForm: FormGroup = this.formBuilder.group({
       airlineName: '',
-      airline:'',
+      airline:['',[
+        Validators.required,
+        Validators.maxLength(3),
+        Validators.minLength(3),
+        Validators.pattern('^[a-zA-Z ]*$')]
+      ],
       country: ['', Validators.required],
       hubs: '',
     });
+
+    public validationMessages = {
+      'airline': [
+        { type: 'maxlength', message: 'Maximum length allowed is 3 characters.' },
+        { type: 'minlength', message: 'Minimum length required is 3 characters.' },
+        { type: 'pattern', message: 'Only letters are allowed in this field.' }
+      ],
+    }
 
   ngOnInit(): void {
     this.countryService.getAllCountries().subscribe((data) => {
@@ -40,18 +54,23 @@ export class SelectFormComponent {
   }
 
   onSubmitCreateNew(): void {
-    const newAirlineData = {
-      airlineName:this.schedulesForm.value.airlineName,
-      airline: this.schedulesForm.value.airline,
-      baseCountry: this.schedulesForm.value.country,
-      hubs: this.getHubs(),
+    if(this.schedulesForm.valid){
+      const newAirlineData = {
+        airlineName:this.schedulesForm.value.airlineName,
+        airline: this.schedulesForm.value.airline,
+        baseCountry: this.schedulesForm.value.country,
+        hubs: this.getHubs(),
+      }
+      this.scheduleForm.setFormData(newAirlineData);
+      this.scheduleForm.setAirlineName(this.schedulesForm.value.airlineName);
     }
-    this.scheduleForm.setFormData(newAirlineData);
-    this.scheduleForm.setAirlineName(this.schedulesForm.value.airlineName);
+    else{
+      console.log("errado")
+    }
   }
 
   onFormControlChange(formControl: string, controlName: string) {
-    this.schedulesForm.setControl(controlName, new FormControl(formControl));
+    this.schedulesForm.controls[controlName].setValue(formControl);
   }
 
   getHubs():string[]{
