@@ -74,6 +74,6 @@ export class SelectFormComponent {
   }
 
   getHubs():string[]{
-    return this.schedulesForm.value.hubs.split(",");
+    return this.schedulesForm.value.hubs.replace(/\[|\]/g,'').split(',');
   }
 }
