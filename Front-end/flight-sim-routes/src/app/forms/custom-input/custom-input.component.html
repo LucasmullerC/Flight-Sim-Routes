@@ -1,15 +1,16 @@
 <input
-type="{{ type }}"
-[placeholder]="placeholder"
-[required]="required"
-[min]="min"
-[max]="max"
-list="exampleList"
-(input)="onFormControlChange($event)"
-[(ngModel)]="currentInput"
+  type="{{ type }}"
+  [placeholder]="placeholder"
+  [required]="required"
+  [min]="min"
+  [max]="max"
+  list="exampleList"
+  (input)="onFormControlChange($event)"
+  [(ngModel)]="currentInput"
 />
 <ng-container *ngIf="icaoInput">
-    <div *ngFor="let icao of icaoList" class="icao-box">
-        {{ icao }}
-      </div>
+  <div *ngFor="let icao of icaoList" class="icao-box">
+    {{ icao }}
+    <button (click)="removeIcao(icao)">X</button>
+  </div>
 </ng-container>

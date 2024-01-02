@@ -39,4 +39,9 @@ export class CustomInputComponent {
       this.currentInput = '';
     }
   }
+
+  removeIcao(icao: string) {
+    this.icaoList = this.icaoList.filter(item => item !== icao);
+    this.formControlChange.emit(this.icaoList.toString());
+  }
 }
