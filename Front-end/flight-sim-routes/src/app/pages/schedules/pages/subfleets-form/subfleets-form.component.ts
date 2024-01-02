@@ -28,10 +28,20 @@ export class SubfleetsFormComponent {
 
   subfleetsForm: FormGroup = this.formBuilder.group({
     subfleets:'',
-    hub:'',
+    hub:['',[
+      Validators.maxLength(4),
+      Validators.minLength(4)]
+    ],
     countries: ['', Validators.required],
     demands:[''],
   });
+
+  public validationMessages = {
+    'hub': [
+      { type: 'maxlength', message: 'Maximum length allowed is 4 characters.' },
+      { type: 'minlength', message: 'Minimum length required is 4 characters.' },
+    ],
+  }
 
   ngOnInit(): void {
     this.countryService.getAllCountries().subscribe((data) => {
@@ -51,7 +61,7 @@ export class SubfleetsFormComponent {
   }
 
   onFormControlChange(formControl: string, controlName: string) {
-    this.subfleetsForm.setControl(controlName, new FormControl(formControl));
+    this.subfleetsForm.controls[controlName].setValue(formControl);
   }
 
   onSubmitNext():void{

@@ -36,7 +36,14 @@
       "
         [type]="'textarea'"
         [placeholder]="'EDDF'"
+        [uppercase]="true"
       ></app-custom-input>
+
+      <div *ngFor="let validation of validationMessages.hub">
+        <div *ngIf="subfleetsForm.get('hub')?.hasError(validation.type)">
+          <small style="color:red;">{{validation.message}}</small>
+        </div>
+      </div>
     </div>
 
     <div class="form-section">
