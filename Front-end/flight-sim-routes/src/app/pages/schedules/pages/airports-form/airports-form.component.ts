@@ -27,9 +27,17 @@ export class AirportsFormComponent {
     private formBuilder: FormBuilder){}
 
   airportsForm: FormGroup = this.formBuilder.group({
-    icao:['', Validators.required],
-    demands:['', Validators.required],
+    icao:['', [Validators.maxLength(4),
+    Validators.minLength(4),]],
+    demands:[''],
   });
+
+  public validationMessages = {
+    'icao': [
+      { type: 'maxlength', message: 'Maximum length allowed is 4 characters.' },
+      { type: 'minlength', message: 'Minimum length required is 4 characters.' }
+    ],
+  }
 
   ngOnInit(): void {
     this.airlineName = this.scheduleForm.getAirlineName();
@@ -42,7 +50,7 @@ export class AirportsFormComponent {
   }
 
   onFormControlChange(formControl: string, controlName: string) {
-    this.airportsForm.setControl(controlName, new FormControl(formControl));
+    this.airportsForm.controls[controlName].setValue(formControl);
   }
 
   onSubmitNext():void{
@@ -53,7 +61,9 @@ export class AirportsFormComponent {
   }
 
   addNewSubmit():void{
-    this.addToAirports();
+    if(this.airportsForm.valid){
+      this.addToAirports();
+    }
   }
 
   private addToAirports(){
@@ -96,7 +106,7 @@ export class AirportsFormComponent {
   }
 
   isNextActive():boolean{
-    if(this.rows.length == 0){
+    if(this.rows.extremeDemand.length == 0 && this.rows.bigDemand.length == 0 && this.rows.mediumDemand.length == 0){
       return false;
     }
     else{
