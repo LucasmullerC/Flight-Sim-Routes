@@ -12,7 +12,7 @@
         [title]="'Extreme Demand'"
         [required]="false"
       ></app-custom-label>
-      <app-result-table [columns]="columns" [rows]="rows.extremeDemand"></app-result-table>
+      <app-result-table [columns]="columns" [rows]="rows.extremeDemand" [actions]="true" (deleteRowEvent)="onRowChange('Extreme Demand',$event)"></app-result-table>
     </div>
 
     <div class="table">
@@ -20,7 +20,7 @@
         [title]="'Big Demand'"
         [required]="false"
       ></app-custom-label>
-      <app-result-table [columns]="columns" [rows]="rows.bigDemand"></app-result-table>
+      <app-result-table [columns]="columns" [rows]="rows.bigDemand" [actions]="true" (deleteRowEvent)="onRowChange('Big Demand',$event)"></app-result-table>
     </div>
 
     <div class="table">
@@ -28,7 +28,7 @@
         [title]="'Medium Demand'"
         [required]="false"
       ></app-custom-label>
-      <app-result-table [columns]="columns" [rows]="rows.mediumDemand"></app-result-table>
+      <app-result-table [columns]="columns" [rows]="rows.mediumDemand" [actions]="true" (deleteRowEvent)="onRowChange('Medium Demand',$event)"></app-result-table>
     </div>
   </div>
 

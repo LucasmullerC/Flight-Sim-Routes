@@ -53,6 +53,38 @@ export class AirportsFormComponent {
     this.airportsForm.controls[controlName].setValue(formControl);
   }
 
+  onRowChange(type: string, row: any){
+    let rowIndex = 0;
+    let demandindex = 0;
+    switch(type){
+      case 'Extreme Demand':
+        rowIndex = this.rows.extremeDemand.indexOf(row, 0);
+        demandindex = this.extremeDemand.indexOf(row.airport, 0);
+        if (rowIndex > -1 && demandindex > -1) {
+          this.rows.extremeDemand.splice(rowIndex, 1);
+          this.extremeDemand.splice(demandindex, 1);
+        }
+        break;
+      case 'Big Demand':
+        rowIndex = this.rows.bigDemand.indexOf(row, 0);
+        demandindex = this.bigDemand.indexOf(row.airport, 0);
+        if (rowIndex > -1 && demandindex > -1) {
+          this.rows.bigDemand.splice(rowIndex, 1);
+          this.bigDemand.splice(demandindex, 1);
+        }
+        break;
+      case 'Medium Demand':
+        rowIndex = this.rows.mediumDemand.indexOf(row, 0);
+        demandindex = this.mediumDemand.indexOf(row.airport, 0);
+        if (rowIndex > -1 && demandindex > -1) {
+          this.rows.mediumDemand.splice(rowIndex, 1);
+          this.mediumDemand.splice(demandindex, 1);
+        }
+        break;
+    }
+  }
+  
+
   onSubmitNext():void{
     if(this.isNextActive()){
       const airportData = { ...this.data, extremeDemand: [...this.extremeDemand],bigDemand:[...this.bigDemand],mediumDemand:[...this.mediumDemand] };
