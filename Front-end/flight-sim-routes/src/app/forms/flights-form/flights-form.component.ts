@@ -27,6 +27,13 @@ export class FlightsFormComponent {
     private flightService: FlightsService
   ) {}
 
+  public validationMessages = {
+    'airport': [
+      { type: 'maxlength', message: 'Maximum length allowed is 4 characters.' },
+      { type: 'minlength', message: 'Minimum length required is 4 characters.' },
+    ],
+  }
+
   ngOnInit(): void {
     this.countryService.getAllCountries().subscribe((data) => {
       this.countries = data;
@@ -34,24 +41,26 @@ export class FlightsFormComponent {
   }
 
   onSubmit(): void {
-    const formData = this.flightsForm.value;
-    switch(this.database) { 
-      case "undefined":{
-        this.flightService.getFlights(formData,'http://localhost:8080/random-route');
-        break;
+    if(this.flightsForm.valid){
+      const formData = this.flightsForm.value;
+      switch(this.database) { 
+        case "undefined":{
+          this.flightService.getFlights(formData,'http://localhost:8080/random-route');
+          break;
+        }
+        case "OpenSky Network":{
+          this.flightService.getFlights(formData,'http://localhost:8080/opensky-route');
+          break;
+        }
+        default: { 
+          this.flightService.getFlights(formData,'http://localhost:8080/random-route');
+       }
       }
-      case "OpenSky Network":{
-        this.flightService.getFlights(formData,'http://localhost:8080/opensky-route');
-        break;
-      }
-      default: { 
-        this.flightService.getFlights(formData,'http://localhost:8080/random-route');
-     }
     }
   }
 
   onChildFormControlChange(formControl: string, controlName: string) {
-    this.flightsForm.setControl(controlName, new FormControl(formControl));
+    this.flightsForm.controls[controlName].setValue(formControl);
   }
 
   getInputValue(value: string, question: FormFlightsModel) {

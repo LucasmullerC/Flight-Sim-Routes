@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlightsService } from 'src/app/services/flights.service';
 import { FormFlightsModel } from 'src/app/form-flights-model';
@@ -65,8 +65,14 @@ export class GenerateFlightsComponent {
     quantity: 1,
     depCountry: [''],
     arrCountry: [''],
-    depAirport: '',
-    arrAirport: '',
+    depAirport: ['',[
+      Validators.maxLength(4),
+      Validators.minLength(4)]
+    ],
+    arrAirport: ['',[
+      Validators.maxLength(4),
+      Validators.minLength(4)]
+    ],
     minDistance: 1,
     maxDistance: 9999,
     continuous: false,
@@ -74,8 +80,14 @@ export class GenerateFlightsComponent {
 
   realFlightsDB = this.formBuilder.group({
     quantity: 1,
-    depAirport: '',
-    arrAirport: '',
+    depAirport: ['',[
+      Validators.maxLength(4),
+      Validators.minLength(4)]
+    ],
+    arrAirport: ['',[
+      Validators.maxLength(4),
+      Validators.minLength(4)]
+    ],
     beginTime:this.unixTime.getUnixYesterday(),
     endTime:this.unixTime.getUnixYesterdayPlusTwoHours(),
     minDistance: 1,
