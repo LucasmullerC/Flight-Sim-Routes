@@ -31,14 +31,16 @@ export class GeneralFormComponent {
   }
 
   onSubmit():void{
-    const routeDensity = this.getRouteDensity();
-    const international = this.formatInternational();
-    const generalData = { ...this.data, 
-      flight_number: this.generalForm.value.flight_number,
-      routeDensity: routeDensity,
-      isRepetitive: this.generalForm.value.isRepetitive,
-      international:international };
-    this.scheduleForm.setFormData(generalData);
+    if(this.generalForm.valid){
+      const routeDensity = this.getRouteDensity();
+      const international = this.formatInternational();
+      const generalData = { ...this.data, 
+        flight_number: this.generalForm.value.flight_number,
+        routeDensity: routeDensity,
+        isRepetitive: this.generalForm.value.isRepetitive,
+        international:international };
+      this.scheduleForm.setFormData(generalData);
+    }
   }
 
   private formatInternational():number{
@@ -64,7 +66,7 @@ export class GeneralFormComponent {
   }
 
   onFormControlChange(formControl: string, controlName: string) {
-    this.generalForm.setControl(controlName, new FormControl(formControl));
+    this.generalForm.controls[controlName].setValue(formControl);
   }
 
 }
