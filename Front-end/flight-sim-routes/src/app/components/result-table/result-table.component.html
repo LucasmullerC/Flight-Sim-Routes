@@ -16,7 +16,9 @@
           </svg>
         </div>
       </td>
-        <td *ngFor="let key of toArray(row); let i = index" [attr.data-title]="columns[i]+'- '">{{ key }}</td>
+        <td *ngFor="let key of toArray(row); let i = index" [attr.data-title]="columns[i]+'- '">
+          <div [innerHTML]="key"></div>
+        </td>
       </tr>
     </tbody>
   </table>

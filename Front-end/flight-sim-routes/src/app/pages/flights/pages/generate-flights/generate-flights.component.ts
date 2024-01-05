@@ -79,6 +79,7 @@ export class GenerateFlightsComponent {
   });
 
   realFlightsDB = this.formBuilder.group({
+    database:['',[Validators.required]],
     quantity: 1,
     depAirport: ['',[
       Validators.maxLength(4),
@@ -88,6 +89,8 @@ export class GenerateFlightsComponent {
       Validators.maxLength(4),
       Validators.minLength(4)]
     ],
+    //beginTime:1698595826,
+    //endTime:1698599426,
     beginTime:this.unixTime.getUnixYesterday(),
     endTime:this.unixTime.getUnixYesterdayPlusTwoHours(),
     minDistance: 1,

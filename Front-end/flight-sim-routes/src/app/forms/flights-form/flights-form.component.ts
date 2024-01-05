@@ -43,7 +43,7 @@ export class FlightsFormComponent {
   onSubmit(): void {
     if(this.flightsForm.valid){
       const formData = this.flightsForm.value;
-      switch(this.database) { 
+      switch(this.flightsForm.value.database) { 
         case "undefined":{
           this.flightService.getFlights(formData,'http://localhost:8080/random-route');
           break;

@@ -39,7 +39,7 @@ export class TableService {
   private formatRows(key:string,response:string): string{
     switch(key){
       case 'airline':{
-        return 'https://raw.githubusercontent.com/sexym0nk3y/airline-logos/main/logos/'+response+'.png';
+        return '<img style="display:block;" width="100%" height="65px" src="https://raw.githubusercontent.com/sexym0nk3y/airline-logos/main/logos/'+response+'.png" alt="Airline Logo" class="airlinelogo">';
       }
       case 'demands':{
         return this.formatDemands(response);
