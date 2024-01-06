@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import { CountryService } from 'src/app/services/country.service';
 import { FlightsService } from 'src/app/services/flights.service';
@@ -16,7 +16,7 @@ export class FlightsFormComponent {
   maxValue: any = 9999;
   database: any = '';
   databaseList: String[] = ['OpenSky Network'];
-  buttonMessage: String = 'Generate!';
+  @Output() ButtonPressed = new EventEmitter<boolean>();
 
   @Input()
   formOptions: FormFlightsModel[] = [];
@@ -44,7 +44,7 @@ export class FlightsFormComponent {
   onSubmit(): void {
     if(this.flightsForm.valid){
       const formData = this.flightsForm.value;
-      this.buttonMessage = 'Loading...';
+      this.ButtonPressed.emit(true);
       switch(this.flightsForm.value.database) { 
         case "undefined":{
           this.flightService.getFlights(formData,'https://flightsimroutes.onrender.com/random-route');
@@ -58,7 +58,6 @@ export class FlightsFormComponent {
           this.flightService.getFlights(formData,'https://flightsimroutes.onrender.com/random-route');
        }
       }
-      this.buttonMessage = 'Generate!';
     }
   }
 

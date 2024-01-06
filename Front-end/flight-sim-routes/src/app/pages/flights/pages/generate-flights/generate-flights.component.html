@@ -5,6 +5,7 @@
     [imageUrl]="'../../assets/images/transparent_blue_fit.png'"
     ></app-header>
 
-    <app-flights-form class="form" [formOptions]="selectedForm" [flightsForm]="flightsForm" ></app-flights-form>
+    <app-flights-form class="form" [formOptions]="selectedForm" [flightsForm]="flightsForm" (ButtonPressed)="OnbuttonPress($event)"></app-flights-form>
+    <h1 *ngIf="loading">Loading...</h1>
     <app-result-table class="table" *ngIf="columns && rows || error_table" [columns]="columns" [rows]="rows" [error]="error_table"></app-result-table>
 </div>

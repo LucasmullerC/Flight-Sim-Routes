@@ -19,6 +19,7 @@ export class GenerateFlightsComponent {
   columns: string[] = [];
   rows: any;
   error_table: boolean = false;
+  loading: boolean = false;
 
   constructor(private router: Router, 
     private flightService: FlightsService,
@@ -47,6 +48,7 @@ export class GenerateFlightsComponent {
         else{
           this.error_table = true;
         }
+        this.loading = false;
       }
     });
 
@@ -59,6 +61,10 @@ export class GenerateFlightsComponent {
   ngOnDestroy(): void {
     this.columns = [];
     this.rows = [];
+  }
+
+  OnbuttonPress(loading:boolean){
+    this.loading = loading;
   }
 
   randomDB = this.formBuilder.group({
