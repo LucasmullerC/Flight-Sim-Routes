@@ -45,15 +45,15 @@ export class FlightsFormComponent {
       const formData = this.flightsForm.value;
       switch(this.flightsForm.value.database) { 
         case "undefined":{
-          this.flightService.getFlights(formData,'http://localhost:8080/random-route');
+          this.flightService.getFlights(formData,'https://flightsimroutes.onrender.com/random-route');
           break;
         }
         case "OpenSky Network":{
-          this.flightService.getFlights(formData,'http://localhost:8080/opensky-route');
+          this.flightService.getFlights(formData,'https://flightsimroutes.onrender.com/opensky-route');
           break;
         }
         default: { 
-          this.flightService.getFlights(formData,'http://localhost:8080/random-route');
+          this.flightService.getFlights(formData,'https://flightsimroutes.onrender.com/random-route');
        }
       }
     }

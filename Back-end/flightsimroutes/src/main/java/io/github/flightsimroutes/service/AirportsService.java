@@ -1,15 +1,14 @@
 package io.github.flightsimroutes.service;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.util.ResourceUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StreamUtils;
 
 import io.github.flightsimroutes.model.entity.Airport;
 import io.github.flightsimroutes.util.AirportUtils;
@@ -50,24 +49,21 @@ public class AirportsService {
      */
     private ArrayList<Airport> readAirports(String baseCountry) {
         ArrayList<Airport> airports = new ArrayList<>();
-        try {
-            File file = ResourceUtils.getFile("classpath:"+airportsCsvFilename);
-            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-                for (String line; (line = br.readLine()) != null;) {
-                    String[] attributes = line.split(",");
-                    Airport airport = createAirports(attributes, baseCountry);
-                    if (airport != null) {
-                        airports.add(airport);
-                    }
+        ClassPathResource resource = new ClassPathResource(airportsCsvFilename);
+        try (InputStream inputStream = resource.getInputStream()) {
+            String content = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
+            String[] lines = content.split("\n");
+            for (String line : lines) {
+                String[] attributes = line.split(",");
+                Airport airport = createAirports(attributes, baseCountry);
+                if (airport != null) {
+                    airports.add(airport);
                 }
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
         return airports;
-
     }
 
     private Airport createAirports(String[] metadata, String baseCountry) {
