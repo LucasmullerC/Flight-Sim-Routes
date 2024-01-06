@@ -16,6 +16,7 @@ export class FlightsFormComponent {
   maxValue: any = 9999;
   database: any = '';
   databaseList: String[] = ['OpenSky Network'];
+  buttonMessage: String = 'Generate!';
 
   @Input()
   formOptions: FormFlightsModel[] = [];
@@ -43,6 +44,7 @@ export class FlightsFormComponent {
   onSubmit(): void {
     if(this.flightsForm.valid){
       const formData = this.flightsForm.value;
+      this.buttonMessage = 'Loading...';
       switch(this.flightsForm.value.database) { 
         case "undefined":{
           this.flightService.getFlights(formData,'https://flightsimroutes.onrender.com/random-route');
@@ -56,6 +58,7 @@ export class FlightsFormComponent {
           this.flightService.getFlights(formData,'https://flightsimroutes.onrender.com/random-route');
        }
       }
+      this.buttonMessage = 'Generate!';
     }
   }
 
