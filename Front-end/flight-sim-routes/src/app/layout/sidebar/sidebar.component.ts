@@ -31,13 +31,15 @@ export class SidebarComponent {
   }
 
   toggleMenu() {
-    this.menuActivated = !this.menuActivated;
+    if(window.innerWidth < 1110){
+      this.menuActivated = !this.menuActivated;
 
-    if(this.menuActivated == false){
-      document.body.style.overflow ='auto';
-    }
-    else{
-      document.body.style.overflow ='hidden';
+      if(this.menuActivated == false){
+        document.body.style.overflow ='auto';
+      }
+      else{
+        document.body.style.overflow ='hidden';
+      }
     }
   }
 
