@@ -20,7 +20,6 @@ export class SchedulesComponent implements OnDestroy {
   ) {
     this.formService.formCompleted.subscribe(() => {
       this.nextForm();
-      console.log(this.activeForm)
     });
 
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
