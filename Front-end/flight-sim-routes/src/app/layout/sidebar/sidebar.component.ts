@@ -40,4 +40,5 @@ export class SidebarComponent {
       document.body.style.overflow ='hidden';
     }
   }
+
 }

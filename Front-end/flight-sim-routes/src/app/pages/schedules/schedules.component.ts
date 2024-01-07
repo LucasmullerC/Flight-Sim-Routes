@@ -1,21 +1,43 @@
-import { Component} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { ScheduleFormService } from 'src/app/services/schedule-form.service';
 import { SchedulesService } from 'src/app/services/schedules.service';
 
 @Component({
   selector: 'app-schedules',
   templateUrl: './schedules.component.html',
-  styleUrl: './schedules.component.scss'
+  styleUrl: './schedules.component.scss',
 })
-export class SchedulesComponent {
+export class SchedulesComponent implements OnDestroy {
   activeForm: number = 1;
   error: boolean = false;
-  constructor(private formService: ScheduleFormService,
+  navigationSubscription;
+  constructor(
+    private formService: ScheduleFormService,
     private scheduleService: SchedulesService,
-    private scheduleForm: ScheduleFormService) {
-      this.formService.formCompleted.subscribe(() => {
-        this.nextForm();
-      });
+    private scheduleForm: ScheduleFormService,
+    private router: Router
+  ) {
+    this.formService.formCompleted.subscribe(() => {
+      this.nextForm();
+      console.log(this.activeForm)
+    });
+
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      if (e instanceof NavigationEnd) {
+        this.initialise();
+      }
+    });
+  }
+
+  initialise() {
+    this.activeForm = 1;
+  }
+
+  ngOnDestroy() {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
   nextForm(): void {
@@ -23,25 +45,27 @@ export class SchedulesComponent {
     this.isFinished();
   }
 
-  private isFinished(): void{
-    if(this.activeForm == 5){
+  private isFinished(): void {
+    if (this.activeForm == 5) {
       const airlineName = this.scheduleForm.getAirlineName();
       const dataStorage = this.scheduleForm.getFormDataList();
-      const existingDataIndex = dataStorage.findIndex(item => item.airlineName === airlineName);
+      const existingDataIndex = dataStorage.findIndex(
+        (item) => item.airlineName === airlineName
+      );
       const data = dataStorage[existingDataIndex];
 
       this.getRequest(data);
     }
   }
 
-  private getRequest(data: any):void{
+  private getRequest(data: any): void {
     this.scheduleService.generateSchedules(data).subscribe(
       (blob: Blob) => {
         const filename = 'schedules.zip';
 
         this.scheduleService.downloadFile(blob, filename);
       },
-      error => {
+      (error) => {
         this.error = true;
         console.error('An error occured:', error);
       }
