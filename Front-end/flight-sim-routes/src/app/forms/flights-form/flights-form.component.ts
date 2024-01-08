@@ -15,7 +15,7 @@ export class FlightsFormComponent {
   minValue: any = 1;
   maxValue: any = 9999;
   database: any = '';
-  databaseList: String[] = ['OpenSky Network'];
+  databaseList: String[] = ['OpenSky Network','OpenFlights (2014)'];
   @Output() ButtonPressed = new EventEmitter<boolean>();
 
   @Input()
@@ -52,6 +52,10 @@ export class FlightsFormComponent {
         }
         case "OpenSky Network":{
           this.flightService.getFlights(formData,'opensky-route');
+          break;
+        }
+        case "OpenFlights (2014)":{
+          this.flightService.getFlights(formData,'openflights-route');
           break;
         }
         default: { 
