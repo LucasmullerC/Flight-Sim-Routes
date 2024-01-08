@@ -82,6 +82,12 @@ svg{
     cursor: pointer;
 }
 
+@media (max-height: 940px) and (min-height: 900px){
+    tr{
+        height: 50px;
+    }
+}
+
 @media (max-width: 1300px) {
     .container{
         width: 100%;

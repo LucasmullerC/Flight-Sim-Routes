@@ -12,6 +12,9 @@
 .table{
     width: 975px;
     height: 100%;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
 }
 
 @media (max-width: 1300px) {
