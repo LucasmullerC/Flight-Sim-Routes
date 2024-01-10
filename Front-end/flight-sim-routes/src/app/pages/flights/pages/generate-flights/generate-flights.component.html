@@ -8,5 +8,5 @@
     <app-flights-form class="form" [formOptions]="selectedForm" [flightsForm]="flightsForm" (ButtonPressed)="OnbuttonPress($event)"></app-flights-form>
     <h1 *ngIf="loading">Please wait...</h1>
     <p *ngIf="loading">This may take longer than expected due to system hibernation. In some minutes your request will be ready.</p>    
-    <app-result-table class="table" *ngIf="columns && rows || error_table" [columns]="columns" [rows]="rows" [error]="error_table"></app-result-table>
+    <app-result-table class="table" *ngIf="(columns && rows || error_table) && !loading" [columns]="columns" [rows]="rows" [error]="error_table"></app-result-table>
 </div>

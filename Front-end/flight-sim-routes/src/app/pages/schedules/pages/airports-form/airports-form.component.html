@@ -42,7 +42,7 @@
         class="custom-input"
         (formControlChange)="onFormControlChange($event, 'icao')"
         [type]="'textarea'"
-        [placeholder]="'KJFK, KSFO, EDDF'"
+        [placeholder]="'KJFK'"
         [uppercase]="true"
       ></app-custom-input>
       <div *ngFor="let validation of validationMessages.icao">

@@ -7,4 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ThankyouComponent {
   @Input() error: boolean = false;
+  @Input() loading: boolean = false;
+
+
 }

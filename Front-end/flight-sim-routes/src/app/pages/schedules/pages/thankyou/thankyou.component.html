@@ -4,12 +4,15 @@
     [imageUrl]="'../../assets/images/transparent_blue_fit.png'"
   ></app-header>
 
-  <div *ngIf="!error" class="thankyou-message">
+  <h1 *ngIf="loading">Please wait...</h1>
+  <p *ngIf="loading">This may take longer than expected due to system hibernation. In some minutes your request will be ready.</p>    
+
+  <div *ngIf="!error && !loading" class="thankyou-message">
     <h1>Thank you for using Flight Sim Routes!</h1>
     <p>Your schedules have been successfully generated.</p>
   </div>
   
-  <app-database-error *ngIf="error">
+  <app-database-error *ngIf="error && !loading">
   </app-database-error>
 
   <app-contactme></app-contactme>

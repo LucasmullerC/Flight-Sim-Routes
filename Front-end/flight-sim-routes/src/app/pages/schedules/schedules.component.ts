@@ -11,6 +11,7 @@ import { SchedulesService } from 'src/app/services/schedules.service';
 export class SchedulesComponent implements OnDestroy {
   activeForm: number = 1;
   error: boolean = false;
+  loading: boolean = false;
   navigationSubscription;
   constructor(
     private formService: ScheduleFormService,
@@ -46,6 +47,7 @@ export class SchedulesComponent implements OnDestroy {
 
   private isFinished(): void {
     if (this.activeForm == 5) {
+      this.loading = true;
       const airlineName = this.scheduleForm.getAirlineName();
       const dataStorage = this.scheduleForm.getFormDataList();
       const existingDataIndex = dataStorage.findIndex(
@@ -60,11 +62,13 @@ export class SchedulesComponent implements OnDestroy {
   private getRequest(data: any): void {
     this.scheduleService.generateSchedules(data).subscribe(
       (blob: Blob) => {
+        this.loading = false;
         const filename = 'schedules.zip';
 
         this.scheduleService.downloadFile(blob, filename);
       },
       (error) => {
+        this.loading = false;
         this.error = true;
         console.error('An error occured:', error);
       }
