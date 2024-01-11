@@ -21,6 +21,7 @@ export class GenerateFlightsComponent implements OnDestroy{
   error_table: boolean = false;
   loading: boolean = false;
   navigationSubscription;
+  flightServiceSubscription;
 
   constructor(private router: Router, 
     private flightService: FlightsService,
@@ -29,6 +30,24 @@ export class GenerateFlightsComponent implements OnDestroy{
     private table: TableService,
     private route: ActivatedRoute) {
       this.navigationSubscription = this.router.events.subscribe();
+
+      this.flightServiceSubscription = this.flightService.requestData$.subscribe((formData) => {
+        if(formData != undefined){
+          if(formData.status == undefined){
+            this.columns = this.table.buildColumns(formData);
+            this.rows = this.table.buildRows(formData);
+          }
+          else{
+            this.error_table = true;
+          }
+          this.loading = false;
+        }
+      });
+  
+      this.route.url.subscribe(url => {
+        this.error_table = false;
+        this.rows = undefined;
+      });
     }
 
   ngOnInit(): void {
@@ -41,29 +60,14 @@ export class GenerateFlightsComponent implements OnDestroy{
       this.selectedForm = this.formRealFlights;
       this.flightsForm = this.realFlightsDB;
     }
-    
-    this.flightService.requestData$.subscribe((formData) => {
-      if(formData != undefined){
-        if(formData.status == undefined){
-          this.columns = this.table.buildColumns(formData);
-          this.rows = this.table.buildRows(formData);
-        }
-        else{
-          this.error_table = true;
-        }
-        this.loading = false;
-      }
-    });
-
-    this.route.url.subscribe(url => {
-      this.error_table = false;
-      this.rows = undefined;
-    });
   }
 
   ngOnDestroy(): void {
     if (this.navigationSubscription) {
       this.navigationSubscription.unsubscribe();
+    }
+    if (this.flightServiceSubscription) {
+      this.flightServiceSubscription.unsubscribe();
     }
     this.columns = [];
     this.rows = [];
