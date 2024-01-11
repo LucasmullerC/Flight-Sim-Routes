@@ -19,7 +19,7 @@ const routes: Routes = [
     children: [
       { path: '',  component: BannerFlightsComponent},
       { path: 'randomdatabase', component: GenerateFlightsComponent },
-      { path: 'realflightsdata', component: GenerateFlightsComponent },
+      { path: 'realflightsdata', component: GenerateFlightsComponent,runGuardsAndResolvers: 'always', },
     ]
   },
   {

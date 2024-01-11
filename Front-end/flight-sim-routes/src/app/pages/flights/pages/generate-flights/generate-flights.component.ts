@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FlightsService } from 'src/app/services/flights.service';
@@ -11,7 +11,7 @@ import { TableService } from 'src/app/services/table.service';
   templateUrl: './generate-flights.component.html',
   styleUrls: ['./generate-flights.component.scss'],
 })
-export class GenerateFlightsComponent {
+export class GenerateFlightsComponent implements OnDestroy{
   title: string = 'Flights';
   subtitle: string = '';
   flightsForm!: FormGroup;
@@ -20,13 +20,16 @@ export class GenerateFlightsComponent {
   rows: any;
   error_table: boolean = false;
   loading: boolean = false;
+  navigationSubscription;
 
   constructor(private router: Router, 
     private flightService: FlightsService,
     private formBuilder: FormBuilder,
     private unixTime: UnixTimeService,
     private table: TableService,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute) {
+      this.navigationSubscription = this.router.events.subscribe();
+    }
 
   ngOnInit(): void {
     if (this.router.url == '/flights/randomdatabase') {
@@ -59,6 +62,9 @@ export class GenerateFlightsComponent {
   }
 
   ngOnDestroy(): void {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
     this.columns = [];
     this.rows = [];
   }
