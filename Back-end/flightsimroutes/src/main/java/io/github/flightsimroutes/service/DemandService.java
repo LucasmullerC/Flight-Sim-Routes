@@ -104,11 +104,11 @@ public class DemandService {
             if (isRepetitive) {
                 for (int i = 0; i <= 5; i++) {
                     addRoute(subfleets, depAirport, arrAirport);
-                    addRoute(subfleets, depAirport, arrAirport);
+                    addRoute(subfleets, arrAirport, depAirport);
                 }
             } else {
                 addRoute(subfleets, depAirport, arrAirport);
-                addRoute(subfleets, depAirport, arrAirport);
+                addRoute(subfleets, arrAirport, depAirport);
             }
         }
     }
