@@ -162,7 +162,7 @@ Project Link: [https://github.com/LucasmullerC/Flight-Sim-Routes](https://github
 [license-shield]: https://img.shields.io/github/license/LucasmullerC/Flight-Sim-Routes.svg?style=for-the-badge
 [license-url]: https://github.com/LucasmullerC/Flight-Sim-Routes/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url]: https://www.linkedin.com/in/lucas-m%C3%BCller-corr%C3%AAa-66721b213/
 [email-shield]: https://img.shields.io/badge/-email-black.svg?style=for-the-badge&logo=gmail&colorB=555
 [email-url]: mailto:lucas.mullerqdv@gmail.com
 [product-screenshot]: images/site.png
