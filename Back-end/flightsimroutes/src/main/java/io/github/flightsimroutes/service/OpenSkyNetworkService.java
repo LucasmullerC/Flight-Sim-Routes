@@ -62,7 +62,7 @@ public class OpenSkyNetworkService {
                 String icao24 = flightNode.get("icao24").asText();
 
                 if(!estArrivalAirport.equals("null") && !estArrivalAirport.equals("null")){
-                    Route newRoute = new Route(airline, callsign, estDepartureAirport, estArrivalAirport, icao24, 0);
+                    Route newRoute = new Route(airline, callsign, estDepartureAirport, estArrivalAirport, icao24, 0,"0","0","0");
                     flights.add(newRoute);
                 }
             }

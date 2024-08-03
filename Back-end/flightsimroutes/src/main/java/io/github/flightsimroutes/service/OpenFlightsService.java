@@ -46,7 +46,7 @@ public class OpenFlightsService {
         String airline = convertIataToIcaoAirlines(attributes[0]);
         String depAirport = convertIataToIcaoAirports(attributes[2]);
         String arrAirport = convertIataToIcaoAirports(attributes[4]);
-        return new Route(airline, "", depAirport, arrAirport, attributes[8].trim().replaceAll("\\s+$", ""), 0);
+        return new Route(airline, "", depAirport, arrAirport, attributes[8].trim().replaceAll("\\s+$", ""), 0,"0","0","0");
     }
 
     private void addAirports() {

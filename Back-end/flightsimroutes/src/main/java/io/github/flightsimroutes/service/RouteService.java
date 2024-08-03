@@ -1,13 +1,18 @@
 package io.github.flightsimroutes.service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
+import java.time.format.DateTimeFormatter;
 
 import io.github.flightsimroutes.model.entity.Airport;
 import io.github.flightsimroutes.model.entity.Route;
 import io.github.flightsimroutes.util.GeographicUtils;
 
 public class RouteService {
+
+    private static final double CRUISE_SPEED = 400.0;
 
     public ArrayList<Route> generateRoute(ArrayList<Airport> airports, String depAirport, String arrAirport,
             String depCountry, String arrCountry,
@@ -60,8 +65,15 @@ public class RouteService {
                 for (Airport arrAirport : airports) {
                     if (isValidAirport(arrAirport, arrIcao, arrCountry) && !depAirport.equals(arrAirport)) {
                         double distance = checkDistance(depAirport, arrAirport, maxDistance, minDistance);
+                        int flight_time = calculateFlightTime(distance);
+
+                        LocalTime takeoffTime = generateDepTime();
+                        LocalTime arrivalTime = calculateArrTime(takeoffTime, flight_time);
+                
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
                         if (distance != 0) {
-                            return new Route("", "0", depAirport.getIcao(), arrAirport.getIcao(), "", (int) distance);
+                            return new Route("", "0", depAirport.getIcao(), arrAirport.getIcao(), "", (int) distance,Integer.toString(flight_time),takeoffTime.format(formatter),arrivalTime.format(formatter));
                         }
                     }
                 }
@@ -98,6 +110,26 @@ public class RouteService {
                 Double.valueOf(arr.getLat()), Double.valueOf(arr.getLon()));
 
         return (distance >= minDistance && distance <= maxDistance) ? distance : 0;
+    }
+
+    private int calculateFlightTime(double miles) {
+        
+        if (miles <= 0) {
+            return 0;
+        }
+        double hoursTime = miles / CRUISE_SPEED;
+        return (int) Math.round(hoursTime * 60);
+    }
+
+    private static LocalTime generateDepTime() {
+        Random random = new Random();
+        int hora = random.nextInt(24);
+        int minuto = random.nextInt(60);
+        return LocalTime.of(hora, minuto);
+    }
+
+    private static LocalTime calculateArrTime(LocalTime takeoffTime, double flight_time) {
+        return takeoffTime.plusMinutes((long) flight_time);
     }
 
 }

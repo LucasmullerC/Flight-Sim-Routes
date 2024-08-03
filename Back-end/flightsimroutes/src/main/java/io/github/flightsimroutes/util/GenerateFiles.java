@@ -39,7 +39,7 @@ public class GenerateFiles {
         for (Route route : routes) {
             flightsCsv += route.getAirline() + "," + route.getFlight_number()
                     + ",,,," + route.getDpt_airport() + "," + route.getArr_airport()
-                    + ",,,,,," + String.valueOf(route.getDistance()) + "," + route.getFlight_time() + ",J,,,,,,,,1,"
+                    + ",,,"+route.getDepTime()+","+route.getArrTime()+",," + String.valueOf(route.getDistance()) + "," + route.getFlight_time() + ",J,,,,,,,,1,"
                     + route.getSubfleets()
                     + ",,,,\r\n";
         }

@@ -57,7 +57,7 @@ public class DemandServiceTest {
 
         System.out.println(routes.toString());
         for (Route route : routes) {
-            System.out.println(route.getDpt_airport() + " - " + route.getArr_airport());
+            System.out.println(route.getDpt_airport() + " - " + route.getArr_airport()+"-"+route.getDepTime()+"-"+route.getArrTime()+"-"+route.getFlight_time());
         }
         assertEquals("SBRF", routes.get(0).getDpt_airport());
         assertEquals("SBBR", routes.get(0).getArr_airport());

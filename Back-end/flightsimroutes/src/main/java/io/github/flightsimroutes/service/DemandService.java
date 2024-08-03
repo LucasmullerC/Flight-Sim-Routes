@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Random;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import io.github.flightsimroutes.model.entity.Aircraft;
 import io.github.flightsimroutes.model.entity.Airport;
 import io.github.flightsimroutes.model.entity.Route;
@@ -31,6 +34,7 @@ public class DemandService {
     private static final int LOW_DENSITY = 6;
     private static final int MID_DENSITY = 3;
     private static final int HIGH_DENSITY = 0;
+    private static final double CRUISE_SPEED = 400.0;
 
     public DemandService(String airline, ArrayList<Aircraft> aircraft, ArrayList<Airport> airports, int flight_number,
             Set<String> hubs, boolean isRepetitive, int routeDensity) {
@@ -116,8 +120,16 @@ public class DemandService {
     private void addRoute(String subfleets, Airport dep, Airport arr) {
         double distance = GeographicUtils.getAirportsDistanceinMiles(Double.valueOf(dep.getLat()),
                 Double.valueOf(dep.getLon()), Double.valueOf(arr.getLat()), Double.valueOf(arr.getLon()));
+
+        int flight_time = calculateFlightTime(distance);
+
+        LocalTime takeoffTime = generateDepTime();
+        LocalTime arrivalTime = calculateArrTime(takeoffTime, flight_time);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
         Route route = new Route(airline, Integer.toString(flight_number), dep.getIcao(), arr.getIcao(), subfleets,
-                distance);
+                distance,Integer.toString(flight_time),takeoffTime.format(formatter),arrivalTime.format(formatter));
         routes.add(route);
         flight_number++;
     }
@@ -226,5 +238,25 @@ public class DemandService {
             }
         }
         return false;
+    }
+
+    private int calculateFlightTime(double miles) {
+        
+        if (miles <= 0) {
+            return 0;
+        }
+        double hoursTime = miles / CRUISE_SPEED;
+        return (int) Math.round(hoursTime * 60);
+    }
+
+    private static LocalTime generateDepTime() {
+        Random random = new Random();
+        int hora = random.nextInt(24);
+        int minuto = random.nextInt(60);
+        return LocalTime.of(hora, minuto);
+    }
+
+    private static LocalTime calculateArrTime(LocalTime takeoffTime, double flight_time) {
+        return takeoffTime.plusMinutes((long) flight_time);
     }
 }
