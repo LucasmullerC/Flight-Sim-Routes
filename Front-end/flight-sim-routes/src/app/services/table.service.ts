@@ -79,6 +79,15 @@ export class TableService {
       case 'hub':{
         return "Hub"
       }
+      case 'flight_time':{
+        return "Flight Time (Min)"
+      }
+      case 'dep_time':{
+        return "Departure Time"
+      }
+      case 'arr_time':{
+        return "Arrival Time"
+      }
       default:{
         return ''
       }
